@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	
+	<!-- 配置扫描 controller -->
+	<context:component-scan base-package="com.fengyukeji.resourceslib" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<!--通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller --> 
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	
+	<!-- 配置视图解析器  方便页面返回-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+		<!-- 登录拦截器 -->
+	<mvc:interceptors>
+		<!-- 登录拦截器 -->
+		<mvc:interceptor>
+			<!-- 以下是不拦截的方法 -->
+			<mvc:mapping path="/**/*"/>
+			<mvc:exclude-mapping path="/**/fonts/*"/>
+	        <mvc:exclude-mapping path="/**/*.css"/>
+	        <mvc:exclude-mapping path="/**/*.map"/>
+	        <mvc:exclude-mapping path="/**/*.js"/>
+	       	<mvc:exclude-mapping path="/**/*.html"/>
+	        <mvc:exclude-mapping path="/**/*.png"/>
+	        <mvc:exclude-mapping path="/**/*.gif"/>
+	        <mvc:exclude-mapping path="/**/*.jpg"/>
+	        <mvc:exclude-mapping path="/**/*.jpeg"/>
+	        <mvc:exclude-mapping path="/**/*login*"/>
+	        <mvc:exclude-mapping path="/**/*imageCode*"/>
+	        <mvc:exclude-mapping path="/**/*qrImage*"/>
+	        <mvc:exclude-mapping path="/**/*submitForm*"/>
+	       
+	        <!-- 权限认证视图不需要拦截 -->
+	        <mvc:exclude-mapping path="/**/*jurisdiction*"/>
+	        <!-- 权限认证方法不需要拦截 -->
+	        <mvc:exclude-mapping path="/**/*confirmUser*"/>
+	        
+	        <bean class="com.fengyukeji.resourceslib.intercepter.LoginIntercepter"></bean>
+		</mvc:interceptor>
+		
+		<!-- 填写权限 拦截器 -->
+		<!--  
+		<mvc:interceptor>
+			
+			<mvc:mapping path="/**/*.html"/>
+			<bean class="com.fengyukeji.questionnaire.intercepter.ConfirmIntercepter"></bean>
+		</mvc:interceptor>
+		-->
+	</mvc:interceptors>
+	<!-- 配哦两个标准 -->
+	<!-- 将mvc 不能处理的请求转发给 tomacat -->
+	<mvc:default-servlet-handler/>
+	<!-- 支持更高级的功能 -->
+	<mvc:annotation-driven/>
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
+	 <property name="maxUploadSize"><value>524288000</value></property> 
+	 <property name="defaultEncoding"><value>UTF-8</value></property> 
+	</bean>
+</beans>

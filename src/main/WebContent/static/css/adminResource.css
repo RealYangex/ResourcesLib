@@ -1,0 +1,167 @@
+@charset "UTF-8";
+     td, th {
+	word-break: keep-all; /* 不换行 */
+	white-space: nowrap; /* 不换行 */
+	overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+	text-overflow: ellipsis;
+ }
+
+/*左侧菜单B*/
+.adminResource .left-menu{
+	display:inline-block;
+	height: 760px;
+	width: 145px;
+	background-color:#FFFFFF;
+	position: absolute;
+	top:0;
+	left: 32px;
+}
+.left-menu-top{
+	height: 49px;
+	width: 145px;
+	background-color: #4BB2FF;
+	cursor: pointer;
+}
+.adminResource .left-menu span{
+	display:inline-block;
+	height: 50px;
+	line-height:50px;
+	width: 93px;
+	color:#FFFFFF;
+	text-align:right;
+	margin-left:10px;
+	background: url("../images/allfile.png")no-repeat;
+	background-size: 30px;
+	background-position: left;
+	
+}
+.adminResource .left-menu ul{
+	height: 417px;
+	width: 145px;
+}
+.adminResource .left-menu ul li{
+	height: 50px;
+	line-height:50px;
+	width: 145px;
+	text-align:center;
+	cursor: pointer;
+	border-bottom: 1px solid #EFEFEF;
+}
+.adminResource .left-menu ul li:hover{
+	background-color: #E3E8EC;
+}
+/*左侧菜单E*/
+
+/*右边内容B*/
+.adminResource .right-content{
+	display:inline-block;
+	height: 760px;
+	width: 719px;
+	background-color:#FFFFFF;
+	position: absolute;
+	top:0;
+	right: 0;
+}
+/*顶部B*/
+.adminResource .right-content .right-top{
+	height: 49px;
+	width: 719px;
+}
+.adminResource .right-content .right-top li{
+	height: 35px;
+	line-height:35px;
+	width: 100px;
+	margin-top: 7px;
+}
+.adminResource .right-content .right-top .li-one{
+	margin-left: 15px;
+	margin-right: 15px;
+	position: relative;
+}
+
+.adminResource .right-content .right-top .li-three{
+	margin-right: 15px;
+	width: 135px;
+	position: relative;
+}
+.adminResource .right-content .right-top .li-three #search{
+
+	height: 30px;
+	width: 30px;
+	cursor:pointer;
+	position: absolute;
+	top:6px;
+	right: 3px;
+	background: url("../images/search.png")no-repeat;
+	background-size: 20px;
+	background-position: center;
+}
+.adminResource .right-content .right-top .li-three #search:hover{
+   background: url("../images/search2.png")no-repeat; 
+   background-size: 20px;
+	background-position: center;
+}
+/*顶部E*/
+
+/*文件路径导航B*/
+.adminResource .right-content .path-nav{
+	height: 15px;
+	line-height:15px;
+	width: 719px;
+}
+.adminResource .right-content .path-nav li{
+	float: left;
+	margin-right: 5px;
+	font-size: 12px;
+	padding-right:5px;
+}
+.adminResource .right-content .path-nav .li-z{
+   color: #4BB2FF;
+   cursor: pointer;
+   
+}
+.adminResource .right-content .path-nav .li-one{
+	margin-left: 15px;
+	padding-right:5px;
+	border-right: 1px solid #DCDDF4;
+}
+.adminResource .right-content .path-nav .path-sign{
+	background: url("../images/path-sign.png")no-repeat;
+	background-position: 50px 2px;
+	background-size:10px;
+	padding-right:10px;
+ }
+/*文件路径导航E*/
+.right-content td a{
+  display: inline-block;
+  cursor: pointer;
+  text-decoration:none;
+  margin-left: 2px;
+  width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+ }
+ 
+ /*表格B*/
+ .right-content .table-container{
+ border: 1px solid #FFFFFF;
+ width: 719px; 
+ }
+ .right-content td a:hover{
+ color: #608CFF;
+ }
+ #fileTable td i{
+ 	font-size:26px;
+ 	margin-right:6px;
+ 	
+ }
+ #fileTable td i2{
+ 	font-size:16px;
+ }
+ #fileTable td i2:hover{
+ 	cursor:pointer;
+ }
+ .yellow{
+ 	color:#efcd4b;
+ }
+ 
+  /*表格E*/
+/*右边内容E*/

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fengyukeji.resourceslib.dao.ResourcesMapper">
+  <resultMap id="BaseResultMap" type="com.fengyukeji.resourceslib.bean.Resources">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="childrens_id" jdbcType="VARCHAR" property="childrensId" />
+    <result column="res_resources_type" jdbcType="INTEGER" property="resResourcesType" />
+    <result column="localtion" jdbcType="VARCHAR" property="localtion" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="admin_id" jdbcType="INTEGER" property="adminId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, parent_id, childrens_id, res_resources_type, localtion, create_time, admin_id
+  </sql>
+  <select id="selectByExample" parameterType="com.fengyukeji.resourceslib.bean.ResourcesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from res_resources
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from res_resources
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from res_resources
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fengyukeji.resourceslib.bean.ResourcesExample">
+    delete from res_resources
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fengyukeji.resourceslib.bean.Resources">
+    insert into res_resources (id, name, parent_id, 
+      childrens_id, res_resources_type, localtion, 
+      create_time, admin_id)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{childrensId,jdbcType=VARCHAR}, #{resResourcesType,jdbcType=INTEGER}, #{localtion,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{adminId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fengyukeji.resourceslib.bean.Resources" keyProperty="id" useGeneratedKeys="true">
+    insert into res_resources
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="childrensId != null">
+        childrens_id,
+      </if>
+      <if test="resResourcesType != null">
+        res_resources_type,
+      </if>
+      <if test="localtion != null">
+        localtion,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="adminId != null">
+        admin_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="childrensId != null">
+        #{childrensId,jdbcType=VARCHAR},
+      </if>
+      <if test="resResourcesType != null">
+        #{resResourcesType,jdbcType=INTEGER},
+      </if>
+      <if test="localtion != null">
+        #{localtion,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertSelectiveBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+	    insert into res_resources(name,parent_id,res_resources_type,localtion,create_time,admin_id)
+	 	values 
+	    <foreach collection="list" item="item" index="index" separator="," >  
+	     (#{item.name,jdbcType=VARCHAR},#{item.parentId,jdbcType=INTEGER},#{item.resResourcesType,jdbcType=INTEGER},#{item.localtion,jdbcType=VARCHAR},#{item.createTime,jdbcType=DATE},#{item.adminId,jdbcType=INTEGER})  
+	    </foreach>
+  </insert> 
+  <select id="countByExample" parameterType="com.fengyukeji.resourceslib.bean.ResourcesExample" resultType="java.lang.Long">
+    select count(*) from res_resources
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update res_resources
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.childrensId != null">
+        childrens_id = #{record.childrensId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resResourcesType != null">
+        res_resources_type = #{record.resResourcesType,jdbcType=INTEGER},
+      </if>
+      <if test="record.localtion != null">
+        localtion = #{record.localtion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.adminId != null">
+        admin_id = #{record.adminId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update res_resources
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
+      childrens_id = #{record.childrensId,jdbcType=VARCHAR},
+      res_resources_type = #{record.resResourcesType,jdbcType=INTEGER},
+      localtion = #{record.localtion,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      admin_id = #{record.adminId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fengyukeji.resourceslib.bean.Resources">
+    update res_resources
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="childrensId != null">
+        childrens_id = #{childrensId,jdbcType=VARCHAR},
+      </if>
+      <if test="resResourcesType != null">
+        res_resources_type = #{resResourcesType,jdbcType=INTEGER},
+      </if>
+      <if test="localtion != null">
+        localtion = #{localtion,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminId != null">
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fengyukeji.resourceslib.bean.Resources">
+    update res_resources
+    set name = #{name,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      childrens_id = #{childrensId,jdbcType=VARCHAR},
+      res_resources_type = #{resResourcesType,jdbcType=INTEGER},
+      localtion = #{localtion,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      admin_id = #{adminId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

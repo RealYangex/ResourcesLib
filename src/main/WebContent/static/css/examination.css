@@ -1,0 +1,133 @@
+@charset "UTF-8";
+body{
+	background-color: #EFEFEF;
+}
+.examDesk{
+	margin:0 auto;
+	min-height:150px;
+	max-height:850px;
+	max-width:700px;
+}
+/*顶部导航条B*/
+.examDesk .topBar{
+}
+.examDesk .topBar .navTitle{
+	background: url("../images/examination/navTitle.png")no-repeat;
+	height: 25px;
+	width:63px;
+	background-size:66px;
+	background-position:center;
+	border:1px solid #FFFFFF;
+
+}
+.examDesk .topBar .naviState{
+		color: #B00B04;
+		padding-top:4px; 
+		padding-left: 5px;
+		font-size: 14px;
+}
+/*顶部导航条E*/
+
+/*试卷部分B*/
+.examDesk .testPaper{
+	margin-top:10px;
+	height: 97%;
+	background-color: #FFFFFF;
+	position: relative;
+}
+   /*工具栏B*/
+    .examDesk .testPaper .toolBar{
+      margin:3% 0 0 4%;
+      height:30px;
+      line-height:30px;
+      width:92%;
+      text-align:center;
+      font-size:16px;
+      background-color:#F5F5F5;
+      border: 1px solid #CCCCCC;
+      position: relative;
+    }
+    .examDesk .testPaper .toolBar .countdown {
+	background-color:#D0DFEF;
+	text-align:center;
+	position:absolute;
+	top: 49px;
+    right: 31px;
+    width: 87px;
+    height: 85px;
+	border-radius:80px;
+	-webkit-border-radius:80px;
+	-moz-border-radius:80px;
+   }
+  .examDesk .testPaper .toolBar .countdown .countdown-top{
+    width: 70px;
+    margin-top: 12px;
+    margin-left: 9px;
+    font-size: 17px;
+    color: #FFFFFF;
+   }
+  .examDesk .testPaper .toolBar .countdown .countdown-bottom{
+    width: 74px;
+    margin-top: 0px;
+    margin-left:8px;
+    font-size: 13px;
+    color: #FFFFFF;
+   }
+  .examDesk .testPaper .toolBar .countdown .countdown-bottom .timeContent{
+     font-size: 17px;
+     color: #FF4040;
+   }
+   /*工具栏B*/
+   
+   /*试卷内容B*/
+   .examDesk .testPaper .paperContent{
+      margin:0 0 0 4%;
+      height:84%;
+      width:92.3%;
+      overflow-y: scroll;
+   }
+   .examDesk .testPaper .paperTop{
+     height: 100px;
+     border-bottom: 1px solid #F0F0F0;
+     margin-right: 15px;
+     padding-top: 20px;
+   }
+  .examDesk .testPaper .paperTop .describe{
+     width: 110px;
+   }
+   .examDesk .testPaper .paperTop span{
+     display:block;
+     height: 30px;
+     text-align:left;
+     font-size: 15px;
+   }
+   
+    .examDesk .testPaper .paperContent .paperTopic{
+    height: 1000px;
+   }
+   /*试卷内容E*/
+   
+   /*控制栏B*/
+   .examDesk .testPaper .controlPane {
+      margin:0 0 0 4%;
+      height:30px;
+      line-height:26px;
+      width:92%;
+      background-color:#F5F5F5;
+      border: 1px solid #CCCCCC;
+      
+   }
+    .examDesk .testPaper .controlPane #controlBar{
+      padding-left: 2px;
+      float: left;
+   }
+   .examDesk .testPaper .controlPane #timerBar{
+      padding-right: 2px;
+      margin-right: 15px;
+      margin-top:2px;
+      float: right;
+    }
+   /*控制栏E*/
+   
+    /*试卷内容E*/
+/*试卷部分E*/

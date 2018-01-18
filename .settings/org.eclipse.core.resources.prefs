@@ -1,0 +1,14 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=refs/remotes/origin/master
+eclipse.preferences.version=1
+<<<<<<< HEAD
+encoding//src/main/WebContent/WEB-INF/views/adminIndex.jsp=UTF-8
+<<<<<<< HEAD
+encoding//src/main/WebContent/WEB-INF/views/adminLeftMenu.jsp=UTF-8
+encoding/<project>=UTF-8
+=======
+=======
+encoding/<project>=UTF-8
+>>>>>>> refs/remotes/origin/master
+>>>>>>> refs/remotes/origin/master

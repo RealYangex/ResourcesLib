@@ -1,0 +1,115 @@
+@charset "UTF-8";
+body{
+	background-color: #FFFFFF;
+}
+/*顶部B*/
+  .top{
+        background-color: #EDE7D9;
+        margin: 0 auto;
+      }
+    .top .top-left{
+       display:inline-block;
+       font-size: 25px;
+       text-align: center;
+    }
+    .top .top-return{
+       display:inline-block;
+       font-size: 20px;
+       text-align: center;
+       height: 100px;
+       line-height: 100px;
+       cursor: pointer;
+       margin-right: 50px;
+       color:#CCCCCC;
+     
+    }
+      .top .top-return:hover{
+       color: #FF0000;
+     
+    }
+    .top .top-right{
+       display:inline-block;
+       font-size: 20px;
+       text-align: center;
+    }
+    
+    .top .top-right .hadAccount{
+      display: inline-block
+    }
+    .top .top-right  .login{
+     display: inline-block;
+     cursor: pointer;
+     color:#CCCCCC;
+    }
+     .top .top-right  .login:hover{
+          color:#FF0000;
+    }
+    /*顶部E*/
+    
+    /*内容B*/
+    .content{
+       margin:0 auto;
+       margin-top:0;
+       position: relative;
+    }
+   .content .sui-formm{
+     margin: 0 auto;
+     border-radius:6px;
+     background-color: #FFFFFF;
+     margin-left: 5%;
+    
+    }
+     .content input{
+      margin-bottom: 40px;
+    }
+    .content .sui-formm .account{
+     background: url("../images/userRegist/account.png")no-repeat;
+     background-position: 10px;
+     background-size: 27px;
+    }
+    .content .sui-formm .name{
+     background: url("../images/userRegist/name.png")no-repeat;
+     background-position: 6px;
+     background-size: 35px;
+    }
+    .content .sui-formm .email{
+     background: url("../images/userRegist/email.png")no-repeat;
+     background-position: 10px 10px;
+     background-size: 29px;
+    }
+    .content .sui-formm .password{
+     background: url("../images/userRegist/password.png")no-repeat;
+     background-position: 10px;
+     background-size: 30px;
+    }
+    .content .sui-formm .repassword{
+     background: url("../images/userRegist/repassword.png")no-repeat;
+     background-position: 10px;
+     background-size: 30px;
+    }
+   .content .sui-formm button{
+    background-color: #B10D06;
+    border-color: #B10D06;
+    }
+    .content .sui-formm button:hover{
+    background-color: #FF0000;
+    border-color: #FF0000;
+    }
+   .content .bg-img{
+        width: 55%;
+    height: 50%;
+    background: url(../images/userRegist/regist-bg.png)no-repeat;
+    background-size: 775px 190px;
+    background-position: center;
+    position: absolute;
+    top: 130px;
+    right: 30px;
+    }
+
+    /*内容E*/
+    
+   #formRegist .msg-error{
+   position: absolute;
+   top:10px;
+   right: -75px;
+    }

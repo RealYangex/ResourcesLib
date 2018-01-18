@@ -1,0 +1,199 @@
+@CHARSET "UTF-8";
+/**CSS ResetB**/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+	blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
+	em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+	b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas,
+	details, embed, figure, figcaption, footer, header, hgroup, menu, nav,
+	output, ruby, section, summary, time, mark, audio, video {
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	margin: 0;
+	padding: 0;
+}
+
+*{
+	font-family: Microsoft YaHei;
+}
+li{
+
+	list-style-type: none;
+}
+
+
+body {
+	background-color: #F8F7FE;
+	overflow-x: hidden;
+	margin: 0;
+
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/**CSS ResetE**/
+
+/**公共B**/
+body, th, td, button, input, select, textarea {
+	font: 12px/1.62 "Microsoft Yahei", "Hiragino Sans GB", "Helvetica Neue",
+		Helvetica, tahoma, arial, Verdana, sans-serif;
+	color: #333;
+}
+
+ol, ul, dl {
+	list-style: none;
+}
+
+img {
+	border: 0;
+	vertical-align: middle;
+}
+
+a {
+	text-decoration: none;
+	outline: none;
+	blr: expression(this.onFocus = this.blur ());
+}
+
+h1 {
+	font-size: 36px;
+}
+
+h2 {
+	font-size: 30px;
+}
+
+h3 {
+	font-size: 24px;
+}
+
+h4 {
+	font-size: 20px;
+}
+
+h5 {
+	font-size: 18px;
+}
+
+h6 {
+	font-size: 12px;
+}
+
+.left, .fl {
+	float: left;
+}
+
+.right, .fr {
+	float: right;
+}
+
+.clearfix, .cf {
+	*zoom: 1
+}
+
+.clearfix:after, .cf:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+.clear, .cl {
+	clear: both;
+}
+/**公共E**/
+
+/*右侧 内容B*/
+.rightmain {
+	position: absolute;
+	top: 80px;
+	left: 187px;
+	bottom: 0;
+	background-color: #FFFFFF;
+	right: 0;
+	overflow: hidden;
+}
+
+body.showleftmenu .rightmain {
+	left: 187px;
+}
+
+body.hideleftmenu .rightmain {
+	left: 0;
+}
+
+.rightcontent {
+	height: 100%;
+	/*padding: 7px 7px 0 7px;*/
+}
+
+.rightcontent iframe {
+	width: 100%;
+	height: 100%;
+}
+
+/*右侧内容 E*/
+.margin-top6 {
+	margin-top: 6px;
+}
+
+.margin-top16 {
+	margin-top: 16px;
+}
+
+.margin-top10 {
+	margin-top: 10px;
+}
+
+.margin-to26 {
+	margin-top: 26px;
+}
+
+.margin-to36 {
+	margin-top: 36px;
+}
+
+.margin-top20 {
+	margin-top: 20px;
+}
+
+.margin-left6 {
+	margin-left: 6px;
+}
+
+.margin-left16 {
+	margin-left: 16px;
+}
+
+.margin-left26 {
+	margin-left: 26px;
+}
+
+.margin-left36 {
+	margin-left: 36px;
+}
+
+.margin-left20 {
+	margin-left: 20px;
+}
+
+.margin-left100 {
+	margin-left: 100px;
+}
+
+.margin-right20 {
+	margin-right: 20px;
+}

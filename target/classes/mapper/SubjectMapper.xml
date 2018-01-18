@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fengyukeji.resourceslib.dao.SubjectMapper">
+  <resultMap id="BaseResultMap" type="com.fengyukeji.resourceslib.bean.Subject">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="subject_content" jdbcType="VARCHAR" property="subjectContent" />
+    <result column="subject_type" jdbcType="INTEGER" property="subjectType" />
+    <result column="subject_does" jdbcType="INTEGER" property="subjectDoes" />
+    <result column="subject_successes" jdbcType="INTEGER" property="subjectSuccesses" />
+    <result column="subject_error" jdbcType="INTEGER" property="subjectError" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, subject_content, subject_type, subject_does, subject_successes, subject_error
+  </sql>
+  <select id="selectByExample" parameterType="com.fengyukeji.resourceslib.bean.SubjectExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from res_subject
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from res_subject
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from res_subject
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fengyukeji.resourceslib.bean.SubjectExample">
+    delete from res_subject
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fengyukeji.resourceslib.bean.Subject">
+    insert into res_subject (id, subject_content, subject_type, 
+      subject_does, subject_successes, subject_error
+      )
+    values (#{id,jdbcType=INTEGER}, #{subjectContent,jdbcType=VARCHAR}, #{subjectType,jdbcType=INTEGER}, 
+      #{subjectDoes,jdbcType=INTEGER}, #{subjectSuccesses,jdbcType=INTEGER}, #{subjectError,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fengyukeji.resourceslib.bean.Subject">
+    insert into res_subject
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="subjectContent != null">
+        subject_content,
+      </if>
+      <if test="subjectType != null">
+        subject_type,
+      </if>
+      <if test="subjectDoes != null">
+        subject_does,
+      </if>
+      <if test="subjectSuccesses != null">
+        subject_successes,
+      </if>
+      <if test="subjectError != null">
+        subject_error,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="subjectContent != null">
+        #{subjectContent,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectType != null">
+        #{subjectType,jdbcType=INTEGER},
+      </if>
+      <if test="subjectDoes != null">
+        #{subjectDoes,jdbcType=INTEGER},
+      </if>
+      <if test="subjectSuccesses != null">
+        #{subjectSuccesses,jdbcType=INTEGER},
+      </if>
+      <if test="subjectError != null">
+        #{subjectError,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fengyukeji.resourceslib.bean.SubjectExample" resultType="java.lang.Long">
+    select count(*) from res_subject
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update res_subject
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.subjectContent != null">
+        subject_content = #{record.subjectContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectType != null">
+        subject_type = #{record.subjectType,jdbcType=INTEGER},
+      </if>
+      <if test="record.subjectDoes != null">
+        subject_does = #{record.subjectDoes,jdbcType=INTEGER},
+      </if>
+      <if test="record.subjectSuccesses != null">
+        subject_successes = #{record.subjectSuccesses,jdbcType=INTEGER},
+      </if>
+      <if test="record.subjectError != null">
+        subject_error = #{record.subjectError,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update res_subject
+    set id = #{record.id,jdbcType=INTEGER},
+      subject_content = #{record.subjectContent,jdbcType=VARCHAR},
+      subject_type = #{record.subjectType,jdbcType=INTEGER},
+      subject_does = #{record.subjectDoes,jdbcType=INTEGER},
+      subject_successes = #{record.subjectSuccesses,jdbcType=INTEGER},
+      subject_error = #{record.subjectError,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fengyukeji.resourceslib.bean.Subject">
+    update res_subject
+    <set>
+      <if test="subjectContent != null">
+        subject_content = #{subjectContent,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectType != null">
+        subject_type = #{subjectType,jdbcType=INTEGER},
+      </if>
+      <if test="subjectDoes != null">
+        subject_does = #{subjectDoes,jdbcType=INTEGER},
+      </if>
+      <if test="subjectSuccesses != null">
+        subject_successes = #{subjectSuccesses,jdbcType=INTEGER},
+      </if>
+      <if test="subjectError != null">
+        subject_error = #{subjectError,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fengyukeji.resourceslib.bean.Subject">
+    update res_subject
+    set subject_content = #{subjectContent,jdbcType=VARCHAR},
+      subject_type = #{subjectType,jdbcType=INTEGER},
+      subject_does = #{subjectDoes,jdbcType=INTEGER},
+      subject_successes = #{subjectSuccesses,jdbcType=INTEGER},
+      subject_error = #{subjectError,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
