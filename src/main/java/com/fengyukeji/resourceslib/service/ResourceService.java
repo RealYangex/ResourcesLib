@@ -101,7 +101,22 @@ public class ResourceService {
 		}
 		return null;
 	}
-	
+	/**
+	 *  根据文件名搜索文件
+	 * @param type
+	 * @return
+	 */
+	public List<Resources> getFilesByName(String searchContent) {
+		ResourcesExample example = new ResourcesExample();
+		example.createCriteria().andNameLike(searchContent);
+		//System.out.println(searchContent);
+		List<Resources> resList = resourcesMapper.selectByExample(example);
+		//System.out.println(resList);
+		if(resList.size()!=0){
+			return resList;
+		}
+		return null;
+	}
 	
 	
 	/**

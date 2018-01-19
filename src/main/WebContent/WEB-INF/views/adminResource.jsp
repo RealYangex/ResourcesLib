@@ -77,11 +77,13 @@
 				    <ul  class="right-top">
 				        <li class="fl li-one">
 				            <button style="width: 85px" id="drop-button" class="layui-btn layui-btn-sm layui-btn-normal changeBtn">上传</button>
-
 				        </li>
 
 				        <li class="fl li-two"><button style="width: 85px" class="layui-btn layui-btn-sm layui-btn-normal changeBtn" id="newFolder">新建文件夹</button></li>
-				        <li class="fr li-three"><input style="height: 30px;width: 135px; margin-top: 5px;" type="text" name="title" placeholder="搜索您的文件" class="layui-input"></li>
+				        <li class="fr li-three">
+				            <input id="searchIpt" style="height: 30px;width: 135px; margin-top: 5px;padding-right: 25px;" type="text" name="title" placeholder="搜索您的文件" class="layui-input">
+				            <span  id="searchBtn"></span>
+				        </li>
 
 				    </ul>
 				    <!-- 顶部E -->
@@ -635,8 +637,72 @@
 	 $(document).on("click",".uploadFileBtn",function(){
 		 $(".uploadFileBt").trigger("click");
 	 })
-	 
-	 //文件按钮点击事件
+	 //搜索按钮点击事件
+	 $("#searchBtn").click(function(){
+		var searchContent=$("#searchIpt").val();
+		if(searchContent==""){
+			return;
+		}
+		var load = layer.msg("正在加载数据,请稍后!",{icon:16,shade:0.05,time:58*1000});
+		$.ajax({
+			  url:'${APP_PATH}/Resources/getFilesByName',
+			  data:{"searchContent":searchContent},
+			  type:'post',
+			  success:function(data){
+				  layer.close(load);
+				  if(data.code==200){
+					  $("#searchIpt").val("");
+					  var resources = data.extend.resources;
+					  if(resources==null){
+						  layer.alert("没有找到您搜索的文件！");
+						  return; 
+					  }
+					  //清空表格
+					  $("#fileTable tbody").empty();
+					  $.each(resources,function(index,item){
+						  var tr = $("<tr></tr>").attr('fileType',item.resResourcesType).attr('childrenId',item.childrensId).attr('fileId',item.id).attr('localtion',item.localtion);
+						  var timestamp = item.createTime;
+						  var newDate = new Date();
+						  newDate.setTime(timestamp);
+						  var showDate = newDate.toLocaleString();
+						  var showType = "";
+						  var icon = "fa fa-";
+						  switch(item.resResourcesType){
+						  	case 0: showType='文件夹'; icon+="folder-open yellow"; break;
+						  	case 1: showType='音频文件';icon+="file-audio-o"; break;
+						  	case 2: showType='视频文件';icon+="file-movie-o"; break;
+						  	case 3: showType='文档文件';icon+="file-word-o"; break;
+						  	case 4: showType='图片文件';icon+="file-photo-o"; break;
+						  	case 5: showType='其他文件';icon+="file-zip-o"; break;
+						  }
+						  tr.append('<td><a class="open"><i class="'+icon+'"></i>'+item.name+'</a><i2 style="display:inline-block;width:16px;height:16px;"><i3 style="display:none;color:#1E9FFF;" class="fa fa-download download"></i3></i2></td>');
+						  tr.append('<td>'+showType+'</td>');
+						  tr.append('<td>'+showDate+'</td>');
+						  tr.append('<td><button class="btn btn-xs btn-info rename" style="display:none;"><span class="fa fa-edit"></span> 重命名</button>&nbsp;&nbsp;<button class="btn btn-xs btn-danger delete"><span class="fa fa-trash"></span> 删 除</button></td>');
+						  $("#fileTable tbody").append(tr);
+					  })
+				  }
+			  },
+			  error:function(data){
+				  console.log(data);
+			  }
+		  });
+		
+																	//清空当前栈
+		fileLifo = [];
+		filePathLifo = [];
+																	//重新生成导航
+		filePathLifo.push("全部文件");
+		fileLifo.push(1);
+																												
+		createFilePath();
+																	//去除上一级
+		$("#lastLevel").css("display","none");
+																	//设置上传按钮禁止点击
+		$(".changeBtn").attr("disabled","disabled");
+		$(".changeBtn").css("cursor","not-allowed");
+	 })
+	 //文件按钮点击事件B
 	 $(".fileTypeBtn").click(function(){
 		var type = $(this).attr("type");
 		var load = layer.msg("正在加载数据,请稍后!",{icon:16,shade:0.05,time:58*1000});
@@ -695,6 +761,7 @@
 		$(".changeBtn").attr("disabled","disabled");
 		$(".changeBtn").css("cursor","not-allowed");
 	 })
+	 //文件按钮点击事件E
 	 
 	 $(document).on("click",".fileAll",function(){
 		//清空当前栈
@@ -708,10 +775,6 @@
 		$(".changeBtn").removeAttr("disabled");
 		$(".changeBtn").css("cursor","pointer");
 	 })
-	 
-	 function l(text){
-		 console.log(text);
-	 }
   });
 </script>
 </body>
