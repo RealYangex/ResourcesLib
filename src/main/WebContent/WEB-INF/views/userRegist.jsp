@@ -221,7 +221,7 @@ $(document).ready(function(){
     	  $(".top .top-return").css("display","block");
     	 
       }else{
-    	  $("#loginModal").css("left","61%");
+    	  $("#loginModal").css("left","62.3%");
     	  $(".top").css({"height":"100%","padding-top":"10px","padding-bottom":"10px"});
     	  $(" .top .top-left").css({"height":"150%","width":"35%","line-height":"150%"});
     	  $(" .top .top-right").css({"height":"150%","width":"55%","line-height":"150%"});

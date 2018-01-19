@@ -166,6 +166,18 @@ public class ResourcesController {
 	}
 	
 	/**
+	 * 根据文件名搜索文件
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/getFilesByName")
+	public Msg getFilesByName(HttpServletRequest request){
+		String searchContent = request.getParameter("searchContent");
+		List<Resources> fileList = resourceService.getFilesByName(searchContent);
+		return Msg.success().add("resources", fileList);
+	}
+	
+	/**
 	 * 删除文件和文件夹
 	 * @return
 	 */

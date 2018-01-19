@@ -16,12 +16,12 @@ $(document).ready(function(){
       var pc=sUserAgent.match(/windows/i) == "windows";
       if(pc){
     	  $("#loginModal").css("left","53%");
-    	  $(".mid-con-content").css({'width':'70%','height':'400px'});
+    	  $(".mid-con-content").css({'width':'70%','height':'430px'});
     	  $(".bottom-top").css('width','70%');
     	  $("body").css('min-width','1360px');
       }else{
-    	  $("#loginModal").css("left","61%");
-    	  $(".mid-con-content").css({'width':'100%','height':'200px'});
+    	  $("#loginModal").css("left","62.3%");
+    	  $(".mid-con-content").css({'width':'100%','height':'400px'});
     	  $(".bottom-top").css('width','100%');
     	  $("body").css('min-width','375px');
       }
@@ -73,8 +73,16 @@ $(document).on('click','#top-login',function(){
 });
 //弹出登录框E
 
-
-
+//body滚动条控制B
+$(document).on("mouseover",".right-content",function(){
+	 var h = $(document).height()-$(window).height();
+	   $(document).scrollTop(h/2);
+	$("body").css("overflow-y","hidden");
+})
+$(document).on("mouseout",".right-content",function(){
+	$("body").css("overflow-y","scroll");
+})
+//body滚动条控制E
 
 
 
