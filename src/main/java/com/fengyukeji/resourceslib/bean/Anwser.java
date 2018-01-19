@@ -50,4 +50,12 @@ public class Anwser {
     public void setSubjectId(Integer subjectId) {
         this.subjectId = subjectId;
     }
+
+	@Override
+	public String toString() {
+		return "Anwser [id=" + id + ", anwserContent=" + anwserContent
+				+ ", anwserDoes=" + anwserDoes + ", isTrue=" + isTrue
+				+ ", subjectId=" + subjectId + "]";
+	}
+    
 }

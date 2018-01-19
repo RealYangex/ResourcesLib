@@ -1,7 +1,18 @@
 package com.fengyukeji.resourceslib.bean;
 
+import java.util.List;
+
 public class Subject {
-    private Integer id;
+    @Override
+	public String toString() {
+		return "Subject [id=" + id + ", subjectContent=" + subjectContent
+				+ ", subjectType=" + subjectType + ", subjectDoes="
+				+ subjectDoes + ", subjectSuccesses=" + subjectSuccesses
+				+ ", subjectError=" + subjectError + ", anwserList="
+				+ anwserList + "]";
+	}
+
+	private Integer id;
 
     private String subjectContent;
 
@@ -12,7 +23,8 @@ public class Subject {
     private Integer subjectSuccesses;
 
     private Integer subjectError;
-
+    
+    private List<Anwser> anwserList = null; 
     public Integer getId() {
         return id;
     }
@@ -60,4 +72,29 @@ public class Subject {
     public void setSubjectError(Integer subjectError) {
         this.subjectError = subjectError;
     }
+
+	public List<Anwser> getAnwserList() {
+		return anwserList;
+	}
+
+	public void setAnwserList(List<Anwser> anwserList) {
+		this.anwserList = anwserList;
+	}
+
+	public Subject(Integer id, String subjectContent, Integer subjectType,
+			Integer subjectDoes, Integer subjectSuccesses,
+			Integer subjectError, List<Anwser> anwserList) {
+		super();
+		this.id = id;
+		this.subjectContent = subjectContent;
+		this.subjectType = subjectType;
+		this.subjectDoes = subjectDoes;
+		this.subjectSuccesses = subjectSuccesses;
+		this.subjectError = subjectError;
+		this.anwserList = anwserList;
+	}
+
+	public Subject() {
+	}
+    
 }

@@ -1,11 +1,15 @@
 package com.fengyukeji.resourceslib.bean;
 
-public class resAdminSet {
+public class AdminSet {
     private Integer id;
 
     private Integer visitAuthority;
 
     private Integer messageRange;
+
+    private Integer examType;
+
+    private Integer canPractice;
 
     public Integer getId() {
         return id;
@@ -29,5 +33,21 @@ public class resAdminSet {
 
     public void setMessageRange(Integer messageRange) {
         this.messageRange = messageRange;
+    }
+
+    public Integer getExamType() {
+        return examType;
+    }
+
+    public void setExamType(Integer examType) {
+        this.examType = examType;
+    }
+
+    public Integer getCanPractice() {
+        return canPractice;
+    }
+
+    public void setCanPractice(Integer canPractice) {
+        this.canPractice = canPractice;
     }
 }
