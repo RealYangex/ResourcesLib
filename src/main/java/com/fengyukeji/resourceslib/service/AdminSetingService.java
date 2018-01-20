@@ -3,8 +3,7 @@ package com.fengyukeji.resourceslib.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fengyukeji.resourceslib.bean.resAdminSet;
-import com.fengyukeji.resourceslib.dao.resAdminSetMapper;
+import com.fengyukeji.resourceslib.dao.AdminSetMapper;
 
 /**
  *AdminSetingService
@@ -15,7 +14,7 @@ import com.fengyukeji.resourceslib.dao.resAdminSetMapper;
 @Service
 public class AdminSetingService {
 	@Autowired
-	resAdminSetMapper adminSetMapper;
+	AdminSetMapper adminSetMapper;
 
 	
 	/**

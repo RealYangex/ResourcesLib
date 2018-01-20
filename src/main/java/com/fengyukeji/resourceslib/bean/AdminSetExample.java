@@ -3,14 +3,14 @@ package com.fengyukeji.resourceslib.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-public class resAdminSetExample {
+public class AdminSetExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public resAdminSetExample() {
+    public AdminSetExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -281,6 +281,126 @@ public class resAdminSetExample {
 
         public Criteria andMessageRangeNotBetween(Integer value1, Integer value2) {
             addCriterion("message_range not between", value1, value2, "messageRange");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamTypeIsNull() {
+            addCriterion("exam_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamTypeIsNotNull() {
+            addCriterion("exam_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamTypeEqualTo(Integer value) {
+            addCriterion("exam_type =", value, "examType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamTypeNotEqualTo(Integer value) {
+            addCriterion("exam_type <>", value, "examType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamTypeGreaterThan(Integer value) {
+            addCriterion("exam_type >", value, "examType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("exam_type >=", value, "examType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamTypeLessThan(Integer value) {
+            addCriterion("exam_type <", value, "examType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("exam_type <=", value, "examType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamTypeIn(List<Integer> values) {
+            addCriterion("exam_type in", values, "examType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamTypeNotIn(List<Integer> values) {
+            addCriterion("exam_type not in", values, "examType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamTypeBetween(Integer value1, Integer value2) {
+            addCriterion("exam_type between", value1, value2, "examType");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("exam_type not between", value1, value2, "examType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanPracticeIsNull() {
+            addCriterion("can_practice is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanPracticeIsNotNull() {
+            addCriterion("can_practice is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanPracticeEqualTo(Integer value) {
+            addCriterion("can_practice =", value, "canPractice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanPracticeNotEqualTo(Integer value) {
+            addCriterion("can_practice <>", value, "canPractice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanPracticeGreaterThan(Integer value) {
+            addCriterion("can_practice >", value, "canPractice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanPracticeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("can_practice >=", value, "canPractice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanPracticeLessThan(Integer value) {
+            addCriterion("can_practice <", value, "canPractice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanPracticeLessThanOrEqualTo(Integer value) {
+            addCriterion("can_practice <=", value, "canPractice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanPracticeIn(List<Integer> values) {
+            addCriterion("can_practice in", values, "canPractice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanPracticeNotIn(List<Integer> values) {
+            addCriterion("can_practice not in", values, "canPractice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanPracticeBetween(Integer value1, Integer value2) {
+            addCriterion("can_practice between", value1, value2, "canPractice");
+            return (Criteria) this;
+        }
+
+        public Criteria andCanPracticeNotBetween(Integer value1, Integer value2) {
+            addCriterion("can_practice not between", value1, value2, "canPractice");
             return (Criteria) this;
         }
     }

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fengyukeji.resourceslib.dao.resAdminSetMapper">
-  <resultMap id="BaseResultMap" type="com.fengyukeji.resourceslib.bean.resAdminSet">
+<mapper namespace="com.fengyukeji.resourceslib.dao.AdminSetMapper">
+  <resultMap id="BaseResultMap" type="com.fengyukeji.resourceslib.bean.AdminSet">
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="visit_authority" jdbcType="INTEGER" property="visitAuthority" />
     <result column="message_range" jdbcType="INTEGER" property="messageRange" />
+    <result column="exam_type" jdbcType="INTEGER" property="examType" />
+    <result column="can_practice" jdbcType="INTEGER" property="canPractice" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,9 +67,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, visit_authority, message_range
+    id, visit_authority, message_range, exam_type, can_practice
   </sql>
-  <select id="selectByExample" parameterType="com.fengyukeji.resourceslib.bean.resAdminSetExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.fengyukeji.resourceslib.bean.AdminSetExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -81,19 +83,19 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.fengyukeji.resourceslib.bean.resAdminSetExample">
+  <delete id="deleteByExample" parameterType="com.fengyukeji.resourceslib.bean.AdminSetExample">
     delete from res_admin_set
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.fengyukeji.resourceslib.bean.resAdminSet">
-    insert into res_admin_set (id, visit_authority, message_range
-      )
-    values (#{id,jdbcType=INTEGER}, #{visitAuthority,jdbcType=INTEGER}, #{messageRange,jdbcType=INTEGER}
-      )
+  <insert id="insert" parameterType="com.fengyukeji.resourceslib.bean.AdminSet">
+    insert into res_admin_set (id, visit_authority, message_range, 
+      exam_type, can_practice)
+    values (#{id,jdbcType=INTEGER}, #{visitAuthority,jdbcType=INTEGER}, #{messageRange,jdbcType=INTEGER}, 
+      #{examType,jdbcType=INTEGER}, #{canPractice,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.fengyukeji.resourceslib.bean.resAdminSet">
+  <insert id="insertSelective" parameterType="com.fengyukeji.resourceslib.bean.AdminSet">
     insert into res_admin_set
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -104,6 +106,12 @@
       </if>
       <if test="messageRange != null">
         message_range,
+      </if>
+      <if test="examType != null">
+        exam_type,
+      </if>
+      <if test="canPractice != null">
+        can_practice,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -116,9 +124,15 @@
       <if test="messageRange != null">
         #{messageRange,jdbcType=INTEGER},
       </if>
+      <if test="examType != null">
+        #{examType,jdbcType=INTEGER},
+      </if>
+      <if test="canPractice != null">
+        #{canPractice,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.fengyukeji.resourceslib.bean.resAdminSetExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.fengyukeji.resourceslib.bean.AdminSetExample" resultType="java.lang.Long">
     select count(*) from res_admin_set
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -136,6 +150,12 @@
       <if test="record.messageRange != null">
         message_range = #{record.messageRange,jdbcType=INTEGER},
       </if>
+      <if test="record.examType != null">
+        exam_type = #{record.examType,jdbcType=INTEGER},
+      </if>
+      <if test="record.canPractice != null">
+        can_practice = #{record.canPractice,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -145,7 +165,9 @@
     update res_admin_set
     set id = #{record.id,jdbcType=INTEGER},
       visit_authority = #{record.visitAuthority,jdbcType=INTEGER},
-      message_range = #{record.messageRange,jdbcType=INTEGER}
+      message_range = #{record.messageRange,jdbcType=INTEGER},
+      exam_type = #{record.examType,jdbcType=INTEGER},
+      can_practice = #{record.canPractice,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

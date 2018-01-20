@@ -2,7 +2,10 @@ package com.fengyukeji.resourceslib.dao;
 
 import com.fengyukeji.resourceslib.bean.Resources;
 import com.fengyukeji.resourceslib.bean.ResourcesExample;
+import com.fengyukeji.resourceslib.bean.SubjectAnwserBean;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ResourcesMapper {
