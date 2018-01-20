@@ -299,22 +299,31 @@ $(document).on("click","#examSchedule",function(){
  /*考试安排删除B*/
 $(document).on("click",".sxhDelete",function(){
 	var id=$(this).parents("td").parents("tr").find("td:eq(8)").text();
-	var load = layer.msg("正在删除数据,请稍后!",{icon:16,shade:0.05,time:38*1000});
-	 $.ajax({
-		url:'${APP_PATH}/Exam/delExamSchedule',
-		type:"post",
-		data:"id="+id,
-		success:function(data){
-			layer.close(load);
-			layer.confirm('删除成功！', {
-				  btn: ['确定'] 					  
-				}, function(index, layero){
-					layer.close(index);
-					getExamSchedule();
+	 layer.confirm("是否删除", {
+		  btn: ['确定','取消'] 					  
+		}, function(index, layero){
+			layer.close(index);
+			var load = layer.msg("正在删除,请稍后!",{icon:16,shade:0.05,time:38*1000});
+			 $.ajax({
+				url:'${APP_PATH}/Exam/delExamSchedule',
+				type:"post",
+				data:"id="+id,
+				success:function(data){
+					layer.close(load);
+					layer.confirm('删除成功！', {
+						  btn: ['确定'] 					  
+						}, function(index, layero){
+							layer.close(index);
+							getExamSchedule();
+						}
+						);	
 				}
-				);	
+			});
+		}, function(index, layero){
+			return;
 		}
-	});
+		);
+	
 });
 /*考试安排删除E*/
  
@@ -324,32 +333,43 @@ $(document).on("click",".isUse",function(){
 	var state=$(this).text().replace(/(^\s*)|(\s*$)/g, "");
 	
 	var hint=null;
+	var Hint=null;
 	if(state=="开启"){
 		state="0";
 		hint="正在开启考试！";
+		Hint="是否开启考试！"
 	}else if(state=="关闭"){
 		state="1";
 		hint="正在关闭考试！";
+		Hint="是否关闭考试！"
 	}else{
 		return;
 	}
-
-	var load = layer.msg(hint,{icon:16,shade:0.05,time:38*1000});
-	 $.ajax({
-		url:'${APP_PATH}/Exam/isUseExamSchedule',
-		type:"post",
-		data:{"id":id,"state":state},
-		success:function(data){
-			layer.close(load);
-			layer.confirm('设置成功！', {
-				  btn: ['确定'] 					  
-				}, function(index, layero){
-					layer.close(index);
-					getExamSchedule();
+	layer.confirm(Hint, {
+		  btn: ['确定','取消'] 					  
+		}, function(index, layero){
+			layer.close(index);
+			var load = layer.msg(hint,{icon:16,shade:0.05,time:38*1000});
+			 $.ajax({
+				url:'${APP_PATH}/Exam/isUseExamSchedule',
+				type:"post",
+				data:{"id":id,"state":state},
+				success:function(data){
+					layer.close(load);
+					layer.confirm('设置成功！', {
+						  btn: ['确定'] 					  
+						}, function(index, layero){
+							layer.close(index);
+							getExamSchedule();
+						}
+						);	
 				}
-				);	
+			});
+		}, function(index, layero){
+			return;
 		}
-	});
+		);
+	
 });
 /*考试安排开启与关闭E*/
  
