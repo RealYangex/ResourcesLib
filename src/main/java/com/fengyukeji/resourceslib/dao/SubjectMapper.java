@@ -3,6 +3,7 @@ package com.fengyukeji.resourceslib.dao;
 import com.fengyukeji.resourceslib.bean.Subject;
 import com.fengyukeji.resourceslib.bean.SubjectAnwserBean;
 import com.fengyukeji.resourceslib.bean.SubjectExample;
+import com.fengyukeji.resourceslib.bean.SubjectWithAnwserBean;
 
 import java.util.List;
 
@@ -21,9 +22,9 @@ public interface SubjectMapper {
 
     List<Subject> selectByExample(SubjectExample example);
 
-    List<SubjectAnwserBean> selectSubjectAnwser(Integer page);
+    List<SubjectWithAnwserBean> selectSubjectWithAnwser(Integer page,Integer showNums);
     
-    List<Subject> selectSubjectWithAnwser();
+    List<SubjectWithAnwserBean> selectSubjectWithAnwserByType(Integer page,Integer id,Integer showNums);
     
     Subject selectByPrimaryKey(Integer id);
 

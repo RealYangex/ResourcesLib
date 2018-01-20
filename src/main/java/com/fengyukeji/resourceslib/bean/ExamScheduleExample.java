@@ -295,52 +295,52 @@ public class ExamScheduleExample {
             return (Criteria) this;
         }
 
-        public Criteria andExamTimeEqualTo(Date value) {
+        public Criteria andExamTimeEqualTo(Integer value) {
             addCriterion("exam_time =", value, "examTime");
             return (Criteria) this;
         }
 
-        public Criteria andExamTimeNotEqualTo(Date value) {
+        public Criteria andExamTimeNotEqualTo(Integer value) {
             addCriterion("exam_time <>", value, "examTime");
             return (Criteria) this;
         }
 
-        public Criteria andExamTimeGreaterThan(Date value) {
+        public Criteria andExamTimeGreaterThan(Integer value) {
             addCriterion("exam_time >", value, "examTime");
             return (Criteria) this;
         }
 
-        public Criteria andExamTimeGreaterThanOrEqualTo(Date value) {
+        public Criteria andExamTimeGreaterThanOrEqualTo(Integer value) {
             addCriterion("exam_time >=", value, "examTime");
             return (Criteria) this;
         }
 
-        public Criteria andExamTimeLessThan(Date value) {
+        public Criteria andExamTimeLessThan(Integer value) {
             addCriterion("exam_time <", value, "examTime");
             return (Criteria) this;
         }
 
-        public Criteria andExamTimeLessThanOrEqualTo(Date value) {
+        public Criteria andExamTimeLessThanOrEqualTo(Integer value) {
             addCriterion("exam_time <=", value, "examTime");
             return (Criteria) this;
         }
 
-        public Criteria andExamTimeIn(List<Date> values) {
+        public Criteria andExamTimeIn(List<Integer> values) {
             addCriterion("exam_time in", values, "examTime");
             return (Criteria) this;
         }
 
-        public Criteria andExamTimeNotIn(List<Date> values) {
+        public Criteria andExamTimeNotIn(List<Integer> values) {
             addCriterion("exam_time not in", values, "examTime");
             return (Criteria) this;
         }
 
-        public Criteria andExamTimeBetween(Date value1, Date value2) {
+        public Criteria andExamTimeBetween(Integer value1, Integer value2) {
             addCriterion("exam_time between", value1, value2, "examTime");
             return (Criteria) this;
         }
 
-        public Criteria andExamTimeNotBetween(Date value1, Date value2) {
+        public Criteria andExamTimeNotBetween(Integer value1, Integer value2) {
             addCriterion("exam_time not between", value1, value2, "examTime");
             return (Criteria) this;
         }

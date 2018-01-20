@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fengyukeji.resourceslib.dao.ExamScheduleMapper">
   <resultMap id="BaseResultMap" type="com.fengyukeji.resourceslib.bean.ExamSchedule">
-    <result column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="exam_start_date" jdbcType="TIMESTAMP" property="examStartDate" />
     <result column="exam_end_date" jdbcType="TIMESTAMP" property="examEndDate" />
-    <result column="exam_time" jdbcType="TIMESTAMP" property="examTime" />
+    <result column="exam_time" jdbcType="INTEGER" property="examTime" />
     <result column="exam_type" jdbcType="INTEGER" property="examType" />
     <result column="exam_subject_num" jdbcType="INTEGER" property="examSubjectNum" />
     <result column="exam_all_score" jdbcType="REAL" property="examAllScore" />
@@ -87,6 +87,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from res_exam_schedule
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from res_exam_schedule
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteByExample" parameterType="com.fengyukeji.resourceslib.bean.ExamScheduleExample">
     delete from res_exam_schedule
     <if test="_parameter != null">
@@ -98,7 +108,7 @@
       exam_time, exam_type, exam_subject_num, 
       exam_all_score, is_use)
     values (#{id,jdbcType=INTEGER}, #{examStartDate,jdbcType=TIMESTAMP}, #{examEndDate,jdbcType=TIMESTAMP}, 
-      #{examTime,jdbcType=TIMESTAMP}, #{examType,jdbcType=INTEGER}, #{examSubjectNum,jdbcType=INTEGER}, 
+      #{examTime,jdbcType=INTEGER}, #{examType,jdbcType=INTEGER}, #{examSubjectNum,jdbcType=INTEGER}, 
       #{examAllScore,jdbcType=REAL}, #{isUse,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.fengyukeji.resourceslib.bean.ExamSchedule">
@@ -140,7 +150,7 @@
         #{examEndDate,jdbcType=TIMESTAMP},
       </if>
       <if test="examTime != null">
-        #{examTime,jdbcType=TIMESTAMP},
+        #{examTime,jdbcType=INTEGER},
       </if>
       <if test="examType != null">
         #{examType,jdbcType=INTEGER},
@@ -175,7 +185,7 @@
         exam_end_date = #{record.examEndDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.examTime != null">
-        exam_time = #{record.examTime,jdbcType=TIMESTAMP},
+        exam_time = #{record.examTime,jdbcType=INTEGER},
       </if>
       <if test="record.examType != null">
         exam_type = #{record.examType,jdbcType=INTEGER},
@@ -199,7 +209,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       exam_start_date = #{record.examStartDate,jdbcType=TIMESTAMP},
       exam_end_date = #{record.examEndDate,jdbcType=TIMESTAMP},
-      exam_time = #{record.examTime,jdbcType=TIMESTAMP},
+      exam_time = #{record.examTime,jdbcType=INTEGER},
       exam_type = #{record.examType,jdbcType=INTEGER},
       exam_subject_num = #{record.examSubjectNum,jdbcType=INTEGER},
       exam_all_score = #{record.examAllScore,jdbcType=REAL},
@@ -207,5 +217,43 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fengyukeji.resourceslib.bean.ExamSchedule">
+    update res_exam_schedule
+    <set>
+      <if test="examStartDate != null">
+        exam_start_date = #{examStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="examEndDate != null">
+        exam_end_date = #{examEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="examTime != null">
+        exam_time = #{examTime,jdbcType=INTEGER},
+      </if>
+      <if test="examType != null">
+        exam_type = #{examType,jdbcType=INTEGER},
+      </if>
+      <if test="examSubjectNum != null">
+        exam_subject_num = #{examSubjectNum,jdbcType=INTEGER},
+      </if>
+      <if test="examAllScore != null">
+        exam_all_score = #{examAllScore,jdbcType=REAL},
+      </if>
+      <if test="isUse != null">
+        is_use = #{isUse,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fengyukeji.resourceslib.bean.ExamSchedule">
+    update res_exam_schedule
+    set exam_start_date = #{examStartDate,jdbcType=TIMESTAMP},
+      exam_end_date = #{examEndDate,jdbcType=TIMESTAMP},
+      exam_time = #{examTime,jdbcType=INTEGER},
+      exam_type = #{examType,jdbcType=INTEGER},
+      exam_subject_num = #{examSubjectNum,jdbcType=INTEGER},
+      exam_all_score = #{examAllScore,jdbcType=REAL},
+      is_use = #{isUse,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

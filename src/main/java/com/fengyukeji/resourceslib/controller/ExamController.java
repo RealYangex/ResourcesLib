@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fengyukeji.resourceslib.bean.SubjectAnwserBean;
+import com.fengyukeji.resourceslib.bean.SubjectWithAnwserBean;
 import com.fengyukeji.resourceslib.service.ExamService;
 import com.fengyukeji.resourceslib.utils.Msg;
 
@@ -29,11 +31,12 @@ public class ExamController {
 	 * 获取题目答案
 	 * @return
 	 */
-	@RequestMapping("getSubjectAnwser")
+	@ResponseBody
+	@RequestMapping("/getSubjectAnwser")
 	public Msg getSubjectAnwser(HttpServletRequest request){
-		Integer pageIndex = Integer.parseInt(request.getParameter("page"));
-		List<SubjectAnwserBean> subjectAnwserList = examService.getSubjectAnwser(pageIndex);
-		
-		return Msg.success();
+		Integer page = Integer.parseInt(request.getParameter("page"));
+		List<SubjectAnwserBean> subjectList = examService.getSubjectAnwser(page);
+		long subjectCount = examService.getAnwserCount();
+		return Msg.success().add("subjectAnwsers", subjectList).add("subjectCount", subjectCount).add("showNum", ExamService.SHOW_NUM);
 	}
 }

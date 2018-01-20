@@ -10,13 +10,21 @@ public interface ExamScheduleMapper {
 
     int deleteByExample(ExamScheduleExample example);
 
+    int deleteByPrimaryKey(Integer id);
+
     int insert(ExamSchedule record);
 
     int insertSelective(ExamSchedule record);
 
     List<ExamSchedule> selectByExample(ExamScheduleExample example);
 
+    ExamSchedule selectByPrimaryKey(Integer id);
+
     int updateByExampleSelective(@Param("record") ExamSchedule record, @Param("example") ExamScheduleExample example);
 
     int updateByExample(@Param("record") ExamSchedule record, @Param("example") ExamScheduleExample example);
+
+    int updateByPrimaryKeySelective(ExamSchedule record);
+
+    int updateByPrimaryKey(ExamSchedule record);
 }

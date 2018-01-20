@@ -9,7 +9,7 @@ public class ExamSchedule {
 
     private Date examEndDate;
 
-    private Date examTime;
+    private Integer examTime;
 
     private Integer examType;
 
@@ -43,11 +43,11 @@ public class ExamSchedule {
         this.examEndDate = examEndDate;
     }
 
-    public Date getExamTime() {
+    public Integer getExamTime() {
         return examTime;
     }
 
-    public void setExamTime(Date examTime) {
+    public void setExamTime(Integer examTime) {
         this.examTime = examTime;
     }
 

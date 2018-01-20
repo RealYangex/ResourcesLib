@@ -48,13 +48,23 @@
   	}
   	#eaxmTable{
   		margin-top:10px;
+  		font-size:18px;
+  		table-layout:fixed;
   	}
   	#eaxmTable thead{
   		background-color:#CC6600;
   	}
+  	#eaxmTable tbody td{
+  		vertical-align: middle;
+  		height:68px;
+	   	overflow: hidden;
+	   	text-overflow: ellipsis;
+  	}
   	#eaxmTable thead td{
   		color:#fff;
+  		text-align:center;
   	}
+  	    
   	#queryPage{
   		padding:0 20px 0 20px;
   	}
@@ -133,14 +143,13 @@
 						<table class="table table-striped table-hover table-bordered" id="eaxmTable">
 							<thead>
 								<tr>
-									<td style='padding-left:18px;'><input type="checkbox" /></td>
-									<td>序 号</td>
-									<td>试题类型</td>
+									<td style='padding-left:18px;'  width="5%"><input type="checkbox" /></td>
+									<td  width="5%">序号</td>
+									<td width="18%">试题类型</td>
 									<td>题目</td>
 									<td>试题答案</td>
-									<td>正确答案</td>
-									<td>添加时间</td>
-									<td>操 作</td>
+									<td width="10%">正确答案</td>
+									<td width="15%">操 作</td>
 								</tr>
 							</thead>
 							<tbody>
@@ -148,7 +157,7 @@
 							</tbody>
 						</table>
 						<div id="queryPage">
-							<span class="fristSpan">共520条数据  当前第<span>8/16</span>页  跳转到：<input type="number" style="width:52px;"/ ><button class="btn btn-info btn-sm jump"><span class='fa fa-send-o'></span></button> <div class="fr"><button class="btn btn-info btn-sm"><span class='fa  fa-chevron-left'></span> </button><button class="btn btn-info btn-sm next"><span class='fa  fa-chevron-right'></span> </button></div>
+							
 						</div>
 					</div>
 				</div>
@@ -165,7 +174,111 @@
 	
 <script type="text/javascript">
 	
+$(function(){
+	var current_page = 1;
+	var maxPage ;
+	getSubject(1)
+	function getSubject(page){
+		var pageIndex = page-1;
+		var load = layer.msg("正在加载数据,请稍后!",{icon:16,shade:0.05,time:58*1000});
+		$.ajax({
+			url:'${APP_PATH}/Exam/getSubjectAnwser',
+			type:'post',
+			data:'page='+pageIndex,
+			success:function(data){
+				layer.close(load);
+				if(data.code==200){
+					var subjectAnwser = data.extend.subjectAnwsers;
+					var subjectCount = data.extend.subjectCount;
+					var showNum = data.extend.showNum;
+					console.log(data);
+					
+					//清空原有数据
+					$("#eaxmTable tbody").empty();
+					
+					//填充表格数据
+					$.each(subjectAnwser,function(index,item){
+						var index = index+1+showNum*(current_page-1); 
+						var anwsers = item.anwser;
+						var anwser = "";
+						var anwserTd = $("<div style='height:68px;width:100%;overflow: hidden;text-overflow: ellipsis;'><div>");
+						$.each(anwsers,function(index,an){
+							anwserTd.append("<span class='fa fa-star-o'></span>"+" "+an+"<br>")
+						})
+						var anTd = $("<td></td>").append(anwserTd);
+						var anwser = item.anwser;
+						var tr = $("<tr></tr>").attr("id",item.id);
+						var checktd = $('<td style="padding-left:18px;"><input type="checkbox" /></td>');
+						var idTd = $("<td>"+index +"</td>");
+						var typeTd = $("<td>"+item.subjectType+"</td>");
+						var titleTd = $("<td></td>").append("<div style='max-height:68px;width:100%;overflow: hidden;text-overflow: ellipsis;'>"+item.title+"</div>");
+						var trueTd = $("<td></td>").append("<div style='max-height:68px;width:100%;overflow: hidden;text-overflow: ellipsis;'><span class='fa fa-star'></span>"+" "+item.isTrue+"</div>");
+						var btnTd = $("<td><button class='btn btn-info btn-xs AnwserEdit'><span class='fa fa-pencil'></span> 编辑</button>&nbsp;&nbsp;<button class='btn btn-danger btn-xs AnwserDeleter'><span class='fa fa-trash'></span> 删除</button></td>");
+						tr.append(checktd).
+						append(idTd).
+						append(typeTd).
+						append(titleTd).
+						append(anTd).
+						append(trueTd).
+						append(btnTd).
+						appendTo("#eaxmTable tbody");
+					})
+					
+					maxPage = Math.ceil(subjectCount/showNum);
+					var pageNow = current_page;
+					//设置分页数据
+					var pageHtml = '<span class="fristSpan">共'+subjectCount+'条数据  当前第<span>'+pageNow+'/'+maxPage+'</span>页  跳转到：<input type="number" style="width:52px;"/ id="jumpPage"><button class="btn btn-info btn-sm jump"><span class="fa fa-send-o"></span></button>';
+					var button ="";
+					var nextPage = parseInt(pageNow)+parseInt(1);
+					var prePage = parseInt(pageNow)-parseInt(1);
+					if(pageNow==maxPage){
+						button = '<div class="fr"><button class="btn btn-info btn-sm pre" pageto='+prePage+'><span class="fa  fa-chevron-left"></span> </button><button class="btn btn-info btn-sm next" style="cursor:not-allowed;" disabled><span class="fa  fa-chevron-right"></span> </button></div>';
+					}else if(pageNow==1){
+						button = '<div class="fr"><button class="btn btn-info btn-sm pre" style="cursor:not-allowed;disabled" disabled><span class="fa  fa-chevron-left"></span> </button><button class="btn btn-info btn-sm next"  pageto='+nextPage+'><span class="fa  fa-chevron-right"></span> </button></div>';
+					}else{
+						button = '<div class="fr"><button class="btn btn-info btn-sm pre"  pageto='+prePage+' ><span class="fa  fa-chevron-left"></span> </button><button class="btn btn-info btn-sm next"  pageto='+nextPage+'><span class="fa  fa-chevron-right"></span> </button></div>';
+					}
+					pageHtml+=button;
+					$("#queryPage").empty();
+					$("#queryPage").append(pageHtml);
+				}else{
+					
+				}
+			}
+			
+		})
+	}
 	
+	//跳转按钮点击事件
+	$(document).on("click",".jump",function(){
+		var pageIndex =	$("#jumpPage").val();
+		if(pageIndex=="") return;
+		if(pageIndex>maxPage){
+			pageIndex = maxPage;
+		}else if(pageIndex<1){
+			pageIndex = 1;
+		}
+		
+		//重新设置当前页
+		current_page = pageIndex;
+		getSubject(pageIndex);
+	});
+	
+	//上一页按钮点击事件
+	$(document).on("click",".pre",function(){
+		var pageIndex = $(this).attr("pageto");
+		current_page = pageIndex;
+		getSubject(pageIndex);
+	})
+	
+	//下一页按钮点击事件
+	$(document).on("click",".next",function(){
+		var pageIndex = $(this).attr("pageto");
+		current_page = pageIndex;
+		getSubject(pageIndex);
+	})
+})
+
 </script>
 </body>
 </html>
