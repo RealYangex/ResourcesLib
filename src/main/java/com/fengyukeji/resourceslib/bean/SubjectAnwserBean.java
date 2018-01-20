@@ -1,7 +1,5 @@
 package com.fengyukeji.resourceslib.bean;
-
 import java.util.List;
-
 /**
  * 题目答案实体 
  * @author xt

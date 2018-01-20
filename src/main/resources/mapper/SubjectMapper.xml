@@ -110,7 +110,6 @@
      SELECT s.id,s.`subject_content`,b.`type_name` AS subject_type,s.`subject_does`,s.`subject_successes`,s.`subject_error`,a.`id` AS anwser_id
 	,a.`anwser_content`,a.`anwser_does`,a.`is_true` FROM (SELECT * FROM  res_subject WHERE subject_type = #{1} LIMIT #{0},#{2}) AS  s LEFT JOIN res_anwser a ON  s.`id` = a.`subject_id` JOIN res_subject_type b ON s.`subject_type`=b.`id` 
   </select>
-  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
