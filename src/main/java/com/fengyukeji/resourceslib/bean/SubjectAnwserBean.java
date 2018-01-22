@@ -1,4 +1,5 @@
 package com.fengyukeji.resourceslib.bean;
+import java.util.List;
 /**
  * 题目答案实体 
  * @author xt
@@ -9,18 +10,18 @@ public class SubjectAnwserBean {
 	
 	private Integer id;
 	private String title;
-	private Integer subjectType;
+	private String subjectType;
 	private Integer does;
 	private Integer successDoes;
 	private Integer errorDoes;
-	private String anwser;
-	private Integer isTrue;
+	private List<String> anwser;
+	private String isTrue;
 	public Integer getId() {
 		return id;
 	}
-	public SubjectAnwserBean(Integer id, String title, Integer subjectType,
+	public SubjectAnwserBean(Integer id, String title, String subjectType,
 			Integer does, Integer successDoes, Integer errorDoes,
-			String anwser, Integer isTrue) {
+			List<String> anwser, String isTrue) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -40,10 +41,10 @@ public class SubjectAnwserBean {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public Integer getSubjectType() {
+	public String getSubjectType() {
 		return subjectType;
 	}
-	public void setSubjectType(Integer subjectType) {
+	public void setSubjectType(String subjectType) {
 		this.subjectType = subjectType;
 	}
 	public Integer getDoes() {
@@ -64,16 +65,16 @@ public class SubjectAnwserBean {
 	public void setErrorDoes(Integer errorDoes) {
 		this.errorDoes = errorDoes;
 	}
-	public String getAnwser() {
+	public List<String> getAnwser() {
 		return anwser;
 	}
-	public void setAnwser(String anwser) {
+	public void setAnwser(List<String> anwser) {
 		this.anwser = anwser;
 	}
-	public Integer getIsTrue() {
+	public String getIsTrue() {
 		return isTrue;
 	}
-	public void setIsTrue(Integer isTrue) {
+	public void setIsTrue(String isTrue) {
 		this.isTrue = isTrue;
 	}
 	public void setId(Integer id) {

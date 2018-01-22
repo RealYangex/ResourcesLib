@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.fengyukeji.resourceslib.bean.Subject;
 import com.fengyukeji.resourceslib.bean.SubjectAnwserBean;
+import com.fengyukeji.resourceslib.bean.SubjectWithAnwserBean;
 import com.fengyukeji.resourceslib.service.ExamService;
 import com.fengyukeji.resourceslib.service.ResourceService;
 
@@ -30,12 +31,24 @@ public class DaoTest {
 	@Test
 	public void testQuestionAnwser(){
 		
-		List<Subject> subjectAnwserList = examService.getSubjectWithAnwser();
-		for(Subject SubjectAnwser:subjectAnwserList){
+		List<SubjectWithAnwserBean> subjectAnwserList = examService.getSubjectWithAnwserByType(0,3);
+		for(SubjectWithAnwserBean SubjectAnwser:subjectAnwserList){
 			System.out.println(SubjectAnwser);
 		}
 		
 	}
+	
+	@Test
+	public void testQuestion(){
+		
+		List<SubjectAnwserBean> subjectAnwserList = examService.getSubjectAnwser(0);
+		for(SubjectAnwserBean SubjectAnwser:subjectAnwserList){
+			System.out.println(SubjectAnwser);
+		}
+		
+	}
+	
+
 	@Test
 	public void  rtr() {
 		

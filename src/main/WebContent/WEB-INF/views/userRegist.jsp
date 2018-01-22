@@ -60,7 +60,7 @@
        </div>
     </div>
     <!--登录弹出框B -->
-    <div tabindex="-1" class="sui-modal hide fade" style="width: 351px;border: 1px" id="loginModal" role="dialog" data-hasfoot="false"  data-backdrop="static">
+    <div tabindex="-1" class="sui-modal hide fade" style="width: 375px;border: 1px" id="loginModal" role="dialog" data-hasfoot="false"  data-backdrop="static">
     <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header" style="border-bottom:0">
@@ -126,7 +126,8 @@ $("#formLogin").validate({
 						layer.confirm('登录成功！', {
 							  btn: ['确定'] 					  
 							}, function(index, layero){
-								window.open("${APP_PATH}/View/index","-self");
+								layer.close(index);
+								 window.open("${APP_PATH}/View/index","_parent");
 							});	
 				   }else{
 					   layer.alert("您的账号还未被授权！");
@@ -244,7 +245,7 @@ $(document).ready(function(){
 
  //返回主页B
  $(document).on("click",".top-return",function(){
-	 window.open("${APP_PATH}/View/index","-self");
+	 window.open("${APP_PATH}/View/index","_self");
  })
  //返回主页E
 

@@ -9,20 +9,10 @@
     <result column="subject_successes" jdbcType="INTEGER" property="subjectSuccesses" />
     <result column="subject_error" jdbcType="INTEGER" property="subjectError" />
   </resultMap>
-  <resultMap id="SubjectAnwserMap" type="com.fengyukeji.resourceslib.bean.SubjectAnwserBean">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="title_type" jdbcType="INTEGER" property="subjectType" />
-    <result column="does" jdbcType="INTEGER" property="does" />
-    <result column="success_does" jdbcType="INTEGER" property="successDoes" />
-    <result column="error_does" jdbcType="INTEGER" property="errorDoes" />
-    <result column="anwser" jdbcType="VARCHAR" property="anwser" />
-    <result column="is_true" jdbcType="INTEGER" property="isTrue" />
-  </resultMap>
-  <resultMap id="ResultWithAnwserMap" type="com.fengyukeji.resourceslib.bean.Subject">
+  <resultMap id="ResultWithAnwserMap" type="com.fengyukeji.resourceslib.bean.SubjectWithAnwserBean">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="subject_content" jdbcType="VARCHAR" property="subjectContent" />
-    <result column="subject_type" jdbcType="INTEGER" property="subjectType" />
+    <result column="subject_type" jdbcType="VARCHAR" property="subjectType" />
     <result column="subject_does" jdbcType="INTEGER" property="subjectDoes" />
     <result column="subject_successes" jdbcType="INTEGER" property="subjectSuccesses" />
     <result column="subject_error" jdbcType="INTEGER" property="subjectError" />
@@ -109,14 +99,16 @@
       order by ${orderByClause}
     </if>
   </select>
-  <!-- 自定义的题目答案获取方法 -->
-  <select id="selectSubjectAnwser" parameterType="java.lang.Integer" resultMap="SubjectAnwserMap">
-     SELECT  s.id AS id,s.subject_content  AS title,s.subject_type AS title_type ,s.subject_does AS does,s.subject_successes AS success_does,s.subject_error AS error_does,a.anwser_content AS anwser,a.is_true  AS is_true FROM  (SELECT id,subject_content,subject_type,subject_does,subject_successes,subject_error  FROM res_subject LIMIT 0,12)AS s LEFT JOIN res_anwser a ON s.id = a.subject_id 
- 
-  </select>
   <!-- 自定义sql 获取携带答案的函数 -->
   <select id="selectSubjectWithAnwser" parameterType="java.lang.Integer" resultMap="ResultWithAnwserMap">
-    SELECT  s.id,s.`subject_content`,s.`subject_type`,s.`subject_does`,s.`subject_successes`,s.`subject_error`,a.`id` AS anwser_id,a.`anwser_content`,a.`anwser_does`,a.`is_true` FROM res_subject s LEFT JOIN res_anwser a ON  s.`id` = a.`subject_id`
+    SELECT s.id,s.`subject_content`,b.`type_name` AS subject_type,s.`subject_does`,s.`subject_successes`,s.`subject_error`,a.`id` AS anwser_id
+	,a.`anwser_content`,a.`anwser_does`,a.`is_true` FROM (SELECT * FROM  res_subject LIMIT #{0},#{1}) AS  s LEFT JOIN res_anwser a ON  s.`id` = a.`subject_id` JOIN res_subject_type b ON s.`subject_type`=b.`id`
+  </select>
+  
+  <!-- 自定义sql 根据类型 获取携带答案  -->
+  <select id="selectSubjectWithAnwserByType" parameterType="java.lang.Integer" resultMap="ResultWithAnwserMap">
+     SELECT s.id,s.`subject_content`,b.`type_name` AS subject_type,s.`subject_does`,s.`subject_successes`,s.`subject_error`,a.`id` AS anwser_id
+	,a.`anwser_content`,a.`anwser_does`,a.`is_true` FROM (SELECT * FROM  res_subject WHERE subject_type = #{1} LIMIT #{0},#{2}) AS  s LEFT JOIN res_anwser a ON  s.`id` = a.`subject_id` JOIN res_subject_type b ON s.`subject_type`=b.`id` 
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

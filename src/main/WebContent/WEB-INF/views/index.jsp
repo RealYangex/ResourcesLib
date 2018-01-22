@@ -28,10 +28,7 @@
     <script type="text/javascript" src="${APP_PATH}/static/js/sui.min.js"></script>  
     <script type="text/javascript" src="${APP_PATH}/static/js/index.js"></script>
     <script type="text/javascript" src="${APP_PATH}/static/js/layer.js"></script>
-    
-    <style type="text/css">
-
-    </style>
+  
 </head>
 <body>
 
@@ -85,7 +82,7 @@
 				    
 				    <!-- 表格B -->
 				    <div class="out-table-container" style="height:362px;overflow:hidden;width:100.2%; border-right: 1px solid #EEEEEE;">
-				    <div class="table-container" style="height:362px;width:102%; overflow-y:auto;">
+				    <div class="table-container" style="height:362px;width:101%; overflow-y:auto;">
 				    <table class="layui-table table" lay-skin="line" id="fileTable" currentParentId="1" style="margin-top: 0px;margin-bottom: 0px;">
                        <thead>
                            <tr>
@@ -175,7 +172,7 @@
     
      
     <!--登录弹出框B -->
-    <div tabindex="-1" class="sui-modal hide fade" style="width: 351px;border: 1px" id="loginModal" role="dialog" data-hasfoot="false"  data-backdrop="static">
+    <div tabindex="-1" class="sui-modal hide fade" style="width: 375px;border: 1px" id="loginModal" role="dialog" data-hasfoot="false"  data-backdrop="static">
     <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header" style="border-bottom:0">
@@ -216,13 +213,27 @@
 
 //考试跳转B
 $(document).on('click','.top-Answer-que',function(){
-	var userType='${UserType}';
-	if(userType==1){
-		window.open('${APP_PATH}/View/examination','_self');
-	}else{
-		layer.alert("请先登录！");
-	}
-	
+	var load = layer.msg("请稍后!",{icon:16,shade:0.05,time:38*1000});
+	$.ajax({
+			url:'${APP_PATH}/Exam/getExamSchOnline',       //传到控制器controller
+			type:'post',
+			success:function(data){
+				layer.close(load);
+				var schId=data.extend.schId;
+			
+				if(schId=="0"){			
+					layer.alert("当前没有考试！");					
+				}
+				else{
+					var userType='${UserType}';
+					if(userType==1){
+						window.open('${APP_PATH}/View/examination?schId='+schId,'_self');
+					}else{
+						layer.alert("请先登录！");
+					}
+				}
+			}
+		});
 });
 //考试跳转E
 
