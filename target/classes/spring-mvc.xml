@@ -48,7 +48,7 @@
 	        <!-- 权限认证方法不需要拦截 -->
 	        <mvc:exclude-mapping path="/**/*confirmUser*"/>
 	        
-	        <bean class="com.fengyukeji.resourceslib.intercepter.LoginIntercepter"></bean>
+	        <bean class="com.fengyukeji.resourceslib.intercepter.AdminLoginIntercepter"></bean>
 		</mvc:interceptor>
 		
 		<!-- 填写权限 拦截器 -->

@@ -99,10 +99,17 @@
       order by ${orderByClause}
     </if>
   </select>
+  
   <!-- 自定义sql 获取携带答案的函数 -->
   <select id="selectSubjectWithAnwser" parameterType="java.lang.Integer" resultMap="ResultWithAnwserMap">
     SELECT s.id,s.`subject_content`,b.`type_name` AS subject_type,s.`subject_does`,s.`subject_successes`,s.`subject_error`,a.`id` AS anwser_id
 	,a.`anwser_content`,a.`anwser_does`,a.`is_true` FROM (SELECT * FROM  res_subject LIMIT #{0},#{1}) AS  s LEFT JOIN res_anwser a ON  s.`id` = a.`subject_id` JOIN res_subject_type b ON s.`subject_type`=b.`id`
+  </select>
+  
+  <!-- 自定义sql 根据查询关键字获取携带答案的函数 -->
+  <select id="selectSubjectWithAnwserByInseachKey"  resultMap="ResultWithAnwserMap">
+   SELECT s.id,s.`subject_content`,b.`type_name` AS subject_type,s.`subject_does`,s.`subject_successes`,s.`subject_error`,a.`id` AS anwser_id
+	,a.`anwser_content`,a.`anwser_does`,a.`is_true` FROM (SELECT * FROM  res_subject WHERE subject_content LIKE #{0} LIMIT 0,#{1}) AS  s LEFT JOIN res_anwser a ON  s.`id` = a.`subject_id` JOIN res_subject_type b ON s.`subject_type`=b.`id`
   </select>
   
   <!-- 自定义sql 根据类型 获取携带答案  -->
@@ -134,7 +141,7 @@
       #{subjectDoes,jdbcType=INTEGER}, #{subjectSuccesses,jdbcType=INTEGER}, #{subjectError,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.fengyukeji.resourceslib.bean.Subject">
+  <insert id="insertSelective" parameterType="com.fengyukeji.resourceslib.bean.Subject" useGeneratedKeys="true" keyProperty="id">
     insert into res_subject
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

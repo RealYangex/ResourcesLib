@@ -2,6 +2,7 @@ package com.fengyukeji.resourceslib.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import com.fengyukeji.resourceslib.bean.ExamExample;
 import com.fengyukeji.resourceslib.bean.ExamSchedule;
 import com.fengyukeji.resourceslib.bean.ExamresExam;
 import com.fengyukeji.resourceslib.bean.ExamresExamExample;
+import com.fengyukeji.resourceslib.bean.Anwser;
 import com.fengyukeji.resourceslib.bean.Subject;
 import com.fengyukeji.resourceslib.bean.SubjectAnwserBean;
 import com.fengyukeji.resourceslib.bean.SubjectWithAnwserBean;
@@ -49,7 +51,7 @@ public class ExamService {
 		List<SubjectAnwserBean>  saList = new ArrayList();
 		List<Anwser>  aList = new ArrayList();
 		
-		List<SubjectWithAnwserBean> subWithAnwserList = subjectMapper.selectSubjectWithAnwser(pageIndex,SHOW_NUM);
+		List<SubjectWithAnwserBean> subWithAnwserList = subjectMapper.selectSubjectWithAnwser(pageIndex*6,SHOW_NUM);
 		for(SubjectWithAnwserBean sab :subWithAnwserList){
 			aList = sab.getAnwserList();
 			String trueAnwser = "";
@@ -93,7 +95,7 @@ public class ExamService {
 	public long getAnwserCount(){
 		return subjectMapper.countByExample(null);
 	}
-
+	
 	/**
 	 * 初始化Exam
 	 * @return
@@ -120,7 +122,7 @@ public class ExamService {
 		list.add(schedule.getExamAllScore());
 		return list;//返回考试题目数量和考生考试记录ID
 	}
-
+	
 	/**
 	 * 获取考试题目
 	 * @return
@@ -147,7 +149,34 @@ public class ExamService {
 		}
 		return saList;
 	}
-
+	
+	
+	/**
+	 * 根据关键词查询 题目和答案
+	 * @param insearchKey
+	 * @return
+	 */
+	public List<SubjectAnwserBean> getSubjectAnwserBys(String insearchKey) {
+		List<SubjectAnwserBean>  saList = new ArrayList();
+		List<Anwser>  aList = new ArrayList();
+		List<SubjectWithAnwserBean> subWithAnwserList = subjectMapper.selectSubjectWithAnwserByInseachKey("%"+insearchKey+"%", SHOW_NUM);
+		for(SubjectWithAnwserBean sab :subWithAnwserList){
+			aList = sab.getAnwserList();
+			String trueAnwser = "";
+			String anwser = "";
+			List<String>  strList = new ArrayList();
+			for(Anwser a:aList){
+				
+				if(a.getIsTrue()==true){
+					trueAnwser = a.getAnwserContent();
+				}
+				//anwser+=a.getAnwserContent()+";";
+				strList.add(a.getAnwserContent());
+			}
+			saList.add(new SubjectAnwserBean(sab.getId(), sab.getSubjectContent(), sab.getSubjectType(), sab.getSubjectDoes(), sab.getSubjectSuccesses(), sab.getSubjectError(), strList, trueAnwser));
+		}
+		return saList;
+	}
 	/**
 	 * 记录题目ID
 	 * @return 
@@ -187,7 +216,7 @@ public class ExamService {
 	    
 	    for(int i=0;i<list.size();i++) {
 	    	Integer T[]=list.get(i);
-	    	Subject  subject=subjectMapper.selectByPrimaryKey(T[0]);
+	    	Subject subject=subjectMapper.selectByPrimaryKey(T[0]);
 	    	if((T[1]==1)&&(T[2]==1)) {
 	    		trueNum++;
 	    		 subject.setId(T[0]);

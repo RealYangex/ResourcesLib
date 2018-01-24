@@ -65,7 +65,13 @@
   		table-layout:fixed;
   	}
   	#eaxmTable thead{
-  		background-color:#CC6600;
+  		background-color:#1E9FFF;
+  	}
+  	#eaxmTable tbody td{
+  		vertical-align: middle;
+  		height:68px;
+	   	overflow: hidden;
+	   	text-overflow: ellipsis;
   	}
   	#eaxmTable tbody td{
   		vertical-align: middle;
@@ -80,6 +86,16 @@
   	    
   	#queryPage{
   		padding:0 20px 0 20px;
+  	}
+  	#btnAdd{
+  		margin-right:20px;
+  	}
+  	#btnAddBatch{
+  		margin-right:8px;
+  		padding:6px 6px;
+  	}
+  	#subjectSearch{
+  		cursor:pointer;
   	}
   </style>
 </head>
@@ -126,43 +142,26 @@
 					<div id="shadow"></div>
 					<div id="eaxmShow">
 						<div style="width:100%;height:36px;padding:10px 0 0 20px;">
-							<label style="display:inline">按试题查看:</label>
-							<div class="dropdown" style="display:inline">
-								<button type="button" class="btn dropdown-toggle btn-sm" id="dropdownMenu1" 
-										data-toggle="dropdown">
-									所有消息
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-									<li role="presentation">
-										<a role="menuitem" tabindex="-1" href="#">所有消息</a>
-									</li>
-									<li role="presentation">
-										<a role="menuitem" tabindex="-1" href="#">资源访问</a>
-									</li>
-									<li role="presentation">
-										<a role="menuitem" tabindex="-1" href="#">资源下载</a>
-									</li>
-									<li role="presentation">
-										<a role="menuitem" tabindex="-1" href="#">请求授权</a>
-									</li>
-									<li role="presentation">
-										<a role="menuitem" tabindex="-1" href="#">密码修改</a>
-									</li>
-								</ul>
+							<div class="form-inline">
+							  <div class="form-group">
+							    <div class="input-group">
+							      <input type="text" class="form-control" id="searchInput" style="width:200px;height:30px;" placeholder="请输题目名查询"/>
+							      <div  id="subjectSearch" class="input-group-addon"><span class="fa  fa-search" ></span></div>
+							    </div>
+							  </div>
+								<button class='btn btn-info  fr' id=btnAdd ><span class="fa  fa-plus-circle"> 添 加</button>
+								<button class='btn btn-warning  fr' id="btnAddBatch" ><span class="fa  fa-plus-circle"> 批量添加</button>
 							</div>
-							<button class='btn btn-info  fr' id="btnAdd" ><span class="fa  fa-plus-circle" > 按分数排名</button>
 						</div>
 						<table class="table table-striped table-hover table-bordered" id="eaxmTable">
 							<thead>
 								<tr>
-									<td style='padding-left:18px;'  width="5%"><input type="checkbox" /></td>
-									<td  width="5%">序号</td>
-									<td width="18%">试题类型</td>
+									<td  style='padding-left:18px;'  width="9%">序号</td>
+									<td width="12%">试题类型</td>
 									<td>题目</td>
 									<td>试题答案</td>
-									<td width="10%">正确答案</td>
-									<td width="15%">操 作</td>
+									<td width="15%">正确答案</td>
+									<td width="8%">操 作</td>
 								</tr>
 							</thead>
 							<tbody>
@@ -225,22 +224,21 @@ $(function(){
 						var anTd = $("<td></td>").append(anwserTd);
 						var anwser = item.anwser;
 						var tr = $("<tr></tr>").attr("id",item.id);
-						var checktd = $('<td style="padding-left:18px;"><input type="checkbox" /></td>');
-						var idTd = $("<td>"+index +"</td>");
-						var typeTd = $("<td>"+item.subjectType+"</td>");
-						var titleTd = $("<td></td>").append("<div style='max-height:68px;width:100%;overflow: hidden;text-overflow: ellipsis;'>"+item.title+"</div>");
-						var trueTd = $("<td></td>").append("<div style='max-height:68px;width:100%;overflow: hidden;text-overflow: ellipsis;'><span class='fa fa-star'></span>"+" "+item.isTrue+"</div>");
-						var btnTd = $("<td><button class='btn btn-info btn-xs AnwserEdit'><span class='fa fa-pencil'></span> 编辑</button>&nbsp;&nbsp;<button class='btn btn-danger btn-xs AnwserDeleter'><span class='fa fa-trash'></span> 删除</button></td>");
-						tr.append(checktd).
-						append(idTd).
+						var idTd = $("<td style='padding-left:18px;' >"+index +"</td>");
+						var typeTd = $("<td >"+item.subjectType+"</td>");
+						var titleTd = $("<td ></td>").append("<div style='max-height:68px;width:100%;overflow: hidden;text-overflow: ellipsis;'>"+item.title+"</div>");
+						var trueTd = $("<td ></td>").append("<div style='max-height:68px;width:100%;overflow: hidden;text-overflow: ellipsis;'><span class='fa fa-star'></span>"+" "+item.isTrue+"</div>");
+						//var btnTd = $("<td><button class='btn btn-info btn-xs AnwserEdit'><span class='fa fa-pencil'></span> 编辑</button>&nbsp;&nbsp;<button class='btn btn-danger btn-xs AnwserDeleter'><span class='fa fa-trash'></span> 删除</button></td>");
+						var btnTd = $("<td><button class='btn btn-danger btn-xs AnwserDeleter'><span class='fa fa-trash'></span> 删除</button></td>");
+						tr.append(idTd).
 						append(typeTd).
 						append(titleTd).
 						append(anTd).
 						append(trueTd).
 						append(btnTd).
 						appendTo("#eaxmTable tbody");
-					})
-					
+					});
+					$("[data-toggle='popover']").popover();
 					maxPage = Math.ceil(subjectCount/showNum);
 					var pageNow = current_page;
 					//设置分页数据
@@ -309,9 +307,8 @@ $(function(){
 				layer.close(load);
 				
 				$("#examScheduleTable tbody").empty();
-				
+				var i=0;
 				var schList = data.extend.schList;
-				var i=schList.length;
 				$.each(schList,function(index,item){
 	                var Stime=getNowFormatDate(item.examStartDate);
 	                var Etime=getNowFormatDate(item.examEndDate);
@@ -335,7 +332,7 @@ $(function(){
 	                }
 	                
 					var tr = $("<tr ></tr>");
-					tr.append($("<td style='padding-left:18px;'></td>").append(i--));
+					tr.append($("<td style='padding-left:18px;'></td>").append(++i));
 					tr.append($("<td></td>").append(Stime));
 					tr.append($("<td></td>").append(Etime));
 					tr.append($("<td></td>").append(item.examTime+"分钟"));
@@ -344,7 +341,7 @@ $(function(){
 					tr.append($("<td></td>").append(item.examAllScore+"分")); 
 					tr.append($("<td></td>").append("<button class='btn "+cls+" "+dsab+"  btn-xs isUse'><span class='fa fa-pencil'></span>&nbsp;"+isUse+"</button>&nbsp;&nbsp;<button class='btn btn-danger btn-xs sxhDelete'><span class='fa fa-trash'></span>&nbsp;删 除</button>"));
 					tr.append($("<td></td>").append(item.id).css("display","none"));				
-					tr.prependTo($("#examScheduleTable tbody"));
+					tr.appendTo($("#examScheduleTable tbody"));
 				});
 			},error:function(){
 				
@@ -445,6 +442,280 @@ $(function(){
 		current_page = pageIndex;
 		getSubject(pageIndex);
 	})
+	
+	//删除按钮点击事件
+	$(document).on("click",".AnwserDeleter",function(){
+		
+		var id = $(this).parents("tr").attr('id');
+		var text = $(this).parents("tr").find("td:eq(2)").text();
+		layer.confirm("是否删除【"+text+"】题目及其答案?",{btn:["确定","取消"]},function(){
+		var load = layer.msg("正在删除,请稍后!",{icon:16,shade:0.05,time:38*1000});
+			$.ajax({
+				url:'${APP_PATH}/Subject/deleteSubjectAnwser',
+				data:'id='+id,
+				type:'post',
+				success:function(data){
+					layer.close(load);
+					if(data.code==200){
+						getSubject(current_page);
+					}
+				},error:function(data){
+					
+				}
+			})
+		},function(){
+			
+		})
+	});
+	
+	//添加按钮点击事件
+	var addOpen;
+	$(document).on("click","#btnAdd",function(){
+		 addOpen = layer.open({
+			 type: 1 
+			 ,area: ['680px', '460px']
+	         ,title:'添加题目'
+			 ,shade: 0.2
+			 ,anim: 5 
+			 ,content:'<div style="margin:20px 10px 20px 30px;overflow-x:hidden;"><form class="form-horizontal" role="form">'+
+				'<div class="form-group">'+
+			    '<label for="Name" class="col-sm-2 control-label"  >题目内容</label>'+
+			   	' <div class="col-sm-10">'+
+			      '<input style="width: 80%" type="text" value="" class="form-control Name"  id="Addtitle" placeholder="请输入题目" >'+
+			    '</div>'+
+			  '</div>'+
+			  '<div class="form-group">'+
+			    '<label for="Name" class="col-sm-2 control-label " >选项一</label>'+
+			   	' <div class="col-sm-10">'+
+			      '<input style="width: 70%" type="text" value=""  class="form-control Name item"  id="Name" placeholder="请输入选项一" >'+
+			    '</div>'+
+			  '</div>'+
+			  '<div class="form-group">'+
+			    '<label for="Name" class="col-sm-2 control-label " >选项二</label>'+
+			   	' <div class="col-sm-10">'+
+			      '<input style="width: 70%" type="text" value="" class="form-control Name item"  id="Name" placeholder="请输入选项二" >'+
+			    '</div>'+
+			  '</div>'+
+			  '<div class="form-group">'+
+			    '<label for="Name" class="col-sm-2 control-label " >选项三</label>'+
+			   	' <div class="col-sm-10">'+
+			      '<input style="width: 70%" type="text" value="" class="form-control Name item"  id="Name" placeholder="请输入选项三" >'+
+			    '</div>'+
+			  '</div>'+
+			  '<div class="form-group">'+
+			    '<label for="Name" class="col-sm-2 control-label " >选项四</label>'+
+			   	' <div class="col-sm-10">'+
+			      '<input style="width: 70%" type="text" value="" class="form-control Name item"  id="Name" placeholder="请输入选项四" >'+
+			    '</div>'+
+			  '</div>'+
+			  '<div class="form-group">'+
+			    '<label for="Name" class="col-sm-2 control-label "  >正确答案</label>'+
+			   	' <div class="col-sm-10">'+
+			      '<select  class="form-control Name" style="width:60%" id="trueAnwser">'+
+			      		'<option>请选择</option>'+
+			      '</select>'+
+			     ' <span  class="help-block fr"></span>'+
+			    '</div>'+
+			  '</div>'+
+		   '</form><button class="btn btn-default btn-sm fr" style="margin-top:10px;" id="addCancel">取 消</button><button class="btn btn-info btn-sm fr" style="margin-right:10px;margin-top:10px;" id="addOk">确 定</button></div>'
+		});
+		
+		//取消按钮点击事件
+		$(document).on("click","#addCancel",function(){
+			layer.close(addOpen);
+		});
+		
+		//确定按钮点击事件
+		$(document).on("click","#addOk",function(){
+			var title = $("#Addtitle").val();
+			var item1 = $(".item:eq(0)").val();
+			var item2 = $(".item:eq(1)").val();
+			var item3 = $(".item:eq(2)").val();
+			var item4 = $(".item:eq(3)").val();
+			var trueAnwser = $("#trueAnwser").val();
+			if(title==""){
+				layer.alert("请填写题目内容");
+				return;
+			}
+			if(trueAnwser=="请选择"){
+				layer.alert("请选择正确答案");
+				return;
+			}
+			if(item1==""||item2==""){
+				layer.alert("每个必须填写第一个和第二个选项哦");
+				return;
+			}
+			
+			//执行入库
+			var load = layer.msg("正在添加,请稍后!",{icon:16,shade:0.05,time:38*1000});
+			$.ajax({
+				url:'${APP_PATH}/Subject/addSubjectAnwser',
+				data:'title='+title+"&item1="+item1+"&item2="+item2+"&item3="+item3+"&item4="+item4+"&trueAnwser="+trueAnwser,
+				type:'post',
+				success:function(data){
+					layer.close(load);
+					if(data.code==200){
+						layer.alert("添加完成,您可以在最后一页进行查看");
+						layer.close(addOpen);
+						
+					}
+				},error:function(data){
+					
+				}
+			})
+			
+		})
+		
+		//选项改变事件
+		$(document).on("change",".item",function(){
+			var items = $(".item");
+			var options = "<option>请选择</option>";
+			$.each(items,function(index,item){
+				var it = $(item).val();
+				if(it!=""){
+					options+='<option>'+it+'</option>';
+				}
+			})
+			$("#trueAnwser").empty();
+			$("#trueAnwser").append(options);
+			
+		})
+	})
+	//btnAdd end
+	
+	var upFileLayer;
+	//批量添加按钮点击事件
+	$(document).on("click","#btnAddBatch",function(){
+		layer.confirm('是否已有数据模板？如第一次使用请先下载', {icon:3,
+			  btn: ['有了直接上传','没有现在下载'] //按钮
+			}, function(index){
+				layer.close(index);
+				upFileLayer = layer.open({
+					  type: 1,
+					  area: ['420px', '240px'], //宽高
+					  content: " <div style='padding:20px;'><form id='upFile'><input type='file' name='file'/></form></br><button class='btn  btn-sm btn-primary  btnSubmit  ' ><span class='glyphicon glyphicon-open'></sapn>上传</button> &nbsp;&nbsp;&nbsp;<br><br><br><button class='btn  btn-sm btn-default  layui-layer-close layui-layer-close1' style='margin-left:260px'>取 消</button></div> "
+					});
+				
+			}, function(){
+				layer.confirm("下载填写完成后，再次点击添加数据上传即可,注：不可更改模板",{icon:0,btn:['好的']},function(index){
+					layer.close(index);
+					window.open("${APP_PATH}/View/downloadEmptyExcel")
+				})
+			});
+	})
+	//批量添加按钮点击事件 end
+//上传按钮点击事件
+$(document).on('click',".btnSubmit",function(){
+	//实现数据上传
+	if($("input[name='file']").val()==""){
+		layer.alert("没有选择文件");
+		return;
+	}else{
+		var load = layer.msg("正在上传,请稍后!",{icon:16,shade:0.06,time:38*1000});					//提示
+		layer.close(upFileLayer);
+		$.ajax({
+			url:'${APP_PATH}/Subject/uploadFile',
+			data:new FormData($("#upFile")[0]),
+			async:true,
+			contentType:false,//必须有
+            processData:false,//必须有 
+			type:'post',
+			success:function(data){
+				layer.close(load);
+				if(data.code==200){
+					layer.alert("添加完成,您可以在最后一页进行查看");
+					current_page = maxPage;
+					getSubject(maxPage);
+				}else if(data.code==100){
+					layer.alert("上传文件格式不符合");
+					}
+				},
+				error:function(data){
+					layer.lalert("上传出错 可能文件过大")
+				}
+			});
+	}
+});
+//上传文件 end
+		
+//搜素按钮点击事件
+$(document).on("click","#subjectSearch",function(){
+	var insearchKey = $("#searchInput").val();
+	if(insearchKey==""){
+		getSubject(1);
+	}else{
+		var load = layer.msg("正在查询,请稍后!",{icon:16,shade:0.05,time:58*1000});
+		$.ajax({
+			url:'${APP_PATH}/Exam/getSubjectAnwserBys',
+			type:'post',
+			data:'insearchKey='+insearchKey,
+			success:function(data){
+				
+				layer.close(load);
+				if(data.code==200){
+					//清空原有数据
+					$("#eaxmTable tbody").empty();
+					var subjectAnwser = data.extend.subjectAnwsers;
+					
+					if(subjectAnwser.length==0){
+						layer.alert("查不到相关数据，请尝试其他关键词");
+						return;
+					}
+					
+					//填充表格数据
+					$.each(subjectAnwser,function(index,item){
+						var index = index+1; 
+						var anwsers = item.anwser;
+						var anwser = "";
+						var anwserTd = $("<div style='height:68px;width:100%;overflow: hidden;text-overflow: ellipsis;'><div>");
+						$.each(anwsers,function(index,an){
+							anwserTd.append("<span class='fa fa-star-o'></span>"+" "+an+"<br>")
+						})
+						var anTd = $("<td></td>").append(anwserTd);
+						var anwser = item.anwser;
+						var tr = $("<tr></tr>").attr("id",item.id);
+						var idTd = $("<td style='padding-left:18px;' >"+index +"</td>");
+						var typeTd = $("<td >"+item.subjectType+"</td>");
+						var titleTd = $("<td ></td>").append("<div style='max-height:68px;width:100%;overflow: hidden;text-overflow: ellipsis;'>"+item.title+"</div>");
+						var trueTd = $("<td ></td>").append("<div style='max-height:68px;width:100%;overflow: hidden;text-overflow: ellipsis;'><span class='fa fa-star'></span>"+" "+item.isTrue+"</div>");
+						//var btnTd = $("<td><button class='btn btn-info btn-xs AnwserEdit'><span class='fa fa-pencil'></span> 编辑</button>&nbsp;&nbsp;<button class='btn btn-danger btn-xs AnwserDeleter'><span class='fa fa-trash'></span> 删除</button></td>");
+						var btnTd = $("<td><button class='btn btn-danger btn-xs AnwserDeleter'><span class='fa fa-trash'></span> 删除</button></td>");
+						tr.append(idTd).
+						append(typeTd).
+						append(titleTd).
+						append(anTd).
+						append(trueTd).
+						append(btnTd).
+						appendTo("#eaxmTable tbody");
+					});
+					//设置分页数据
+					/*
+					var pageHtml = '<span class="fristSpan">共'+subjectCount+'条数据  当前第<span>'+pageNow+'/'+maxPage+'</span>页  跳转到：<input type="number" style="width:52px;"/ id="jumpPage"><button class="btn btn-info btn-sm jump"><span class="fa fa-send-o"></span></button>';
+					var button ="";
+					var nextPage = parseInt(pageNow)+parseInt(1);
+					var prePage = parseInt(pageNow)-parseInt(1);
+					if(pageNow==maxPage){
+						button = '<div class="fr"><button class="btn btn-info btn-sm pre" pageto='+prePage+'><span class="fa  fa-chevron-left"></span> </button><button class="btn btn-info btn-sm next" style="cursor:not-allowed;" disabled><span class="fa  fa-chevron-right"></span> </button></div>';
+					}else if(pageNow==1){
+						button = '<div class="fr"><button class="btn btn-info btn-sm pre" style="cursor:not-allowed;disabled" disabled><span class="fa  fa-chevron-left"></span> </button><button class="btn btn-info btn-sm next"  pageto='+nextPage+'><span class="fa  fa-chevron-right"></span> </button></div>';
+					}else{
+						button = '<div class="fr"><button class="btn btn-info btn-sm pre"  pageto='+prePage+' ><span class="fa  fa-chevron-left"></span> </button><button class="btn btn-info btn-sm next"  pageto='+nextPage+'><span class="fa  fa-chevron-right"></span> </button></div>';
+					}
+					*/
+					//pageHtml+=button;
+					$("#queryPage").empty();
+					//$("#queryPage").append(pageHtml);
+				}else{
+					
+				}
+			}
+			
+		})
+		//end
+	}
+	
+})
+//end 搜索
 	
 	/*添加考试保存B*/
 $(document).on("click","#addExamSave",function(){

@@ -153,6 +153,15 @@ public class ViewController {
 	}
 	
 	/**
+	 *  下载空的试题添加模板
+	 * @return
+	 */
+	@RequestMapping("/downloadEmptyExcel")
+	public String downloadEmptyExcel(){
+		return "downloadEmptyExcel";
+	}
+	
+	/**
 	 * 验证码
 	 */
 	@RequestMapping("/imageCode")

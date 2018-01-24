@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * 2017年9月14日
  */
-public class LoginIntercepter implements HandlerInterceptor{
+public class AdminLoginIntercepter implements HandlerInterceptor{
 
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
