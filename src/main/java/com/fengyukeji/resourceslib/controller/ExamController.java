@@ -138,8 +138,12 @@ public class ExamController {
 	@ResponseBody
 	@RequestMapping("getExamSchOnline")
 	public Msg getExamSchOnline(HttpServletRequest request,HttpSession session) {
-		 List<Integer> schList=examScheduleService.getExamSchOnline();
+		 List<Float> schList=examScheduleService.getExamSchOnline();
 		 session.setAttribute("schTime", schList.get(1));
+		 session.setAttribute("schTotalScore", schList.get(2));  
+		 String str= schList.get(3).toString();
+		 str=str.substring(0,str.indexOf("."));
+		 session.setAttribute("schTpcNum",str );
 		return Msg.success().add("schId", schList.get(0));
 	}
 	

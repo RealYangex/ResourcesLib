@@ -84,19 +84,21 @@ public class ExamScheduleService {
 	 * 在线考试获取考试安排
 	 * @return
 	 */
-	public List<Integer> getExamSchOnline() {
+	public List<Float> getExamSchOnline() {
 		Date date=new Date();
 	    ExamScheduleExample examp=new ExamScheduleExample();
 	    examp.createCriteria().andIsUseEqualTo(1).andExamStartDateLessThanOrEqualTo(date);
 	    List<ExamSchedule> schList=examScheduleMapper.selectByExample(examp);
-	    List<Integer> list=new ArrayList<Integer>();
+	    List<Float> list=new ArrayList<Float>();
 	    if(schList.isEmpty()) {
-	    	list.add(0);
-	        list.add(schList.get(0).getExamTime());
+	    	list.add(0f);
+	        list.add(Float.parseFloat(schList.get(0).getExamTime().toString()));
 	    }
 	    else {
-	    	list.add(schList.get(0).getId());
-	    	list.add(schList.get(0).getExamTime());
+	    	list.add(Float.parseFloat(schList.get(0).getId().toString()));
+	    	list.add(Float.parseFloat(schList.get(0).getExamTime().toString()));
+	    	list.add(Float.parseFloat(schList.get(0).getExamAllScore().toString()));
+	    	list.add(Float.parseFloat(schList.get(0).getExamSubjectNum().toString()));
 	    }
 		    return list;
 	}
