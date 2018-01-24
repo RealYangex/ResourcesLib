@@ -256,7 +256,8 @@
 		        "beforeUpload":beforeUploadFun,//在上传前执行的函数
 		        "onUpload":onUploadFun,//在上传后执行的函数
 		         //autoCommit:true,//文件是否自动上传
-		        // "fileType":['png','jpg','docx','doc','mp4'] //文件类型限制，默认不限制，注意写的是文件后缀
+		        "fileType":['png','jpg','docx','doc','mp4','mp3','wma','flv','qsv','qlv','kux','mts','mp4','bmp','txt','pdf','rtf','ppt','xls','pptx','xlsx','jpeg','3gp','mpeg','m4a','bhd','lrc']
+		        //文件类型限制，默认不限制，注意写的是文件后缀
 
 		    });
 		 	var Upload
@@ -491,6 +492,8 @@
 	 													//pdf
 	 		if(suffix==".pdf"){
 	 			window.open("${APP_PATH}/"+localtion);
+	 		}else{
+	 			
 	 		}
 	 	}else if(type==4){								//图片
 	 		showImage("${APP_PATH}/"+localtion);

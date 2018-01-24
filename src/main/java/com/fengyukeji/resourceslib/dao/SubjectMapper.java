@@ -23,6 +23,9 @@ public interface SubjectMapper {
 
     List<SubjectWithAnwserBean> selectSubjectWithAnwser(Integer page,Integer showNums);
     
+    //自定义方法获取关键字查询题目和答案
+    List<SubjectWithAnwserBean> selectSubjectWithAnwserByInseachKey(String info,Integer showNums);
+    
     List<SubjectWithAnwserBean> selectSubjectWithAnwserByType(Integer page,Integer id,Integer showNums);
     
     Subject selectByPrimaryKey(Integer id);

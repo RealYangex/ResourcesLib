@@ -47,13 +47,25 @@ public class ExamController {
 		long subjectCount = examService.getAnwserCount();
 		return Msg.success().add("subjectAnwsers", subjectList).add("subjectCount", subjectCount).add("showNum", ExamService.SHOW_NUM);
 	}
-
+	
+	/**
+	 * 根据关键字查询获取题目答案
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/getSubjectAnwserBys")
+	public Msg getSubjectAnwserBys(HttpServletRequest request){
+		String insearchKey = request.getParameter("insearchKey");
+		List<SubjectAnwserBean> subjectList = examService.getSubjectAnwserBys(insearchKey);
+		return Msg.success().add("subjectAnwsers", subjectList);
+	}
+	
 	/**
 	 * 获取考试安排
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("getExamSchedule")
+	@RequestMapping("/getExamSchedule")
 	public Msg getExamSchedule(){
 		List<ExamSchedule> ExamScheduleList = examScheduleService.getExamSchedule();
 		return Msg.success().add("schList", ExamScheduleList);
@@ -64,7 +76,7 @@ public class ExamController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("addExamSchedule")
+	@RequestMapping("/addExamSchedule")
 	public Msg addExamSchedule(HttpServletRequest request) throws ParseException{
 		SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
@@ -85,7 +97,7 @@ public class ExamController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("delExamSchedule")
+	@RequestMapping("/delExamSchedule")
 	public Msg delExamSchedule(HttpServletRequest request) {
 		Integer id= Integer.parseInt(request.getParameter("id"));
 		examScheduleService.delExamSchedule(id);
@@ -97,7 +109,7 @@ public class ExamController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("isUseExamSchedule")
+	@RequestMapping("/isUseExamSchedule")
 	public Msg isUseExamSchedule(HttpServletRequest request) {
 		Integer id= Integer.parseInt(request.getParameter("id"));
 		Integer state= Integer.parseInt(request.getParameter("state"));
@@ -105,4 +117,6 @@ public class ExamController {
 		examScheduleService.isUseExamSchedule(id,state);
 		return Msg.success();
 	}
+	
+	
 }

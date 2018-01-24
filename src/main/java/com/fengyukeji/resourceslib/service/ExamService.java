@@ -32,7 +32,7 @@ public class ExamService {
 		List<SubjectAnwserBean>  saList = new ArrayList();
 		List<Anwser>  aList = new ArrayList();
 		
-		List<SubjectWithAnwserBean> subWithAnwserList = subjectMapper.selectSubjectWithAnwser(pageIndex,SHOW_NUM);
+		List<SubjectWithAnwserBean> subWithAnwserList = subjectMapper.selectSubjectWithAnwser(pageIndex*6,SHOW_NUM);
 		for(SubjectWithAnwserBean sab :subWithAnwserList){
 			aList = sab.getAnwserList();
 			String trueAnwser = "";
@@ -75,6 +75,33 @@ public class ExamService {
 	 */
 	public long getAnwserCount(){
 		return subjectMapper.countByExample(null);
+	}
+	
+	/**
+	 * 根据关键词查询 题目和答案
+	 * @param insearchKey
+	 * @return
+	 */
+	public List<SubjectAnwserBean> getSubjectAnwserBys(String insearchKey) {
+		List<SubjectAnwserBean>  saList = new ArrayList();
+		List<Anwser>  aList = new ArrayList();
+		List<SubjectWithAnwserBean> subWithAnwserList = subjectMapper.selectSubjectWithAnwserByInseachKey("%"+insearchKey+"%", SHOW_NUM);
+		for(SubjectWithAnwserBean sab :subWithAnwserList){
+			aList = sab.getAnwserList();
+			String trueAnwser = "";
+			String anwser = "";
+			List<String>  strList = new ArrayList();
+			for(Anwser a:aList){
+				
+				if(a.getIsTrue()==true){
+					trueAnwser = a.getAnwserContent();
+				}
+				//anwser+=a.getAnwserContent()+";";
+				strList.add(a.getAnwserContent());
+			}
+			saList.add(new SubjectAnwserBean(sab.getId(), sab.getSubjectContent(), sab.getSubjectType(), sab.getSubjectDoes(), sab.getSubjectSuccesses(), sab.getSubjectError(), strList, trueAnwser));
+		}
+		return saList;
 	}
 		
 }

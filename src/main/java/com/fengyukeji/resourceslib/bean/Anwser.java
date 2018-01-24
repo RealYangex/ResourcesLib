@@ -57,5 +57,18 @@ public class Anwser {
 				+ ", anwserDoes=" + anwserDoes + ", isTrue=" + isTrue
 				+ ", subjectId=" + subjectId + "]";
 	}
+
+	public Anwser(Integer id, String anwserContent, Integer anwserDoes,
+			Boolean isTrue, Integer subjectId) {
+		super();
+		this.id = id;
+		this.anwserContent = anwserContent;
+		this.anwserDoes = anwserDoes;
+		this.isTrue = isTrue;
+		this.subjectId = subjectId;
+	}
+
+	public Anwser() {
+	}
     
 }
