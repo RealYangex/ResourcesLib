@@ -73,6 +73,12 @@
 	   	overflow: hidden;
 	   	text-overflow: ellipsis;
   	}
+  	#eaxmTable tbody td{
+  		vertical-align: middle;
+  		height:68px;
+	   	overflow: hidden;
+	   	text-overflow: ellipsis;
+  	}
   	#eaxmTable thead td{
   		color:#fff;
   		text-align:center;

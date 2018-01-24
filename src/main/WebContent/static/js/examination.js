@@ -20,11 +20,13 @@ $(document).ready(function(){
     	  $(".sui-modal").css("left","53%");
     	  $(".examDesk").css("margin-top","1%");
     	  $("body").css("width","1366px");  
+    	  $(".paperTopic label").css("margin-left","6%");
       }
       else{
     	  $(".sui-modal").css("left","61%");
     	  $(".examDesk").css("margin-top","0");
     	  $("body").css("width","100%");
+    	  $(".paperTopic label").css("margin-left","10%");
       }
 	}
    	  $(window).resize(function() {
@@ -32,11 +34,7 @@ $(document).ready(function(){
 	  });
   
    	/*屏幕适应E*/
-   	  
-	
-	
-})//redy结束
-   
+});
 	 /*控制栏时间显示B*/
    	function helloTime(){
    		function p(s) {

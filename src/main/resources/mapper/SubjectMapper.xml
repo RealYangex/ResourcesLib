@@ -99,6 +99,7 @@
       order by ${orderByClause}
     </if>
   </select>
+  
   <!-- 自定义sql 获取携带答案的函数 -->
   <select id="selectSubjectWithAnwser" parameterType="java.lang.Integer" resultMap="ResultWithAnwserMap">
     SELECT s.id,s.`subject_content`,b.`type_name` AS subject_type,s.`subject_does`,s.`subject_successes`,s.`subject_error`,a.`id` AS anwser_id

@@ -1,5 +1,6 @@
 package com.fengyukeji.resourceslib.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -77,6 +78,27 @@ public class ExamScheduleService {
 	    examSchedule.setId(id);
 
 		examScheduleMapper.updateByPrimaryKeySelective(examSchedule);
+	}
+
+	/**
+	 * 在线考试获取考试安排
+	 * @return
+	 */
+	public List<Integer> getExamSchOnline() {
+		Date date=new Date();
+	    ExamScheduleExample examp=new ExamScheduleExample();
+	    examp.createCriteria().andIsUseEqualTo(1).andExamStartDateLessThanOrEqualTo(date);
+	    List<ExamSchedule> schList=examScheduleMapper.selectByExample(examp);
+	    List<Integer> list=new ArrayList<Integer>();
+	    if(schList.isEmpty()) {
+	    	list.add(0);
+	        list.add(schList.get(0).getExamTime());
+	    }
+	    else {
+	    	list.add(schList.get(0).getId());
+	    	list.add(schList.get(0).getExamTime());
+	    }
+		    return list;
 	}
 	
 	
