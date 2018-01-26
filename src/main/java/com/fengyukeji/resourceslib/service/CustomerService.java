@@ -24,8 +24,9 @@ public class CustomerService {
 	/**
 	 * 保存用户信息
 	 * @param customer
+	 * @return 
 	 */
-	public void saveCustomerInfo(String userName,String userRealName,String userEmail,String userPassword) {
+	public Integer saveCustomerInfo(String userName,String userRealName,String userEmail,String userPassword) {
 		Customer customer=new Customer();
 		customer.setUsername(userName);
 		customer.setPassword(userPassword);
@@ -33,6 +34,8 @@ public class CustomerService {
 		customer.setEamil(userEmail);
 		customer.setCurrentType(2);
 		customerMapper.insertSelective(customer);
+		Integer id = customer.getId();
+		return id;
 	}
 	/**
 	 * 用户登录

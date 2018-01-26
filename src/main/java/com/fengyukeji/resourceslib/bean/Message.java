@@ -61,4 +61,20 @@ public class Message {
     public void setIsReaded(Integer isReaded) {
         this.isReaded = isReaded;
     }
+
+	public Message(Integer id, Integer customerId, Date time, String content,
+			Integer type, Integer isReaded) {
+		super();
+		this.id = id;
+		this.customerId = customerId;
+		this.time = time;
+		this.content = content;
+		this.type = type;
+		this.isReaded = isReaded;
+	}
+
+	public Message() {
+	}
+    
+	
 }

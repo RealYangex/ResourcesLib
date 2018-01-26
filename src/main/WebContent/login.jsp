@@ -10,13 +10,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <script type="text/javascript" src="${APP_PATH}/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="${APP_PATH}/static/js/layer.js"></script>
-
 <link href="${APP_PATH}/static/css/AdminLogin.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
    <div class="login">
-    <div class="message">管理登录</div>
+    <div class="message">管理员登录</div>
     <div id="darkbannerwrap"></div>
     
     <form method="post">
