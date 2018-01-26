@@ -9,15 +9,15 @@ body{
       }
     .top .top-left{
        display:inline-block;
-       font-size: 25px;
+       font-size: 15px;
        text-align: center;
     }
     .top .top-return{
        display:inline-block;
-       font-size: 20px;
+       font-size: 15px;
        text-align: center;
-       height: 100px;
-       line-height: 100px;
+       height: 35px;
+       line-height: 35px;
        cursor: pointer;
        margin-right: 50px;
        color:#CCCCCC;
@@ -29,7 +29,7 @@ body{
     }
     .top .top-right{
        display:inline-block;
-       font-size: 20px;
+       font-size: 15px;
        text-align: center;
     }
     
@@ -60,32 +60,32 @@ body{
     
     }
      .content input{
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
     .content .sui-formm .account{
      background: url("../images/userRegist/account.png")no-repeat;
      background-position: 10px;
-     background-size: 27px;
+     background-size: 19px;
     }
     .content .sui-formm .name{
      background: url("../images/userRegist/name.png")no-repeat;
      background-position: 6px;
-     background-size: 35px;
+     background-size: 25px;
     }
     .content .sui-formm .email{
      background: url("../images/userRegist/email.png")no-repeat;
      background-position: 10px 10px;
-     background-size: 29px;
+     background-size: 19px;
     }
     .content .sui-formm .password{
      background: url("../images/userRegist/password.png")no-repeat;
      background-position: 10px;
-     background-size: 30px;
+     background-size: 20px;
     }
     .content .sui-formm .repassword{
      background: url("../images/userRegist/repassword.png")no-repeat;
      background-position: 10px;
-     background-size: 30px;
+     background-size: 20px;
     }
    .content .sui-formm button{
     background-color: #B10D06;
@@ -102,14 +102,14 @@ body{
     background-size: 775px 190px;
     background-position: center;
     position: absolute;
-    top: 130px;
-    right: 30px;
+    top: 165px;
+    right: 100px;
     }
 
     /*内容E*/
     
    #formRegist .msg-error{
    position: absolute;
-   top:10px;
-   right: -75px;
+   top:3px;
+   right: 115px;
     }

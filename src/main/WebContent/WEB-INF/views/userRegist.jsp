@@ -181,7 +181,12 @@ $("#formLogin").validate({
 				success:function(data){
 					layer.close(load);
 					if(data.code==200){
-						layer.alert("信息已提交,请等待管理员审核！");
+						layer.confirm('信息已提交,请等待管理员审核！', {
+							  btn: ['确定'] 					  
+							}, function(index, layero){													
+								 layer.close(index);
+								 window.open("${APP_PATH}/View/index","_self");
+							});	
 					}
 					else{
 						layer.alert("提交失败！");
@@ -211,13 +216,13 @@ $(document).ready(function(){
       var pc=sUserAgent.match(/windows/i) == "windows";
       if(pc){ 
     	  $("#loginModal").css("left","53%");
-    	  $(".top").css({"height":"100px","padding-top":"0px","padding-bottom":"0px"});
-    	  $(" .top .top-left").css({"height":"100px","width":"335px","line-height":"100px"});
-    	  $(" .top .top-right").css({"height":"100px","width":"250px","line-height":"100px"});
+    	  $(".top").css({"height":"35px","padding-top":"0px","padding-bottom":"0px"});
+    	  $(" .top .top-left").css({"height":"35px","width":"335px","line-height":"35px"});
+    	  $(" .top .top-right").css({"height":"35px","width":"250px","line-height":"35px"});
     	  $(".content").css({"height":"400px","width":"1360px"});
-    	  $(".sui-formm").css({"height":"90%","width":"395px","padding":"60px 60px 0px 60px"});
-    	  $(".sui-formm input").css("width","86%");
-    	  $(".sui-formm button").css("width","100%");
+    	  $(".sui-formm").css({"height":"90%","width":"395px","padding":"165px 60px 0px 60px"});
+    	  $(".sui-formm input").css({"width":"35%","height":"25px"});
+    	  $(".sui-formm button").css({"width":"49%","height":"25px","line-height":"15px"});
     	  $(".content .bg-img").css("display","block");
     	  $(".top .top-return").css("display","block");
     	 

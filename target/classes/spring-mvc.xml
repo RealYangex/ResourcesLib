@@ -61,6 +61,7 @@
 			
 	        <bean class="com.fengyukeji.resourceslib.intercepter.AdminLoginIntercepter"></bean>
 		</mvc:interceptor>
+		
 		<!-- 资源访问拦截器 -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**/getFiles*"/>

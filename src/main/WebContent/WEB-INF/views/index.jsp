@@ -764,7 +764,7 @@ $(document).on('click','.top-regist',function(){
 		filePathLifo.push("全部文件");
 		
 		getFiles(1);
-																	//恢复按钮可用
+																	 //恢复按钮可用
 		$(".changeBtn").removeAttr("disabled");
 		$(".changeBtn").css("cursor","pointer");
 	 })

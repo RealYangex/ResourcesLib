@@ -4,7 +4,9 @@
   pageContext.setAttribute("UserId",request.getSession().getAttribute("UserId"));
   pageContext.setAttribute("schTime",request.getSession().getAttribute("schTime"));
   pageContext.setAttribute("examId",request.getSession().getAttribute("examId"));
-  
+  pageContext.setAttribute("schTotalScore",request.getSession().getAttribute("schTotalScore"));
+  pageContext.setAttribute("schTpcNum",request.getSession().getAttribute("schTpcNum"));
+   
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -23,7 +25,6 @@
     <script type="text/javascript" src="${APP_PATH}/static/js/sui.min.js"></script>
    
     <script type="text/javascript" src="${APP_PATH}/static/js/examination.js"></script>
-    <script type="text/javascript" src="${APP_PATH}/static/js/forbidden.js"></script>
 
 </head>
 <body class="sui-row-fluid" style="margin: 0 auto;">
@@ -87,13 +88,13 @@ $(document).ready(function(){
 	$("#returnIndex").attr("disabled", true);
 	//禁止右键菜单
 	 $(document).bind("contextmenu",function(e) {  
-		return false; 
+		//return false; 
 	});  
 	
 	layer.open({
 		  type: 1 
 	      ,height:'350px'
-	      ,width:'500px'
+	      ,width:'600px'
 		  ,title: '考试须知'
 		  ,shade: 0.6 
 		  ,anim: 5
@@ -141,10 +142,15 @@ $(document).ready(function(){
 	     ,btn2: function(index, layero){
 	    	 window.open('${APP_PATH}/View/index','_self');
 	     }
-		  ,content: '<div style="padding:50px;font-size:20px;">请注意！做题过程中请勿退出全屏或刷新网页,避免题目重新加载,影响你的考试。</div>'
+		  ,content: '<div style="padding:50px;font-size:18px;">'+
+		               '<p>请注意！本次考试时间为${schTime}分钟,&nbsp;共${schTpcNum}道题,</p>'+
+		               '<p>总分${schTotalScore}分,&nbsp;请在规定时间内完成答题,当倒</p>'+		          
+		               '<p>计时为零时系统会自动提交,做题过程中请勿</p>'+
+		               '<p>退出全屏或刷新网页,以免影响考试成绩。</p>'+
+		            '</div>'
 		}); 
 	
-	
+	$("#layui-layer1").css("width","460px");
 	$(document).on("click",".layui-layer-btn",function(){
 	    var el = document.documentElement; 
 		var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen; 
@@ -169,8 +175,9 @@ function format(str) {
 	}
 	return str;
 };
+var ts=null;
 function setCountDown_time(min,sec, handpaper) {
-	var ts = setInterval(function (){ 
+	  ts = setInterval(function (){ 
 	  sec--;
 	  if(sec==0 && min!=0) {
 		min--;
@@ -178,7 +185,6 @@ function setCountDown_time(min,sec, handpaper) {
 	  }
 	   $("#countdown_time").text(format(min) + ":" + format(sec));
 	  if(min==0&&sec==0){ 
-	    clearInterval(ts);
 	    handpaper();
 	  }
    },1000)
@@ -213,6 +219,7 @@ function checkmistakes(){
 
 //交卷函数B
 function handpaper(){
+	 clearInterval(ts);
 	$("#examine").attr("disabled", true);
 	$("#examSave").attr("disabled", true);
 	$("#returnIndex").attr("disabled", false);
