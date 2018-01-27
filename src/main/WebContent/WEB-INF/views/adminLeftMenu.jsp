@@ -29,7 +29,7 @@
 			<a href="#" id="visitSet"><li><span class="fa fa-lock"></span>访问设置</li></a>
 			<a href="#" id="messageSet"><li><span class="fa fa-volume-up"></span>消息设置</li></a>
 		</ul>
-		<a href="${APP_PATH}/View/AdmLogin/exit" ><li ><span class="fa fa-power-off"></span>退出</li></a>
+		<a href="${APP_PATH}/AdmLogin/exit" ><li ><span class="fa fa-power-off"></span>退出</li></a>
 	</ul>
 	<script type="text/javascript">
 		$("#selectBtn").click(function(){
@@ -210,6 +210,20 @@
 			     ' </div>'+
 			   ' </div>'
 				}); 
+    	   $.ajax({
+				url:'${APP_PATH}/AdminSeting/getVistSeting',
+				type:'get',
+				success:function(data){
+					  var value=data.extend.value;
+					 if(value==0){
+						 $("#formViste").find("input:eq(0)").attr("checked","checked");
+					 }else if(value==1){
+						 $("#formViste").find("input:eq(1)").attr("checked","checked");
+					 }else if(value==2){
+						 $("#formViste").find("input:eq(2)").attr("checked","checked");
+					 }
+				}					
+			})
        });
        $(document).on("click","#visitSetingSave",function(){
     

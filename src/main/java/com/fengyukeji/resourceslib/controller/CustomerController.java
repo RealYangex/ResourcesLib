@@ -13,7 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fengyukeji.resourceslib.bean.Customer;
+import com.fengyukeji.resourceslib.bean.Message;
+import com.fengyukeji.resourceslib.bean.Resources;
 import com.fengyukeji.resourceslib.service.CustomerService;
+import com.fengyukeji.resourceslib.service.ResourceService;
+import com.fengyukeji.resourceslib.service.SystemMessgeService;
+import com.fengyukeji.resourceslib.utils.DateUtil;
 import com.fengyukeji.resourceslib.utils.Msg;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -28,8 +33,15 @@ import com.github.pagehelper.PageInfo;
 @RequestMapping("/Customer")
 @Controller
 public class CustomerController {
+	
 	@Autowired
 	CustomerService customerService;
+	
+	@Autowired
+	SystemMessgeService systemMessageService;
+	
+	@Autowired
+	ResourceService resourceService;
 	
 	/**
 	 * 保存用户信息 
@@ -42,7 +54,11 @@ public class CustomerController {
 		String userPassword=request.getParameter("userPassword");
 		String userRealName=request.getParameter("userRealName");
 		String userEmail=request.getParameter("userEmail");
-		customerService.saveCustomerInfo(userName, userRealName,userEmail,userPassword);
+		Integer userId = customerService.saveCustomerInfo(userName, userRealName,userEmail,userPassword);
+		
+		//记录请求授权信息
+		Message message = new Message(null,userId,DateUtil.getNowSqlDate(),"用户："+userName+";真实姓名："+userRealName+";邮箱:"+userEmail+" 完成注册，请求授权",2,null);
+		systemMessageService.insertMessage(message);
 		return Msg.success();
 	}
    //deleteOneCustomer
@@ -184,10 +200,10 @@ public class CustomerController {
 	@ResponseBody
 	@RequestMapping("/exitCustomer")
 	public Msg exitCustomer(HttpSession session) {
-		 session.setAttribute("UserId", "");
-		 session.setAttribute("UserName","");
-		 session.setAttribute("UserPassword","");
-		 session.setAttribute("UserType", "");
+		 session.setAttribute("UserId", null);
+		 session.setAttribute("UserName",null);
+		 session.setAttribute("UserPassword",null);
+		 session.setAttribute("UserType", null);
 		return Msg.success();
 	}
 
@@ -219,5 +235,67 @@ public class CustomerController {
 		else
 			return Msg.success().add("state", "已经授权");
 	}
+	
+	/**
+	 * 返回不可以访问
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/cannotVisit")
+	public Msg cannotVisit(){
+		
+		Msg msg = new Msg();
+		msg.setCode(300);
+		return msg;
+	}
+	
+	/**
+	 * 返回不可以访问
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/checkLogin")
+	public Msg checkLogin(HttpServletRequest request){
+		Object UserName = request.getSession().getAttribute("UserName");
+		if(UserName==null||UserName==""){
+			return Msg.failed();
+		}
+		return Msg.success();
+	}
+	
+	/**
+	 * 返回不可以访问
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/visit")
+	public Msg visit(HttpServletRequest request){
+		String  UserName = request.getSession().getAttribute("UserName").toString();
+		Integer userId = Integer.parseInt( request.getSession().getAttribute("UserId").toString());
+		String type = request.getParameter("type");
+		Integer  id = Integer.parseInt(request.getParameter("id"));
+		if(type.equals("2")){
+			
+			//下载消息
+			Resources res = resourceService.getFile(id);
+			if(res!=null){
+				String name = res.getName();
+				Message message = new Message(null,userId,DateUtil.getNowSqlDate(),"用户："+UserName+" 下载了【"+name+"】资源",1,null);
+				systemMessageService.insertMessage(message);
+			}
+			
+		}else{
+			
+			//访问消息
+			Resources res = resourceService.getFile(id);
+			if(res!=null){
+				String name = res.getName();
+				Message message = new Message(null,userId,DateUtil.getNowSqlDate(),"用户："+UserName+" 访问了【"+name+"】资源",0,null);
+				systemMessageService.insertMessage(message);
+			}
+		}
+		return Msg.success();
+	}
+	
 	
 }

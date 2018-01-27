@@ -220,9 +220,9 @@ $(document).ready(function(){
     	  $(" .top .top-left").css({"height":"35px","width":"335px","line-height":"35px"});
     	  $(" .top .top-right").css({"height":"35px","width":"250px","line-height":"35px"});
     	  $(".content").css({"height":"400px","width":"1360px"});
-    	  $(".sui-formm").css({"height":"90%","width":"395px","padding":"165px 60px 0px 60px"});
-    	  $(".sui-formm input").css({"width":"35%","height":"25px"});
-    	  $(".sui-formm button").css({"width":"49%","height":"25px","line-height":"15px"});
+    	  $(".sui-formm").css({"height":"90%","width":"330px","padding":"165px 60px 0px 60px","margin-left":"11%"});
+    	  $(".sui-formm input").css({"width":"55%","height":"25px"});
+    	  $(".sui-formm button").css({"width":"72%","height":"25px","line-height":"15px"});
     	  $(".content .bg-img").css("display","block");
     	  $(".top .top-return").css("display","block");
     	 
@@ -232,8 +232,8 @@ $(document).ready(function(){
     	  $(" .top .top-left").css({"height":"150%","width":"35%","line-height":"150%"});
     	  $(" .top .top-right").css({"height":"150%","width":"55%","line-height":"150%"});
     	  $(".content").css({"height":"100%","width":"100%"});
-    	  $(".sui-formm").css({"height":"100%","width":"58%","padding":"60px 60px 45px 60px"});
-    	  $(".sui-formm input").css("width","80%");
+    	  $(".sui-formm").css({"height":"100%","width":"58%","padding":"60px 60px 45px 60px","margin-left":"4%"});
+    	  $(".sui-formm input").css({"width":"80%","height":"25px"});
     	  $(".sui-formm button").css("width","106%");
     	  $(".content .bg-img").css("display","none");
     	  $(".top .top-return").css("display","none");

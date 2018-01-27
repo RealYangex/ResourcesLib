@@ -1,32 +1,19 @@
 package com.fengyukeji.resourceslib.controller;
-
 import java.util.List;
 import java.util.Random;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import org.apache.ibatis.javassist.expr.NewArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
-
-import com.fengyukeji.resourceslib.bean.Anwser;
 import com.fengyukeji.resourceslib.bean.ExamSchedule;
-import com.fengyukeji.resourceslib.bean.Subject;
 import com.fengyukeji.resourceslib.bean.SubjectAnwserBean;
-import com.fengyukeji.resourceslib.bean.SubjectWithAnwserBean;
 import com.fengyukeji.resourceslib.service.ExamScheduleService;
 import com.fengyukeji.resourceslib.service.ExamService;
 import com.fengyukeji.resourceslib.utils.Msg;

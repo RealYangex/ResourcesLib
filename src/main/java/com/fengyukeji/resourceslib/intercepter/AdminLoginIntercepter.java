@@ -17,11 +17,11 @@ public class AdminLoginIntercepter implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		 String  username = (String) request.getSession().getAttribute("username");
+		 System.out.println(request.getRequestURI());
 	       if (username == null||username.equals("")) {
 	             System.out.println("尚未登录，调到登录页面");
-	              
-	              //response.sendRedirect(request.getContextPath()+"/allToLogin.jsp");
-	              return true;
+	             response.sendRedirect(request.getContextPath()+"/login.jsp");
+	             return false;
 	         }else{
 //	        	 System.out.println("通过验证");
 	        	 return true;
@@ -42,6 +42,6 @@ public class AdminLoginIntercepter implements HandlerInterceptor{
 		
 	}
 	
-	
+	 
 	
 }

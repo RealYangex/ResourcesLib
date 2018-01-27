@@ -110,7 +110,7 @@
       #{realName,jdbcType=VARCHAR}, #{eamil,jdbcType=VARCHAR}, #{regitsterTime,jdbcType=TIMESTAMP}, 
       #{lastTime,jdbcType=TIMESTAMP}, #{currentType,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.fengyukeji.resourceslib.bean.Customer">
+  <insert id="insertSelective" parameterType="com.fengyukeji.resourceslib.bean.Customer" useGeneratedKeys="true" keyProperty="id">
     insert into res_customer
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

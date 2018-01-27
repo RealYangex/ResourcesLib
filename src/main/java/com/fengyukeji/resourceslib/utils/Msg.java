@@ -32,7 +32,7 @@ public class Msg {
 	 */
 	public static Msg failed(){
 		Msg msg = new Msg();
-		msg.setCode(200);
+		msg.setCode(100);
 		msg.setMessage("处理完成");
 		return msg;
 	}

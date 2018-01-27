@@ -144,7 +144,6 @@
   });
 
 //上传文件E
-
   $(document).ready(function(){
 	  var lastParent = -1;
 	  var fileLifo = new Array();
@@ -157,10 +156,7 @@
 	  createFilePath();
 	  //根据id 获取当前文件下所有的文件
 	  function getFiles(id,type){
-		  //l("c："+fileLifo)
 		  fileLifo.push(id);
-		  //l("a："+fileLifo)
-		  //l("a:"+filePathLifo)
 		  parentId = id;
 		  //判断是否需要显示上一级
 		  if(fileLifo.length!=1){
@@ -176,6 +172,7 @@
 			  data:"parentId="+id,
 			  type:'post',
 			  success:function(data){
+				  console.log(data);
 				  layer.close(load);
 				  if(data.code==200){
 					  var resources = data.extend.resources;
@@ -199,24 +196,13 @@
 						  	case 4: showType='图片文件';icon+="file-photo-o"; break;
 						  	case 5: showType='其他文件';icon+="file-zip-o"; break;
 						  }
-						  tr.append('<td><a class="open"><i class="'+icon+'"></i>'+item.name+'</a><i2 style="display:inline-block;width:16px;height:16px;"><i3 style="display:none;color:#1E9FFF;" class="fa fa-download download"></i3></i2></td>');
+						  tr.append('<td><a class="openFile"><i class="'+icon+'"></i>'+item.name+'</a><i2 style="display:inline-block;width:16px;height:16px;"><i3 style="display:none;color:#1E9FFF;" class="fa fa-download download"></i3></i2></td>');
 						  tr.append('<td>'+showType+'</td>');
 						  tr.append('<td>'+showDate+'</td>');
 						  tr.append('<td><button class="btn btn-xs btn-info rename" style="display:none;"><span class="fa fa-edit"></span> 重命名</button>&nbsp;&nbsp;<button class="btn btn-xs btn-danger delete"><span class="fa fa-trash"></span> 删 除</button></td>');
 						  $("#fileTable tbody").append(tr);
 					  })
 				  }
-				  /*
-				  l(data);
-				  adminId: 1
-				  childrensId: null
-				  createTime: 1515734587000
-				  id: 42
-				  localtion: null
-				  name: "IMG20140125002.jpg"
-				  parentId: 1
-				  resResourcesType: 5
-				  */
 			  },
 			  error:function(data){
 				  console.log(data);
@@ -347,7 +333,7 @@
 		 layer.close(newfolder);
 	 })
 	 
-	 //鼠标悬浮
+	 //鼠标悬浮Begin
 	 $(document).on("mouseover","tr",function(){
 		 if($(this).attr("filetype")!=0){
 		 	$(this).find("i3").css("display","inline-block");
@@ -358,6 +344,7 @@
 		 	$(this).find("i3").css("display","none");
 		 }
 	 })
+	 //鼠标悬浮End
 	 
 	 //下载按钮点击事件
 	 $(document).on("click",".download",function(){
@@ -369,7 +356,7 @@
 	 })
 	 
 	 //文件点击事件
-	 $(document).on("click",".open",function(){
+	 $(document).on("click",".openFile",function(){
 	 	var id = $(this).parents("tr").attr("fileid");
 	 	var type = $(this).parents("tr").attr("filetype");
 	 	var localtion = $(this).parents("tr").attr("localtion");
@@ -395,7 +382,6 @@
 	 			      btn:["取消"],
 	 			      area: ['380px', '200px'],
 	 			      content: "${APP_PATH}/"+localtion
-					  //content:'http://localhost:8080/ResourceLib/static/Upload/%E9%9F%B3%E4%B9%90/%E9%82%93%E7%8E%89%E5%8D%8E-%E9%9D%A9%E5%91%BD%E7%86%94%E7%82%89%E7%81%AB%E6%9C%80%E7%BA%A2.wma'
 	 			    });
 	 		}else if(suffix==".mp3"||suffix==".m4a"){
 	 			var player; 
@@ -439,7 +425,7 @@
 	 					
 	 				}
 	 			})
-	 		}else if(suffix==".mp4"){
+	 		}else if(suffix.toLowerCase()==".mp4".toLowerCase()){
 	 			$.ajax({
 	 				url:'${APP_PATH}/Resources/playVideo',
 	 				data:'src='+address,
@@ -485,12 +471,18 @@
 	 				}
 	 			})
 	 		}else{
-	 			
+	 			window.open("${APP_PATH}/"+localtion);
 	 		}
 	 		
 	 	}else if(type==3){								//文档
 	 													//pdf
-	 		if(suffix==".pdf"){
+	 		if(suffix.toLowerCase()==".pdf".toLowerCase()){
+	 			window.open("${APP_PATH}/"+localtion);
+	 		}else if(suffix.toLowerCase()==".rtf"||suffix.toLowerCase()==".ppt"||suffix.toLowerCase()==".pptx"||suffix.toLowerCase()==".txt"||suffix.toLowerCase()==".doc"||suffix.toLowerCase()==".docx"||suffix.toLowerCase()==".xls"||suffix.toLowerCase()==".xlsx"){
+	 																										//支持预览的文档
+	 			window.open("http://dcsapi.com?k=282939901&url=http://118.24.28.134/ResourceLib/"+localtion);
+	 		}else{	
+	 																										//不支持预览 交给浏览器
 	 			window.open("${APP_PATH}/"+localtion);
 	 		}else{
 	 			
@@ -678,7 +670,7 @@
 						  	case 4: showType='图片文件';icon+="file-photo-o"; break;
 						  	case 5: showType='其他文件';icon+="file-zip-o"; break;
 						  }
-						  tr.append('<td><a class="open"><i class="'+icon+'"></i>'+item.name+'</a><i2 style="display:inline-block;width:16px;height:16px;"><i3 style="display:none;color:#1E9FFF;" class="fa fa-download download"></i3></i2></td>');
+						  tr.append('<td><a class="openFile"><i class="'+icon+'"></i>'+item.name+'</a><i2 style="display:inline-block;width:16px;height:16px;"><i3 style="display:none;color:#1E9FFF;" class="fa fa-download download"></i3></i2></td>');
 						  tr.append('<td>'+showType+'</td>');
 						  tr.append('<td>'+showDate+'</td>');
 						  tr.append('<td><button class="btn btn-xs btn-info rename" style="display:none;"><span class="fa fa-edit"></span> 重命名</button>&nbsp;&nbsp;<button class="btn btn-xs btn-danger delete"><span class="fa fa-trash"></span> 删 除</button></td>');

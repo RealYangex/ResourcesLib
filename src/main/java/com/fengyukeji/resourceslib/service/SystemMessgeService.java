@@ -38,6 +38,7 @@ public class SystemMessgeService {
 			example.createCriteria().andTypeBetween(2, 2);
 		else if(msgTypeSel==4)
 			example.createCriteria().andTypeBetween(3, 3);
+		example.setOrderByClause("id desc");
 		return messageMapper.selectByExample(example);
 	}
 
@@ -89,6 +90,10 @@ public class SystemMessgeService {
 		MessageExample example=new MessageExample();
 		 example.createCriteria().andTypeEqualTo(msgType);
 		 messageMapper.deleteByExample(example);
+	}
+	
+	public void insertMessage(Message message) {
+		messageMapper.insertSelective(message);
 	}
 	
 

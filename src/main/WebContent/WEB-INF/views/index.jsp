@@ -162,8 +162,8 @@
             </div> 
             <div class="bottom-bot-right">
                 <ul>
-                   <li>总访问人次： 01204513</li>
-                   <li>今日访问人次： 00003</li>
+                   <li id="totalVisit">总访问人次： 01204513</li>
+                   <li id="todayVisit">今日访问人次： 00003</li>
                 </ul>
             </div>                       
        </div>
@@ -209,6 +209,8 @@
    </div>
     <!--登录弹出框E -->
 </body>
+<script type="text/javascript" src="${APP_PATH}/static/js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="${APP_PATH}/static/js/showImage.js"></script>
 <script type="text/javascript">
 
 //考试跳转B
@@ -338,7 +340,7 @@ $(document).on('click','.top-regist',function(){
 	  filePathLifo.push("全部文件");
 	  var parentId = 1;
 	  getFiles(parentId);
-	  														//创建文件路径
+	  //创建文件路径
 	  createFilePath();
 	  //根据id 获取当前文件下所有的文件
 	  function getFiles(id,type){
@@ -387,6 +389,13 @@ $(document).on('click','.top-regist',function(){
 		
 						  $("#fileTable tbody").append(tr);
 					  })
+				  }else if(data.code==300){
+					  $("#top-login").trigger("click");
+					  
+					  //访问被拒绝 重新生成导航
+					  filePathLifo.pop();
+					  fileLifo.pop();
+					  createFilePath();
 				  }
 			  },
 			  error:function(data){
@@ -409,15 +418,32 @@ $(document).on('click','.top-regist',function(){
 	 
 	 //下载按钮点击事件
 	 $(document).on("click",".download",function(){
+		 
+		//判断是否登录
+		if(!isLogin()){
+			 $("#top-login").trigger("click");
+			 return;
+		}
 	 	var id =$(this).parents("tr").attr("fileid");
 	 	var form = $("<form action='${APP_PATH}/Resources/download' method='post' style='display:none'></from>");
 		   $("<input name='id' value='"+id+"'>").appendTo(form);
 		   $(document.body).append(form);
 		   form.submit();
+		   
+	 	   //设置下载记录
+		   if(type!=0){
+		 	 visit(2,id);
+		   }
 	 })
 	 
 	 //文件点击事件
 	 $(document).on("click",".open",function(){
+		 
+		 //判断是否登录
+		 if(!isLogin()){
+			 $("#top-login").trigger("click");
+			 return;
+		 }
 	 	var id = $(this).parents("tr").attr("fileid");
 	 	var type = $(this).parents("tr").attr("filetype");
 	 	var localtion = $(this).parents("tr").attr("localtion");
@@ -537,8 +563,14 @@ $(document).on('click','.top-regist',function(){
 	 		}
 	 		
 	 	}else if(type==3){								//文档
-	 													//pdf
-	 		if(suffix==".pdf"){
+			//pdf
+	 		if(suffix.toLowerCase()==".pdf".toLowerCase()){
+	 			window.open("${APP_PATH}/"+localtion);
+	 		}else if(suffix.toLowerCase()==".rtf"||suffix.toLowerCase()==".ppt"||suffix.toLowerCase()==".pptx"||suffix.toLowerCase()==".txt"||suffix.toLowerCase()==".doc"||suffix.toLowerCase()==".docx"||suffix.toLowerCase()==".xls"||suffix.toLowerCase()==".xlsx"){
+	 																										//支持预览的文档
+	 			window.open("http://dcsapi.com?k=282939901&url=http://118.24.28.134/ResourceLib/"+localtion);
+	 		}else{	
+	 																										//不支持预览 交给浏览器
 	 			window.open("${APP_PATH}/"+localtion);
 	 		}
 	 	}else if(type==4){								//图片
@@ -546,6 +578,11 @@ $(document).on('click','.top-regist',function(){
 	 	}else{			
 	 													//其他文档直接交给浏览器 实现下载
 	 		window.open("${APP_PATH}/"+localtion);
+	 	}
+	 	
+	 	//设置访问记录
+	 	if(type!=0){
+	 		visit(1,id);
 	 	}
 	 })
 	 
@@ -731,6 +768,38 @@ $(document).on('click','.top-regist',function(){
 		$(".changeBtn").removeAttr("disabled");
 		$(".changeBtn").css("cursor","pointer");
 	 })
+	 
+	 /**
+	  *	判断是否是已经登录
+	  */
+	  function isLogin(){
+		 var isLogin = false;
+		 $.ajax({
+			 url:'${APP_PATH}/Customer/checkLogin',
+			 type:'post',
+			 async:false, 
+			 success:function(data){
+				 if(data.code==200){
+					 isLogin = true;
+				 }
+			 }
+		 });
+		 return isLogin;
+	 }
+	 
+	 /**
+	  *	记录访问
+	  */
+	  function visit(type,id){
+		 $.ajax({
+			 url:'${APP_PATH}/Customer/visit',
+			 type:'post',
+			 data:"type="+type+"&id="+id,
+			 success:function(data){
+			 }
+		 })
+	 }
+	 
   });
 </script>
 </html>

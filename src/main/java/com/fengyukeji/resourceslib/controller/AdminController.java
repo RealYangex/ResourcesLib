@@ -100,7 +100,7 @@ public class AdminController {
 	public void exit(HttpServletRequest request,HttpSession session,HttpServletResponse response){
 		session.setAttribute("username", null);
 		try {
-			response.sendRedirect(request.getContextPath()+"/Index/index");
+			response.sendRedirect(request.getContextPath()+"/logout.jsp");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

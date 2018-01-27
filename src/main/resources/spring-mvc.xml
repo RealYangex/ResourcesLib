@@ -25,7 +25,7 @@
 	
 		<!-- 登录拦截器 -->
 	<mvc:interceptors>
-		<!-- 登录拦截器 -->
+		<!-- 管理员登录拦截器 -->
 		<mvc:interceptor>
 			<!-- 以下是不拦截的方法 -->
 			<mvc:mapping path="/**/*"/>
@@ -41,14 +41,34 @@
 	        <mvc:exclude-mapping path="/**/*login*"/>
 	        <mvc:exclude-mapping path="/**/*imageCode*"/>
 	        <mvc:exclude-mapping path="/**/*qrImage*"/>
-	        <mvc:exclude-mapping path="/**/*submitForm*"/>
-	       
-	        <!-- 权限认证视图不需要拦截 -->
-	        <mvc:exclude-mapping path="/**/*jurisdiction*"/>
-	        <!-- 权限认证方法不需要拦截 -->
-	        <mvc:exclude-mapping path="/**/*confirmUser*"/>
-	        
+			<!-- 除了前台用户界面登录 -->
+			<mvc:exclude-mapping path="/View/index*"/>
+			<mvc:exclude-mapping path="/**/getFiles*"/>
+			<mvc:exclude-mapping path="/**/playVideo*"/>
+			<mvc:exclude-mapping path="/Exam/getExamSchOnline*"/>
+			<mvc:exclude-mapping path="/View/userRegis*"/>
+			<mvc:exclude-mapping path="/Customer/saveCustomerInfo*"/>
+			<mvc:exclude-mapping path="/Customer/exitCustomer*"/>
+			<mvc:exclude-mapping path="/Customer/cannotVisit*"/>
+			<mvc:exclude-mapping path="/Customer/checkLogin*"/>
+			<mvc:exclude-mapping path="/Customer/visit*"/>
+			<mvc:exclude-mapping path="/**loginCustomer*"/>
+			<mvc:exclude-mapping path="/View/examination*"/>
+			<mvc:exclude-mapping path="/Exam/getExamSchOnline*"/>
+			<mvc:exclude-mapping path="/Exam/getExamSubject*"/>
+			<mvc:exclude-mapping path="/Exam/disposeExamResult*"/>
+			<mvc:exclude-mapping path="/Resources/download*"/>
+			
 	        <bean class="com.fengyukeji.resourceslib.intercepter.AdminLoginIntercepter"></bean>
+		</mvc:interceptor>
+		
+		<!-- 资源访问拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**/getFiles*"/>
+			<mvc:mapping path="/Resources/download*"/>
+			<mvc:mapping path="/static/Upload/*"/>
+			<mvc:mapping path="/playVideo*"/>
+	        <bean class="com.fengyukeji.resourceslib.intercepter.ResourcesVisitIntercepter"></bean>
 		</mvc:interceptor>
 		
 		<!-- 填写权限 拦截器 -->
