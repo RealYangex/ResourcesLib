@@ -162,8 +162,8 @@
             </div> 
             <div class="bottom-bot-right">
                 <ul>
-                   <li>总访问人次： 01204513</li>
-                   <li>今日访问人次： 00003</li>
+                   <li id="totalVisit">总访问人次： 01204513</li>
+                   <li id="todayVisit">今日访问人次： 00003</li>
                 </ul>
             </div>                       
        </div>

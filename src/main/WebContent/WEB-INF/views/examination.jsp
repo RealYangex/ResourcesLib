@@ -88,7 +88,7 @@ $(document).ready(function(){
 	$("#returnIndex").attr("disabled", true);
 	//禁止右键菜单
 	 $(document).bind("contextmenu",function(e) {  
-		//return false; 
+		return false; 
 	});  
 	
 	layer.open({

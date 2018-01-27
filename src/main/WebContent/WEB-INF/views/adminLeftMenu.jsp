@@ -210,6 +210,20 @@
 			     ' </div>'+
 			   ' </div>'
 				}); 
+    	   $.ajax({
+				url:'${APP_PATH}/AdminSeting/getVistSeting',
+				type:'get',
+				success:function(data){
+					  var value=data.extend.value;
+					 if(value==0){
+						 $("#formViste").find("input:eq(0)").attr("checked","checked");
+					 }else if(value==1){
+						 $("#formViste").find("input:eq(1)").attr("checked","checked");
+					 }else if(value==2){
+						 $("#formViste").find("input:eq(2)").attr("checked","checked");
+					 }
+				}					
+			})
        });
        $(document).on("click","#visitSetingSave",function(){
     

@@ -32,7 +32,7 @@ public class AdminSetingController {
 		
 		return Msg.success();
 	}
-	//
+	
 	/**
 	 * 访问设置
 	 * @return
@@ -46,5 +46,20 @@ public class AdminSetingController {
 		adminSetingService.vistSeting(value);
 		
 		return Msg.success();
+	}
+	
+	
+	/**
+	 * 获取访问设置
+	 * @return
+	 * @throws
+	 */
+	@ResponseBody
+	@RequestMapping("/getVistSeting")
+	public Msg getVistSeting(HttpServletRequest request,HttpSession session)
+	{
+	   Integer value= adminSetingService.getVistSeting();
+		
+		return Msg.success().add("value", value);
 	}
 }

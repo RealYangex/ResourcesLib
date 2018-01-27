@@ -56,7 +56,6 @@ body{
      margin: 0 auto;
      border-radius:6px;
      background-color: #FFFFFF;
-     margin-left: 5%;
     
     }
      .content input{
@@ -99,11 +98,11 @@ body{
         width: 55%;
     height: 50%;
     background: url(../images/userRegist/regist-bg.png)no-repeat;
-    background-size: 775px 190px;
+    background-size: 709px 171px;
     background-position: center;
     position: absolute;
     top: 165px;
-    right: 100px;
+    right: 135px;
     }
 
     /*内容E*/
@@ -111,5 +110,5 @@ body{
    #formRegist .msg-error{
    position: absolute;
    top:3px;
-   right: 115px;
+   right: 0px;
     }
