@@ -10,6 +10,7 @@ import com.fengyukeji.resourceslib.bean.Anwser;
 import com.fengyukeji.resourceslib.bean.Exam;
 import com.fengyukeji.resourceslib.bean.ExamExample;
 import com.fengyukeji.resourceslib.bean.ExamSchedule;
+import com.fengyukeji.resourceslib.bean.ExamWithCustomerBean;
 import com.fengyukeji.resourceslib.bean.ExamresExam;
 import com.fengyukeji.resourceslib.bean.ExamresExamExample;
 import com.fengyukeji.resourceslib.bean.Anwser;
@@ -30,18 +31,25 @@ import com.fengyukeji.resourceslib.dao.SubjectMapper;
  */
 @Service
 public class ExamService {
-	public static int SHOW_NUM = 6; 
+	public static int ANWSER_SHOW_NUM = 6; 
+	
+	public static int EAXM_SHOW_NUM = 11; 
 	
 	@Autowired
 	SubjectMapper subjectMapper;
+	
 	@Autowired
 	ExamScheduleMapper examScheduleMapper;
+	
 	@Autowired
 	ExamMapper examMapper;
+	
 	@Autowired
 	AnwserMapper anwserMapper;
+	
 	@Autowired
 	ExamresExamMapper examresExamMapper; 
+	
 	/**
 	 * 获取答案和
 	 * @return
@@ -51,7 +59,7 @@ public class ExamService {
 		List<SubjectAnwserBean>  saList = new ArrayList();
 		List<Anwser>  aList = new ArrayList();
 		
-		List<SubjectWithAnwserBean> subWithAnwserList = subjectMapper.selectSubjectWithAnwser(pageIndex*6,SHOW_NUM);
+		List<SubjectWithAnwserBean> subWithAnwserList = subjectMapper.selectSubjectWithAnwser(pageIndex*ANWSER_SHOW_NUM,ANWSER_SHOW_NUM);
 		for(SubjectWithAnwserBean sab :subWithAnwserList){
 			aList = sab.getAnwserList();
 			String trueAnwser = "";
@@ -76,7 +84,7 @@ public class ExamService {
 	 */
 	public List<SubjectWithAnwserBean> getSubjectWithAnwser(Integer pageIndex) {
 		
-		return subjectMapper.selectSubjectWithAnwser(pageIndex,SHOW_NUM);
+		return subjectMapper.selectSubjectWithAnwser(pageIndex,ANWSER_SHOW_NUM);
 	}
 	
 	/**
@@ -85,7 +93,7 @@ public class ExamService {
 	 */
 	public List<SubjectWithAnwserBean> getSubjectWithAnwserByType(Integer pageIndex,Integer page) {
 		
-		return subjectMapper.selectSubjectWithAnwserByType(pageIndex,page,SHOW_NUM);
+		return subjectMapper.selectSubjectWithAnwserByType(pageIndex,page,ANWSER_SHOW_NUM);
 	}
 	
 	/**
@@ -159,7 +167,7 @@ public class ExamService {
 	public List<SubjectAnwserBean> getSubjectAnwserBys(String insearchKey) {
 		List<SubjectAnwserBean>  saList = new ArrayList();
 		List<Anwser>  aList = new ArrayList();
-		List<SubjectWithAnwserBean> subWithAnwserList = subjectMapper.selectSubjectWithAnwserByInseachKey("%"+insearchKey+"%", SHOW_NUM);
+		List<SubjectWithAnwserBean> subWithAnwserList = subjectMapper.selectSubjectWithAnwserByInseachKey("%"+insearchKey+"%", ANWSER_SHOW_NUM);
 		for(SubjectWithAnwserBean sab :subWithAnwserList){
 			aList = sab.getAnwserList();
 			String trueAnwser = "";
@@ -243,5 +251,53 @@ public class ExamService {
 	    
 	   examMapper.updateByPrimaryKeySelective(exam);
 	   return  totalScore;
+	}
+	
+	/**
+	 * 获取考试信息
+	 * @param pageIndex 页数索引
+	 * @return
+	 */
+	public List<ExamWithCustomerBean> getExamWithCustomer(Integer pageIndex) {
+		return examMapper.selectEaxmWithCustomer(pageIndex*EAXM_SHOW_NUM, EAXM_SHOW_NUM);
+	}
+	
+	/**
+	 * 获取考试记录条数
+	 * @return
+	 */
+	public long getExamCount() {
+		return examMapper.countByExample(null);
+	}
+	
+	/**
+	 * 根据id 删除考试记录
+	 * @param id
+	 */
+	public void deleteEaxmById(Integer id) {
+		examMapper.deleteByPrimaryKey(id);
+	}
+	
+	/**
+	 * 获取所有的考试记录 
+	 * @return
+	 */
+	public List<ExamWithCustomerBean> getAllExamWithCustomer() {
+		return examMapper.selectAllExamWithCustomer();
+	}
+	
+	/**
+	 * 根据分数高低来获取数据
+	 * @param pageIndex
+	 * @param string
+	 * @return
+	 */
+	public List<ExamWithCustomerBean> getExamWithCustomerSortByScore(
+			Integer pageIndex, String sort) {
+		if(sort.equals("up")){
+			return examMapper.selectEaxmWithCustomerSortByScoreUp(pageIndex*EAXM_SHOW_NUM, EAXM_SHOW_NUM);
+		}else{
+			return examMapper.selectEaxmWithCustomerSortByScoreDown(pageIndex*EAXM_SHOW_NUM, EAXM_SHOW_NUM);
+		}
 	}
 }

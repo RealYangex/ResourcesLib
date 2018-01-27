@@ -283,6 +283,76 @@ public class ExamresExamExample {
             addCriterion("subject_id not between", value1, value2, "subjectId");
             return (Criteria) this;
         }
+
+        public Criteria andUserAnwserIsNull() {
+            addCriterion("user_anwser is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAnwserIsNotNull() {
+            addCriterion("user_anwser is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAnwserEqualTo(String value) {
+            addCriterion("user_anwser =", value, "userAnwser");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAnwserNotEqualTo(String value) {
+            addCriterion("user_anwser <>", value, "userAnwser");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAnwserGreaterThan(String value) {
+            addCriterion("user_anwser >", value, "userAnwser");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAnwserGreaterThanOrEqualTo(String value) {
+            addCriterion("user_anwser >=", value, "userAnwser");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAnwserLessThan(String value) {
+            addCriterion("user_anwser <", value, "userAnwser");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAnwserLessThanOrEqualTo(String value) {
+            addCriterion("user_anwser <=", value, "userAnwser");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAnwserLike(String value) {
+            addCriterion("user_anwser like", value, "userAnwser");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAnwserNotLike(String value) {
+            addCriterion("user_anwser not like", value, "userAnwser");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAnwserIn(List<String> values) {
+            addCriterion("user_anwser in", values, "userAnwser");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAnwserNotIn(List<String> values) {
+            addCriterion("user_anwser not in", values, "userAnwser");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAnwserBetween(String value1, String value2) {
+            addCriterion("user_anwser between", value1, value2, "userAnwser");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAnwserNotBetween(String value1, String value2) {
+            addCriterion("user_anwser not between", value1, value2, "userAnwser");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

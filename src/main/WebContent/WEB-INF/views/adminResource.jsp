@@ -484,8 +484,6 @@
 	 		}else{	
 	 																										//不支持预览 交给浏览器
 	 			window.open("${APP_PATH}/"+localtion);
-	 		}else{
-	 			
 	 		}
 	 	}else if(type==4){								//图片
 	 		showImage("${APP_PATH}/"+localtion);

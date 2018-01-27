@@ -7,6 +7,8 @@ public class ExamresExam {
 
     private Integer subjectId;
 
+    private String userAnwser;
+
     public Integer getId() {
         return id;
     }
@@ -29,5 +31,13 @@ public class ExamresExam {
 
     public void setSubjectId(Integer subjectId) {
         this.subjectId = subjectId;
+    }
+
+    public String getUserAnwser() {
+        return userAnwser;
+    }
+
+    public void setUserAnwser(String userAnwser) {
+        this.userAnwser = userAnwser == null ? null : userAnwser.trim();
     }
 }

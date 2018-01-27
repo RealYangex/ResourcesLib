@@ -5,6 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="exam_id" jdbcType="INTEGER" property="examId" />
     <result column="subject_id" jdbcType="INTEGER" property="subjectId" />
+    <result column="user_anwser" jdbcType="VARCHAR" property="userAnwser" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, exam_id, subject_id
+    id, exam_id, subject_id, user_anwser
   </sql>
   <select id="selectByExample" parameterType="com.fengyukeji.resourceslib.bean.ExamresExamExample" resultMap="BaseResultMap">
     select
@@ -98,10 +99,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.fengyukeji.resourceslib.bean.ExamresExam">
-    insert into res_exam_subject (id, exam_id, subject_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{examId,jdbcType=INTEGER}, #{subjectId,jdbcType=INTEGER}
-      )
+    insert into res_exam_subject (id, exam_id, subject_id, 
+      user_anwser)
+    values (#{id,jdbcType=INTEGER}, #{examId,jdbcType=INTEGER}, #{subjectId,jdbcType=INTEGER}, 
+      #{userAnwser,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.fengyukeji.resourceslib.bean.ExamresExam">
     insert into res_exam_subject
@@ -115,6 +116,9 @@
       <if test="subjectId != null">
         subject_id,
       </if>
+      <if test="userAnwser != null">
+        user_anwser,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -125,6 +129,9 @@
       </if>
       <if test="subjectId != null">
         #{subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="userAnwser != null">
+        #{userAnwser,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -146,6 +153,9 @@
       <if test="record.subjectId != null">
         subject_id = #{record.subjectId,jdbcType=INTEGER},
       </if>
+      <if test="record.userAnwser != null">
+        user_anwser = #{record.userAnwser,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -155,7 +165,8 @@
     update res_exam_subject
     set id = #{record.id,jdbcType=INTEGER},
       exam_id = #{record.examId,jdbcType=INTEGER},
-      subject_id = #{record.subjectId,jdbcType=INTEGER}
+      subject_id = #{record.subjectId,jdbcType=INTEGER},
+      user_anwser = #{record.userAnwser,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -169,13 +180,17 @@
       <if test="subjectId != null">
         subject_id = #{subjectId,jdbcType=INTEGER},
       </if>
+      <if test="userAnwser != null">
+        user_anwser = #{userAnwser,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fengyukeji.resourceslib.bean.ExamresExam">
     update res_exam_subject
     set exam_id = #{examId,jdbcType=INTEGER},
-      subject_id = #{subjectId,jdbcType=INTEGER}
+      subject_id = #{subjectId,jdbcType=INTEGER},
+      user_anwser = #{userAnwser,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,15 +1,22 @@
 package com.fengyukeji.resourceslib.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.fengyukeji.resourceslib.bean.ExamWithCustomerBean;
+import com.fengyukeji.resourceslib.service.ExamService;
 import com.fengyukeji.resourceslib.utils.CreateImageCode;
+import com.fengyukeji.resourceslib.utils.DateUtil;
+import com.fengyukeji.resourceslib.utils.SimpleExcelWrite;
 
 /**
  * 视图控制器 用于控制返回视图
@@ -20,6 +27,10 @@ import com.fengyukeji.resourceslib.utils.CreateImageCode;
 @Controller
 @RequestMapping("/View")
 public class ViewController {
+	
+	@Autowired 
+	ExamService examService;
+	
 	/**
 	 * 登录
 	 * @return
@@ -183,4 +194,66 @@ public class ViewController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping("/exportExcelWrite")
+	public String exportExcelWrite(HttpServletRequest request){	
+		
+		String data=request.getParameter("data");
+		
+		
+		List<List<String>>datacol=new ArrayList();       //存数据的每一行每一列
+		
+		String[] dataArry=data.split("#");
+		for(int i=0;i<dataArry.length;i++) 
+		{
+			String[] dataAr=dataArry[i].split("`");
+			List<String> list = new ArrayList();
+			for(int j = 0;j<dataAr.length;j++){
+				
+				list.add(dataAr[j]);
+				
+			}
+			//List datarow = Arrays.asList(dataAr);	
+		//	datacol.add(datarow);
+			datacol.add(list);
+		}
+		SimpleExcelWrite.ListListData.addAll(datacol);
+			
+		return "exportExcelWrite";
+	}
+	
+	
+	@RequestMapping("/allExportExcelWrite")
+	public String allExportExcelWrite(HttpServletRequest request){	
+		
+		List<List<String>>datacol=new ArrayList();       //存数据的每一行每一列
+		
+		List<String> list = new ArrayList();
+		list.add("序 号");
+		list.add("用户名");
+		list.add("真实姓名");
+		list.add("考试开始时间");
+		list.add("考试结束时间");
+		list.add("考试成绩");
+		list.add("总分");
+		datacol.add(list);
+		List<ExamWithCustomerBean> examWithCustomerList = examService.getAllExamWithCustomer();
+		int i =1;
+		for(ExamWithCustomerBean examWithCustomer:examWithCustomerList){
+			List<String> list2 = new ArrayList();
+			list2.add(""+i);
+			list2.add(examWithCustomer.getCustomer().getUsername());
+			list2.add(examWithCustomer.getCustomer().getRealName());
+			list2.add(DateUtil.SqlDateToLocalDate(examWithCustomer.getStartTime()));
+			list2.add(DateUtil.SqlDateToLocalDate(examWithCustomer.getEndTime()));
+			list2.add(examWithCustomer.getScore().toString());
+			list2.add(examWithCustomer.getAllScore().toString());
+			datacol.add(list2);
+			i++;
+		}
+		SimpleExcelWrite.ListListData.addAll(datacol);
+			
+		return "exportExcelWrite";
+	}
+	
 }

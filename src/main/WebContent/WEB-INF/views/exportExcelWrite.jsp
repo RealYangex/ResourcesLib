@@ -3,7 +3,7 @@
 <%@ page import="com.fengyukeji.resourceslib.utils.SimpleExcelWrite" %>
 
 <% 
-    String fname = "试题添加";
+    String fname = "考试记录";
     //request.getSession().getAttribute("formName").toString();
     OutputStream os = response.getOutputStream();//取得输出流
     response.reset();//清空输出流
