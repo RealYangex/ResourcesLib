@@ -13,6 +13,9 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import com.fengyukeji.resourceslib.bean.ExamSchedule;
+import com.fengyukeji.resourceslib.bean.ExamWithCustomerBean;
+import com.fengyukeji.resourceslib.bean.ExamresExam;
+import com.fengyukeji.resourceslib.bean.Subject;
 import com.fengyukeji.resourceslib.bean.SubjectAnwserBean;
 import com.fengyukeji.resourceslib.service.ExamScheduleService;
 import com.fengyukeji.resourceslib.service.ExamService;
@@ -43,7 +46,7 @@ public class ExamController {
 		Integer page = Integer.parseInt(request.getParameter("page"));
 		List<SubjectAnwserBean> subjectList = examService.getSubjectAnwser(page);
 		long subjectCount = examService.getAnwserCount();
-		return Msg.success().add("subjectAnwsers", subjectList).add("subjectCount", subjectCount).add("showNum", ExamService.SHOW_NUM);
+		return Msg.success().add("subjectAnwsers", subjectList).add("subjectCount", subjectCount).add("showNum", ExamService.ANWSER_SHOW_NUM);
 	}
 	
 	/**
@@ -201,12 +204,12 @@ public class ExamController {
        
 		String[] subIds = subId.split(",#,");
 	   
-	    List<Integer[]> list=new ArrayList<Integer[]>();
+	    List<String[]> list=new ArrayList<String[]>();
 		for(int i=0;i<subIds.length;i++) {
 			String[] subIdContent =subIds[i].substring(0,subIds[i].length()).split(",");
-			 Integer[] cntInts=new Integer[3];
+			String[] cntInts=new String[4];
 			for(int j=0;j<subIdContent.length;j++) {
-				cntInts[j]=Integer.parseInt(subIdContent[j]);
+				cntInts[j]=subIdContent[j];
 			}
 			list.add(cntInts);
 		}
@@ -215,4 +218,91 @@ public class ExamController {
 		
 		return Msg.success().add("totalScore", totalScore);
 	}
+	
+	/**
+	 * 获取携带考试者信息的考试记录
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/getExamWithCustomer")
+	public Msg getExamWithCustomer(HttpServletRequest request){
+		Integer pageIndex = Integer.parseInt(request.getParameter("pageIndex"));
+		List<ExamWithCustomerBean> examWithAnwserList = examService.getExamWithCustomer(pageIndex);
+		long examCount = examService.getExamCount();
+		return Msg.success().add("examList", examWithAnwserList).add("examCount",examCount).add("showNum",examService.EAXM_SHOW_NUM);
+	}
+	
+	/**
+	 * 获取携带考试者信息的考试记录
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/getExamWithCustomerSortByScore")
+	public Msg getExamWithCustomerSortByScore(HttpServletRequest request){
+		Integer pageIndex = Integer.parseInt(request.getParameter("pageIndex"));
+		String sort = request.getParameter("sort");
+		List<ExamWithCustomerBean> examWithAnwserList = null;
+		if(sort.equals("up")){
+			examWithAnwserList = examService.getExamWithCustomerSortByScore(pageIndex,"up");
+		}else{
+			examWithAnwserList = examService.getExamWithCustomerSortByScore(pageIndex,"down");
+		}
+		long examCount = examService.getExamCount();
+		return Msg.success().add("examList", examWithAnwserList).add("examCount",examCount).add("showNum",examService.EAXM_SHOW_NUM);
+	}
+	
+	
+	/**
+	 * 通过id删除考试记录
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/deleteEaxmById")
+	public Msg deleteEaxmById(HttpServletRequest request){
+		
+		Integer id = Integer.parseInt(request.getParameter("id"));
+		examService.deleteEaxmById(id);
+		return Msg.success();
+	}
+	
+	/**
+	 * 通过id删除考试记录
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/deleteEaxmByIds")
+	public Msg deleteEaxmByIds(HttpServletRequest request){
+		
+		String ids = request.getParameter("ids");
+		String[] idarr = ids.split(",");
+		for(String str:idarr){
+			Integer id = Integer.parseInt(str);
+			examService.deleteEaxmById(id);
+		}
+		return Msg.success();
+	}
+	
+	/**
+	 * 获取考试详情
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/getExamDetail")
+	public Msg getExamDetail(HttpServletRequest request){
+	  Integer id=Integer.parseInt(request.getParameter("id"));
+	  List<ExamresExam> detailList=examService.getExamAnswer(id);//获取用户选的答案
+	  List<Subject> subjectList=examService.getExamSubject(id); //获取用户考试的题目
+		return Msg.success().add("detailList", detailList).add("subjectList", subjectList);
+	}
 }
+
+
+
+
+
+

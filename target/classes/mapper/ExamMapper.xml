@@ -10,6 +10,18 @@
     <result column="exam_subject_id" jdbcType="INTEGER" property="examSubjectId" />
     <result column="all_score" jdbcType="REAL" property="allScore" />
   </resultMap>
+  <resultMap id="BaseWithCustomerResultMap" type="com.fengyukeji.resourceslib.bean.ExamWithCustomerBean">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="all_score" jdbcType="REAL" property="allScore" />
+    <association property="customer" javaType="com.fengyukeji.resourceslib.bean.Customer">
+    	<result column="username" jdbcType="VARCHAR"  property="username"/>
+    	<result column="real_name" jdbcType="VARCHAR"  property="realName"/>
+    </association>
+  </resultMap>
+  
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -85,6 +97,27 @@
       order by ${orderByClause}
     </if>
   </select>
+  
+  <!-- 自定义获取答案方法 -->
+  <select id="selectEaxmWithCustomer"  resultMap="BaseWithCustomerResultMap">
+    SELECT e.id,c.`username`,c.`real_name`,e.`start_time`,e.`end_time`,e.`score`,e.`all_score` FROM `res_exam` e LEFT JOIN res_customer c ON e.`customer_id` = c.`id` ORDER BY e.id DESC LIMIT #{0},#{1}
+  </select>
+  
+   <!-- 自定义获取所有答案方法 -->
+  <select id="selectAllExamWithCustomer"  resultMap="BaseWithCustomerResultMap">
+    SELECT e.id,c.`username`,c.`real_name`,e.`start_time`,e.`end_time`,e.`score`,e.`all_score` FROM `res_exam` e LEFT JOIN res_customer c ON e.`customer_id` = c.`id` ORDER BY e.id DESC
+  </select>
+  
+  <!-- 自定义获取所有答案方法 根据分数排序  顺序 -->
+  <select id="selectEaxmWithCustomerSortByScoreDown"  resultMap="BaseWithCustomerResultMap">
+    SELECT e.id,c.`username`,c.`real_name`,e.`start_time`,e.`end_time`,e.`score`,e.`all_score` FROM `res_exam` e LEFT JOIN res_customer c ON e.`customer_id` = c.`id` ORDER BY e.score  LIMIT #{0},#{1}
+  </select>
+  
+  <!-- 自定义获取所有答案方法 根据分数排序  倒序 -->
+  <select id="selectEaxmWithCustomerSortByScoreUp"  resultMap="BaseWithCustomerResultMap">
+    SELECT e.id,c.`username`,c.`real_name`,e.`start_time`,e.`end_time`,e.`score`,e.`all_score` FROM `res_exam` e LEFT JOIN res_customer c ON e.`customer_id` = c.`id` ORDER BY e.score desc LIMIT #{0},#{1}
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

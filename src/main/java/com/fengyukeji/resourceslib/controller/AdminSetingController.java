@@ -34,6 +34,19 @@ public class AdminSetingController {
 	}
 	
 	/**
+	 * 获取消息设置
+	 * @return
+	 * @throws
+	 */
+	@ResponseBody
+	@RequestMapping("/getMsgSeting")
+	public Msg getMsgSeting(HttpServletRequest request,HttpSession session)
+	{
+        Integer value= adminSetingService.getMsgSeting();
+		
+		return Msg.success().add("value", value);
+	}
+	/**
 	 * 访问设置
 	 * @return
 	 * @throws

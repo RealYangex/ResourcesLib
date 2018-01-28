@@ -238,16 +238,19 @@ function handpaper(){
 			subIds[i][0]=schId;
 			subIds[i][1]="0";  
 			subIds[i][2]="0";
+			subIds[i][3]="没有填写";
 		}else if($(inputS).val()==" "){
 			subIds[i][0]=schId;
 			subIds[i][1]="1";  
-			subIds[i][2]="0";  
+			subIds[i][2]="0"; 
+			subIds[i][3]=$(inputS).parents("label").text()+"(错误)";
 		}else{
 			subIds[i][0]=schId;
 			subIds[i][1]="1";  
-			subIds[i][2]="1";  
+			subIds[i][2]="1"; 
+			subIds[i][3]=$(inputS).parents("label").text()+"(正确)";
 		}
-		subIds[i][3]="#";  
+		subIds[i][4]="#";  
 	}
 	 var load = layer.msg("正在批改,请稍后!",{icon:16,shade:0.05,time:38*1000});
 	$.ajax({

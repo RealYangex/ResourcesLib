@@ -1,5 +1,7 @@
 package com.fengyukeji.resourceslib.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.List;
 
@@ -297,5 +299,23 @@ public class CustomerController {
 		return Msg.success();
 	}
 	
-	
+	/**
+	 * 获取访问人次
+	 * @return
+	 * @throws UnknownHostException 
+	 */
+	@ResponseBody
+	@RequestMapping("/visitCount")
+	public Msg visitCount() throws UnknownHostException{
+		//获取当前时间
+		Date date=new Date();
+		//获取系统ip
+		InetAddress addr = InetAddress.getLocalHost();
+		String ip=addr.getHostAddress().toString(); 
+		
+		List<Object> visitCountList=customerService.visitCount(date,ip);
+		Integer totalCount=(Integer) visitCountList.get(0);
+		Integer todayCount=(Integer) visitCountList.get(1);
+		return Msg.success().add("totalCount",totalCount).add("todayCount", todayCount);
+	}
 }

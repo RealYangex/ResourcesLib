@@ -92,7 +92,9 @@ public class ExamScheduleService {
 	    List<Float> list=new ArrayList<Float>();
 	    if(schList.isEmpty()) {
 	    	list.add(0f);
-	        list.add(Float.parseFloat(schList.get(0).getExamTime().toString()));
+	    	list.add(0f);
+	    	list.add(0f);
+	    	list.add(0f);
 	    }
 	    else {
 	    	list.add(Float.parseFloat(schList.get(0).getId().toString()));

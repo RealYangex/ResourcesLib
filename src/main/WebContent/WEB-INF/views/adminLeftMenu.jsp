@@ -130,7 +130,6 @@
     					layer.confirm('保存成功！', {
     						  btn: ['确定'] 					  
     						}, function(index, layero){
-    							$("#add_modal").modal("hide");
     							layer.close(index);
     						}
     						);	
@@ -148,7 +147,7 @@
      <!-- 消息设置B -->
     <script type="text/javascript">
        $(document).on("click","#messageSet",function(){
-    	   layer.open({
+    	  layer.open({
 				  type: 1 
 				  ,area: ['380px', '243px']
  	          ,title:'消息设置'
@@ -165,6 +164,31 @@
 			     ' </div>'+
 			   ' </div>'
 				}); 
+    	  
+    	  $.ajax({
+				url:'${APP_PATH}/AdminSeting/getMsgSeting',
+				type:'get',
+				success:function(data){
+					  var value=data.extend.value;
+					 switch(value){
+					    case 1:$("#formMsg").find("input:eq(0)").attr("checked","checked");break;
+					    case 2:$("#formMsg").find("input:eq(1)").attr("checked","checked");break;
+					    case 3:$("#formMsg").find("input:eq(0)").attr("checked","checked");$("#formMsg").find("input:eq(1)").attr("checked","checked");break;
+					    case 4:$("#formMsg").find("input:eq(2)").attr("checked","checked");break;
+					    case 5:$("#formMsg").find("input:eq(0)").attr("checked","checked");$("#formMsg").find("input:eq(2)").attr("checked","checked");break;
+					    case 6:$("#formMsg").find("input:eq(1)").attr("checked","checked");$("#formMsg").find("input:eq(2)").attr("checked","checked");break;
+					    case 7:$("#formMsg").find("input:eq(0)").attr("checked","checked");$("#formMsg").find("input:eq(1)").attr("checked","checked");$("#formMsg").find("input:eq(2)").attr("checked","checked");break;
+					    case 8:$("#formMsg").find("input:eq(3)").attr("checked","checked");break;
+					    case 9:$("#formMsg").find("input:eq(0)").attr("checked","checked");$("#formMsg").find("input:eq(3)").attr("checked","checked");break;
+					    case 10:$("#formMsg").find("input:eq(1)").attr("checked","checked");$("#formMsg").find("input:eq(3)").attr("checked","checked");break;
+					    case 11:$("#formMsg").find("input:eq(0)").attr("checked","checked");$("#formMsg").find("input:eq(1)").attr("checked","checked");$("#formMsg").find("input:eq(3)").attr("checked","checked");break;
+					    case 12:$("#formMsg").find("input:eq(2)").attr("checked","checked");$("#formMsg").find("input:eq(3)").attr("checked","checked");break;
+					    case 13:$("#formMsg").find("input:eq(0)").attr("checked","checked");break;
+					    case 14:$("#formMsg").find("input:eq(1)").attr("checked","checked");$("#formMsg").find("input:eq(2)").attr("checked","checked");$("#formMsg").find("input:eq(3)").attr("checked","checked");break;
+					    case 15:$("#formMsg").find("input:eq(0)").attr("checked","checked");$("#formMsg").find("input:eq(1)").attr("checked","checked");$("#formMsg").find("input:eq(2)").attr("checked","checked");$("#formMsg").find("input:eq(3)").attr("checked","checked");break;
+					 } 
+				}					
+			})
        });
        $(document).on("click","#msgSetingSave",function(){
     	  var value=0;  
@@ -177,7 +201,6 @@
 				data:'value='+value,
 				type:'post',
 				success:function(data){
-					layer.close(load);
 					if(data.code==200){
 						 layer.alert("保存成功！");				 
 					}else{
@@ -193,7 +216,7 @@
      <!-- 访问设置B -->
     <script type="text/javascript">
        $(document).on("click","#visitSet",function(){
-    	   layer.open({
+    	  layer.open({
 				  type: 1 
 				  ,area: ['380px', '217px']
 	          ,title:'访问设置'
@@ -238,7 +261,6 @@
 				data:'value='+value,
 				type:'post',
 				success:function(data){
-					layer.close(load);
 					if(data.code==200){
 						 layer.alert("保存成功！");				 
 					}else{
