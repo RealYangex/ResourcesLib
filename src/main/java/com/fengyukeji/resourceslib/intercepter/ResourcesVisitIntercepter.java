@@ -7,8 +7,12 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.fengyukeji.resourceslib.service.AdminSetingService;
+
 
 /**
  * 
@@ -17,7 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
  * 2018年1月24日
  */
 public class ResourcesVisitIntercepter implements HandlerInterceptor{
-
+	
+	@Autowired
+	AdminSetingService adminSettingService;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
@@ -31,14 +38,35 @@ public class ResourcesVisitIntercepter implements HandlerInterceptor{
 					return true;
 				}
 			}
-			if(customerName!=null&&customerName!=""){
-				return true;
-			}
+			
+			//如果是管理员直接通行
 			if(adminName!=null){
 				return true;
 			}
-			response.sendRedirect(request.getServletContext().getContextPath()+"/Customer/cannotVisit");
-		return false;
+			
+			//判断管理设置的访问权限
+			Integer visitSet = adminSettingService.getVistSeting();
+			System.out.println(visitSet);
+			if(visitSet==0){
+				
+				//仅管理员可以访问
+				response.sendRedirect(request.getServletContext().getContextPath()+"/Customer/cannotVisit?visit=0");
+				return false;
+				
+			}else if(visitSet==2){
+				
+				//所有人可以访问
+				return true;
+			}else{
+				
+				//会员可以访问
+				if(customerName!=null&&customerName!=""){
+					return true;
+				}else{
+					response.sendRedirect(request.getServletContext().getContextPath()+"/Customer/cannotVisit?visit=1");
+					return false;
+				}
+			}
 	}
 
 	@Override

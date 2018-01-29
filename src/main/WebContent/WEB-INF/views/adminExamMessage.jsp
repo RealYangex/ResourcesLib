@@ -127,7 +127,7 @@ $(function(){
 				type:"get",
 				data:{"pn":pn,"msgTypeSel":msgTypeSel},
 				success:function(data){
-					layer.close(load);
+					setTimeout(function(){layer.close(load)}, 500);
 					var msg = data.extend.msgList.list;
 					$("#messageContainer").empty();
 					$.each(msg,function(index,item){
@@ -189,7 +189,7 @@ $(function(){
 				type:'post',
 				success:function(data){
 					if(data.code==200){
-						layer.close(load);
+						setTimeout(function(){layer.close(load)}, 500);
 						$(msgDiv).remove();
 						layer.confirm('删除成功！', {
 							  btn: ['确定'] 					  
@@ -224,7 +224,7 @@ $("#deletenAll").click(function(){
 				type:'post',
 				success:function(data){
 					if(data.code==200){
-						layer.close(load);
+						setTimeout(function(){layer.close(load)}, 500);
 						layer.confirm('全部删除成功！', {
 							  btn: ['确定'] 					  
 							}, function(index, layero){						

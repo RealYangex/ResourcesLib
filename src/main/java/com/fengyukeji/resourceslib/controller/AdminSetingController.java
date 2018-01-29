@@ -29,7 +29,6 @@ public class AdminSetingController {
 	{
 		Integer value=Integer.parseInt(request.getParameter("value"));
 		adminSetingService.msgSeting(value);
-		
 		return Msg.success();
 	}
 	
@@ -62,4 +61,19 @@ public class AdminSetingController {
 		
 		return Msg.success().add("value", value);
 	}
+	
+	/**
+	 * 获取设置的消息范围
+	 * @return
+	 * @throws
+	 */
+	@ResponseBody
+	@RequestMapping("/getMsgSeting")
+	public Msg getMsgSeting(HttpServletRequest request)
+	{
+	   Integer value= adminSetingService.getMsgSeting();
+		
+		return Msg.success().add("value", value);
+	}
+	
 }

@@ -239,7 +239,7 @@ $("#greenAll").click(function(){
 				type:'post',
 				success:function(data){
 					if(data.code==200){
-						layer.close(load);
+						setTimeout(function(){layer.close(load)}, 500);
 						$(msgDiv).remove();
 						layer.confirm('删除成功！', {
 							  btn: ['确定'] 					  
@@ -329,13 +329,13 @@ function getAgreeState(Id){
   //function getAllSupplipes(pn)B
 		function getAllSupplipes(pn,msgTypeSel){
 			 
-			 var load = layer.msg("正在加载数据,请稍后!",{icon:16,shade:0.05,time:38*1000});
+			var load = layer.msg("正在加载数据,请稍后!",{icon:16,shade:0.05,time:38*1000});
 			$.ajax({
 				url:'${APP_PATH}/SystemMessge/getAllSystemMessge',
 				type:"get",
 				data:{"pn":pn,"msgTypeSel":msgTypeSel},
 				success:function(data){
-					layer.close(load);
+					setTimeout(function(){layer.close(load)}, 500);
 					var msg = data.extend.msgList.list;
 					$("#messageContainer").empty();
 					$.each(msg,function(index,item){

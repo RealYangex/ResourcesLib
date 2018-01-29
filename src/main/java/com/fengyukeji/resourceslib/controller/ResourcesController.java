@@ -26,7 +26,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fengyukeji.resourceslib.bean.Resources;
+import com.fengyukeji.resourceslib.service.AdminSetingService;
+import com.fengyukeji.resourceslib.service.CustomerService;
 import com.fengyukeji.resourceslib.service.ResourceService;
+import com.fengyukeji.resourceslib.service.SystemMessgeService;
 import com.fengyukeji.resourceslib.utils.DateUtil;
 import com.fengyukeji.resourceslib.utils.FileUtil;
 import com.fengyukeji.resourceslib.utils.Msg;
@@ -41,9 +44,11 @@ import com.fengyukeji.resourceslib.utils.Msg;
 @RequestMapping("/Resources")
 public class ResourcesController {
 	
-	
 	@Autowired
 	ResourceService resourceService;
+	
+	@Autowired
+	CustomerService customerService;
 	
 	/**
 	 *上传文件
@@ -258,7 +263,7 @@ public class ResourcesController {
 				PrintWriter out = response.getWriter();
 				out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
 		        out.println("<HTML>");
-		        out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
+		        out.println("  <HEAD><TITLE>资源建设平台</TITLE></HEAD>");
 		        out.println("  <BODY>");
 		        out.print("   <center><h3>资源不存在<h3><hr>Tomocat 8.0<center> ");
 		        out.println("  </BODY>");
@@ -317,7 +322,7 @@ public class ResourcesController {
 				out = response.getWriter();
 				out.println("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">");
 		        out.println("<HTML>");
-		        out.println("  <HEAD><TITLE>A Servlet</TITLE></HEAD>");
+		        out.println("  <HEAD><TITLE>资源建设平台</TITLE></HEAD>");
 		        out.println("  <BODY>");
 		        out.print("   <center><h3>资源不存在<h3><hr>Tomocat 8.0<center> ");
 		        out.println("  </BODY>");
@@ -345,4 +350,58 @@ public class ResourcesController {
 		request.getSession().setAttribute("videoAdress", videoAdress);
 		return Msg.success();
 	}
+	
+	/**
+	 * flv 格式视频播放地址
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/getResourceInfo")
+	public Msg getResourceInfo(HttpServletRequest request){
+		long start = System.currentTimeMillis();
+		//获取所有文件数
+		long allFileCount = resourceService.getFileCountByType(0);
+		
+		//获取音频文件数
+		long audioFileCount = resourceService.getFileCountByType(1);
+		
+		//获取视频文件数
+		long videoFileCount = resourceService.getFileCountByType(2);
+		
+		//获取文档文件数
+		long docFileCount = resourceService.getFileCountByType(3);
+		
+		//获取图片文件数
+		long imageFileCount = resourceService.getFileCountByType(4);
+		
+		
+		
+		
+		
+		
+		//获取用户数
+		long allCusotmerCount = customerService.getAllCustomerCount();
+		
+		
+		
+		
+		int audioPercent = (int)(((float)audioFileCount/allFileCount)*100);
+		
+		int vedioPercent = (int)(((float)videoFileCount/allFileCount)*100);
+		
+		int docPercent = (int)(((float)docFileCount/allFileCount)*100);
+		
+		int imagePercent = (int)(((float)imageFileCount/allFileCount)*100);
+		
+		
+		long end = System.currentTimeMillis();
+		
+		System.out.println("消耗时间"+(end-start)+":ms");
+		return Msg.success().add("allFileCount", allFileCount).add("audioPercent",audioPercent)
+				.add("vedioPercent", vedioPercent).add("docPercent", docPercent).add("imagePercent", imagePercent)
+				.add("allCusotmerCount", allCusotmerCount);
+	}
+	
+	
 }

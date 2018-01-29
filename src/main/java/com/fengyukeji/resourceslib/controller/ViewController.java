@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fengyukeji.resourceslib.bean.ExamWithCustomerBean;
+import com.fengyukeji.resourceslib.service.AdminSetingService;
 import com.fengyukeji.resourceslib.service.ExamService;
+import com.fengyukeji.resourceslib.service.SystemMessgeService;
 import com.fengyukeji.resourceslib.utils.CreateImageCode;
 import com.fengyukeji.resourceslib.utils.DateUtil;
 import com.fengyukeji.resourceslib.utils.SimpleExcelWrite;
@@ -30,6 +32,12 @@ public class ViewController {
 	
 	@Autowired 
 	ExamService examService;
+	
+	@Autowired
+	SystemMessgeService systemMessageService;
+	
+	@Autowired
+	AdminSetingService adminSetingSerivce;
 	
 	/**
 	 * 登录
@@ -55,7 +63,10 @@ public class ViewController {
 	 * @return
 	 */
 	@RequestMapping("/adminIndex")
-	public String adminIndex(){
+	public String adminIndex(HttpServletRequest request){
+		
+		//设置消息状态
+		getMessage(request);
 		return "adminIndex";
 	}
 	
@@ -64,7 +75,10 @@ public class ViewController {
 	 * @return
 	 */
 	@RequestMapping("/index/admin")
-	public String admin(){
+	public String admin(HttpServletRequest request){
+		
+		//设置消息状态
+		getMessage(request);
 		return "adminIndex";
 	}
 
@@ -74,7 +88,10 @@ public class ViewController {
 	 * @return
 	 */
 	@RequestMapping("/adminResource")
-	public String adminResource(){
+	public String adminResource(HttpServletRequest request){
+		
+		//设置消息状态
+		getMessage(request);
 		return "adminResource";
 	}
 	/**
@@ -82,7 +99,10 @@ public class ViewController {
 	 * @return
 	 */
 	@RequestMapping("/adminCoustomer")
-	public String adminCoustomer(){
+	public String adminCoustomer(HttpServletRequest request){
+		
+		//设置消息状态
+		getMessage(request);
 		return "adminCoustomer";
 	}
 	
@@ -91,7 +111,13 @@ public class ViewController {
 	 * @return
 	 */
 	@RequestMapping("/adminSystemMessge")
-	public String adminSystemMessge(){
+	public String adminSystemMessge(HttpServletRequest request){
+		
+		//设置系统消息为已读 2的系统消息
+		systemMessageService.setMessageReaded(2);
+		
+		//设置消息状态
+		getMessage(request);
 		return "adminSystemMessge";
 	}
 	//+++++++++++++++++++++++++
@@ -101,7 +127,8 @@ public class ViewController {
 	 * @return
 	 */
 	@RequestMapping("/adminExamManage")
-	public String adminExamManage(){
+	public String adminExamManage(HttpServletRequest request){
+		getMessage(request);
 		return "adminExamManage";
 	}
 	
@@ -110,7 +137,8 @@ public class ViewController {
 	 * @return
 	 */
 	@RequestMapping("/adminGradeManage")
-	public String adminGradeManage(){
+	public String adminGradeManage(HttpServletRequest request){
+		getMessage(request);
 		return "adminGradeManage";
 	}
 	
@@ -119,7 +147,12 @@ public class ViewController {
 	 * @return
 	 */
 	@RequestMapping("/adminExamMessage")
-	public String adminExamMessage(){
+	public String adminExamMessage(HttpServletRequest request){
+		
+		//设置系统消息为已读 3为考试消息
+		systemMessageService.setMessageReaded(3);
+		//设置消息状态
+		getMessage(request);
 		return "adminExamMessage";
 	}
 	
@@ -129,6 +162,7 @@ public class ViewController {
 	 */
 	@RequestMapping("/adminSetting")
 	public String adminSetting(){
+		
 		return "adminSetting";
 	}
 	
@@ -254,6 +288,40 @@ public class ViewController {
 		SimpleExcelWrite.ListListData.addAll(datacol);
 			
 		return "exportExcelWrite";
+	}
+	
+	/**
+	 *  获取消息信息
+	 */
+	public void getMessage (HttpServletRequest request){
+		
+		long examMessage = 0;
+		//根据用户设置的消息范围获取消息
+		int messageRange = adminSetingSerivce.getMsgSeting();
+		String range = "0000"+Integer.toBinaryString(messageRange);
+		String rangBinartStr = range.substring(range.length()-4);
+		List<Integer> list1 = new ArrayList();
+		List<Integer> list2 = new ArrayList();
+		if(rangBinartStr.substring(0, 1).equals("0")){
+			list2.add(3);
+			
+			//获取未读的考试消息
+			examMessage = systemMessageService.getMessgeCountByType(list2);
+		}
+		if(rangBinartStr.substring(1, 2).equals("0")){
+			list1.add(2);
+		}
+		if(rangBinartStr.substring(2, 3).equals("0")){
+			list1.add(1);
+		}
+		if(rangBinartStr.substring(3, 4).equals("0")){
+			list1.add(0);
+		}
+		
+		//获取未读系统消息
+		long systemMessage = systemMessageService.getMessgeCountByType(list1);
+		request.getSession().setAttribute("systemMessage", systemMessage);
+		request.getSession().setAttribute("examMessage", examMessage);
 	}
 	
 }

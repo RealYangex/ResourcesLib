@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fengyukeji.resourceslib.bean.Customer;
 import com.fengyukeji.resourceslib.bean.Message;
 import com.fengyukeji.resourceslib.bean.Resources;
+import com.fengyukeji.resourceslib.service.AdminSetingService;
 import com.fengyukeji.resourceslib.service.CustomerService;
 import com.fengyukeji.resourceslib.service.ResourceService;
 import com.fengyukeji.resourceslib.service.SystemMessgeService;
@@ -42,6 +43,9 @@ public class CustomerController {
 	
 	@Autowired
 	ResourceService resourceService;
+	
+	@Autowired
+	AdminSetingService adminSettingService;
 	
 	/**
 	 * 保存用户信息 
@@ -81,7 +85,7 @@ public class CustomerController {
 	@ResponseBody
 	@RequestMapping("/getAllCustomer")
 	public Msg getAllCustomer(@RequestParam(value="pn",defaultValue = "1")Integer pn){
-		PageHelper.startPage(pn, 6);
+		PageHelper.startPage(pn, 12);
 		List<Customer> cusList = customerService.getAllCustomer();
 		PageInfo page = new PageInfo(cusList,1);
 		
@@ -242,10 +246,17 @@ public class CustomerController {
 	 */
 	@ResponseBody
 	@RequestMapping("/cannotVisit")
-	public Msg cannotVisit(){
+	public Msg cannotVisit(HttpServletRequest request){
 		
+		String visit = request.getParameter("visit");
 		Msg msg = new Msg();
-		msg.setCode(300);
+		if("0".equals(visit)){
+			msg.setMessage("当前系统设置仅管理员可以访问，请联管理员");
+			msg.setCode(400);
+		}else{
+			msg.setMessage("请先登录");
+			msg.setCode(300);
+		}
 		return msg;
 	}
 	
@@ -257,10 +268,29 @@ public class CustomerController {
 	@RequestMapping("/checkLogin")
 	public Msg checkLogin(HttpServletRequest request){
 		Object UserName = request.getSession().getAttribute("UserName");
-		if(UserName==null||UserName==""){
-			return Msg.failed();
+		
+		//判断管理设置的访问权限
+		Integer visitSet = adminSettingService.getVistSeting();
+		
+		Msg msg = new Msg();
+		
+		if(visitSet==1){
+			if(UserName==null||UserName==""){
+				msg.setCode(100);
+				return msg;
+			}else{
+				msg.setCode(200);
+				return msg;
+			}
+		}else if(visitSet==0){
+			msg.setCode(400);
+			return msg;
+		}else{
+			msg.setCode(200);
+			return msg;
 		}
-		return Msg.success();
+		
+		
 	}
 	
 	/**

@@ -146,4 +146,13 @@ public class CustomerService {
 		else
 			return 1;
 	}
+	
+	/**
+	 * 获取所有的用户数量
+	 * @return
+	 */
+	public long getAllCustomerCount() {
+		
+		return customerMapper.countByExample(null);
+	}
 }

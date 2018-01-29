@@ -1,5 +1,6 @@
 package com.fengyukeji.resourceslib.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -94,6 +95,45 @@ public class SystemMessgeService {
 	
 	public void insertMessage(Message message) {
 		messageMapper.insertSelective(message);
+	}
+	
+	/**
+	 * 设置系统消息为已读状态
+	 * @param i
+	 */
+	public void setMessageReaded(int i) {
+		if(i==2){
+			
+			//系统消息
+			MessageExample example = new MessageExample();
+			List<Integer> list = new ArrayList();
+			list.add(0);
+			list.add(1);
+			example.createCriteria().andTypeIn(list).andIsReadedEqualTo(0);
+			Message message = new Message();
+			message.setIsReaded(1);
+			messageMapper.updateByExampleSelective(message, example);
+		}else{
+			
+			//考试消息
+			MessageExample example = new MessageExample();
+			example.createCriteria().andTypeEqualTo(3).andIsReadedEqualTo(0);
+			Message message = new Message();
+			message.setIsReaded(1);
+			messageMapper.updateByExampleSelective(message, example);
+		}
+		
+	}
+	
+	/**
+	 * 获取未读消息数量 根据类型
+	 * @param list 消息类型
+	 * @return
+	 */
+	public long getMessgeCountByType(List<Integer> list) {
+		MessageExample example = new MessageExample();
+		example.createCriteria().andTypeIn(list).andIsReadedEqualTo(0);
+		return messageMapper.countByExample(example);
 	}
 	
 

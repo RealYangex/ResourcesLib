@@ -289,5 +289,20 @@ public class ResourceService {
 		return resourcesMapper.selectByPrimaryKey(id);
 	}
 	
+	/**
+	 * 获取文件的数量 根据类型
+	 * @return
+	 */
+	public long getFileCountByType(Integer type) {
+		if(type==0){
+			return resourcesMapper.countByExample(null);
+		}else{
+			ResourcesExample example = new ResourcesExample();
+			example.createCriteria().andResResourcesTypeEqualTo(type);
+			return resourcesMapper.countByExample(example);
+		}
+		
+	}
+	
 	
 }

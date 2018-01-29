@@ -6,7 +6,7 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1' />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 <meta name="renderer" content="webkit"/>
-<title>请登录--问卷调查管理系统</title> 
+<title>请登录--资源建设平台</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <script type="text/javascript" src="${APP_PATH}/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="${APP_PATH}/static/js/layer.js"></script>

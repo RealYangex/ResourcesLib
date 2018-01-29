@@ -191,7 +191,7 @@
 				type:"get",
 				data:data,
 				success:function(data){
-					layer.close(load);
+					setTimeout(function(){layer.close(load)}, 500);
 					if(data.code==200){
 						var customer = data.extend.examList;
 						var examCount = data.extend.examCount;
@@ -335,7 +335,7 @@
 						data:'id='+id,
 						type:'post',
 						success:function(data){
-							layer.close(load);
+							setTimeout(function(){layer.close(load)}, 500);
 							if(data.code==200){
 								getExam(current_page);
 							}
@@ -482,7 +482,7 @@
 						data:'ids='+ids,
 						type:'post',
 						success:function(data){
-							layer.close(load);
+							setTimeout(function(){layer.close(load)}, 500);
 							if(data.code==200){
 								getExam(current_page);
 							}

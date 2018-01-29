@@ -41,7 +41,7 @@ public class SystemMessgeController {
 		PageHelper.startPage(pn, 4);
 		List<Message> msgList = systemMessgeService.getAllSystemMessge(msgTypeSel);
 		PageInfo page = new PageInfo(msgList,1);
-	
+		
 		/*systemMessgeService.addSystemMessge();
 		return Msg.success();*/
 		return Msg.success().add("msgList",page);

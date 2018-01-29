@@ -36,7 +36,7 @@
 						<div class="showIconDiv" >
 							<center>
 								<span class=" fa fa-tasks" style="font-size:50px;"></span>
-								<label style="color:#333333">1200</label><br>
+								<label style="color:#333333" id="fileCount"></label><br>
 								<span style="color:#333333" class="title">资源总数</span>
 							</center>
 						</div>
@@ -44,8 +44,8 @@
 					<div class="range fr" style="margin-right:10px;">
 						<div class="showIconDiv" >
 							<center>
-								<span class=" fa fa-user" style="font-size:52px;"></span>
-								<label style="color:#333333">800</label><br>
+								<span class=" fa fa-user" style="font-size:52px;"></span></br>
+								<label style="color:#333333" id="customerCount"></label><br>
 								<span style="color:#333333" class="title">用户数量</span>
 							</center>
 						</div>
@@ -96,7 +96,7 @@
 						<div class="showIconDiv" >
 							<center>
 								<span class=" fa fa-eye" style="font-size:52px;"></span>
-								<label style="color:#333333">800</label><br>
+								<label style="color:#333333" id="visitCount">800</label><br>
 								<span style="color:#333333" class="title">总浏览量</span>
 							</center>
 						</div>
@@ -105,36 +105,36 @@
 					<div class="fileType fileTypeFrist fileLine" >
 						<span>视频文件</span>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<span class="number fr" >60%</span>
+						<span class="number fr" id="videoPercent">0%</span>
 						<div class="progress" style="height:10px;">
-						  <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 60%;height:12px;">
+						  <div id="videoPercentLine" class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%;height:12px;">
 						  </div>
 						</div>
 					</div>
 					<div class="fileType fileLine">
 						<span>音频文件</span>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<span class="number fr" >88%</span>
+						<span class="number fr" id="audioPercent">0%</span>
 						<div class="progress" style="height:10px;">
-						  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 88%;height:12px;">
+						  <div id="audioPercentLine" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%;height:12px;">
 						  </div>
 						</div>
 					</div>
 					<div class="fileType fileLine">
 						<span>图片文件</span>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<span class="number fr" >70%</span>
+						<span class="number fr" id="imagePercent">0%</span>
 						<div class="progress" style="height:10px;">
-						  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 70%;height:12px;">
+						  <div  id="imagePercentLine" class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%;height:12px;">
 						  </div>
 						</div>
 					</div>
 					<div class="fileType fileTypeLast ">
 						<span>文本文件</span>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<span class="number fr" >80%</span>
+						<span class="number fr" id="docPercent">0%</span>
 						<div class="progress" style="height:10px;">
-						  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 80%;height:12px;">
+						  <div id="docPercentLine" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%;height:12px;">
 						  </div>
 						</div>
 					</div>
@@ -156,6 +156,63 @@
 <script type="text/javascript">
 	
 	$(function(){
+		
+		getResourceInfo()
+		
+		/**
+		 *	获取资源信息
+		 */
+		function getResourceInfo(){
+			var load = layer.msg("正在加载数据,请稍后!",{icon:16,shade:0.05,time:88*1000});
+			$.ajax({
+				url:'${APP_PATH}/Resources/getResourceInfo',
+				type:"get",
+				success:function(data){
+					setTimeout(function(){layer.close(load)}, 500);
+					if(data.code==200){
+						var datas = data.extend;
+						var allFileCount = datas.allFileCount;
+						var audioPercent = datas.audioPercent;
+						var vedioPercent = datas.vedioPercent;
+						var docPercent = datas.docPercent;
+						var imagePercent = datas.imagePercent;
+						var allCusotmerCount = datas.allCusotmerCount;
+						var systemMessage = datas.systemMessage;
+						var examMessage = datas.examMessage;
+						
+						//设置这些值
+						$("#fileCount").text(allFileCount);
+						$("#customerCount").text(allCusotmerCount);
+						$("#videoPercent").text(vedioPercent+"%");
+						$("#videoPercentLine").css("width",vedioPercent+"%");
+						$("#imagePercent").text(imagePercent+"%");
+						$("#imagePercentLine").css("width",imagePercent+"%");
+						$("#docPercent").text(docPercent+"%");
+						$("#docPercentLine").css("width",docPercent+"%");
+						$("#audioPercent").text(audioPercent+"%");
+						$("#audioPercentLine").css("width",audioPercent+"%");
+						
+						/*
+						//如果新消息为零则去掉badge
+						if(systemMessage==0){
+							$("#systemMessageBadge").remove();
+						}else{
+							$("#systemMessageBadge").text(systemMessage);
+						}
+						if(examMessage==0){
+							$("#examMessageBadge").remove();
+						}else{
+							$("#examMessageBadge").text(examMessage);
+						}
+						*/
+						
+					}
+				},error:function(){
+					
+				}
+			});
+		}
+		
 		
 		
 		var ct=[];

@@ -119,7 +119,7 @@ $("#formLogin").validate({
 			data:{"userName":$("#inputAccount").val(),"userPassword":$("#inputPassword").val()},
 			type:'post',
 			success:function(data){
-				layer.close(load);
+				setTimeout(function(){layer.close(load)}, 500);
 				if(data.code==200){			
 					if(data.extend.userType==1){
 					   $('#loginModal').modal('hide');
@@ -179,7 +179,7 @@ $("#formLogin").validate({
 				data:{"userName":$(".account").val(),"userRealName":$(".name").val(),"userEmail":$(".email").val(),"userPassword":$(".password").val()},
 				type:'post',
 				success:function(data){
-					layer.close(load);
+					setTimeout(function(){layer.close(load)}, 500);
 					if(data.code==200){
 						layer.confirm('信息已提交,请等待管理员审核！', {
 							  btn: ['确定'] 					  
