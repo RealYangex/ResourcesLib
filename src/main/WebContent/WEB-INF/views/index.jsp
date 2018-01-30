@@ -157,13 +157,13 @@
             <div class="bottom-bot-left">
                 <ul>
                    <li>地址：贵州民族大学</li>
-                   <li>邮编：553000</li>
+                   <li>邮编：550025</li>
                 </ul>
             </div> 
             <div class="bottom-bot-right">
                 <ul>
-                   <li id="totalVisit">总访问人次： 01204513</li>
-                   <li id="todayVisit">今日访问人次： 00003</li>
+                   <li id="totalVisit">总访问人次：</li>
+                   <li id="todayVisit">今日访问人次：</li>
                 </ul>
             </div>                       
        </div>
@@ -224,7 +224,7 @@ $(document).on('click','.top-Answer-que',function(){
 				var schId=data.extend.schId;
 			
 				if(schId=="0"){			
-					layer.alert("当前没有考试！");					
+					layer.alert("考试时间未到！");					
 				}
 				else{
 					var userType='${UserType}';
@@ -813,6 +813,20 @@ $(document).on('click','.top-regist',function(){
 			 }
 		 })
 	 }
+	 
+	 //访问人次B
+	 $.ajax({
+			 url:'${APP_PATH}/Customer/visitCount',
+			 type:'get',
+			 success:function(data){
+				var totalCount=data.extend.totalCount;
+				var todayCount=data.extend.todayCount;
+				$("#totalVisit").text("总访问人次："+totalCount);
+				$("#todayVisit").text("今日访问人次："+todayCount);		
+			 }
+		 })
+	 
+	 //访问人次E
 	 
   });
 </script>

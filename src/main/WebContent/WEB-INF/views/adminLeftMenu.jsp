@@ -298,7 +298,7 @@
 					if(data.code==200){
 						 layer.close(visitLayer);
 						 layer.alert("保存成功！");				 
-					}else{
+					}else{ 
 						layer.alert("请求超时！");
 					}							
 				}					

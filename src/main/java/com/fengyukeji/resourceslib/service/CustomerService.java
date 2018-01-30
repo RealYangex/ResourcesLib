@@ -1,5 +1,10 @@
 package com.fengyukeji.resourceslib.service;
 
+import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +14,10 @@ import org.springframework.stereotype.Service;
 import com.fengyukeji.resourceslib.bean.Customer;
 import com.fengyukeji.resourceslib.bean.CustomerExample;
 import com.fengyukeji.resourceslib.bean.MessageExample;
+import com.fengyukeji.resourceslib.bean.Visit;
+import com.fengyukeji.resourceslib.bean.VisitExample;
 import com.fengyukeji.resourceslib.dao.CustomerMapper;
+import com.fengyukeji.resourceslib.dao.VisitMapper;
 
 /**
  * CustomerService
@@ -21,6 +29,9 @@ import com.fengyukeji.resourceslib.dao.CustomerMapper;
 public class CustomerService {
 	@Autowired
 	CustomerMapper customerMapper; 
+	
+	@Autowired
+	VisitMapper visitMapper;
 	/**
 	 * 保存用户信息
 	 * @param customer
@@ -154,5 +165,54 @@ public class CustomerService {
 	public long getAllCustomerCount() {
 		
 		return customerMapper.countByExample(null);
+	}
+	
+	/**
+	 * 获取访问人次
+	 * @return
+	 * @throws ParseException 
+	 */
+	public List<Object> visitCount(Date date, String ip) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//定义要输出日期字符串的
+		String sdat=sdf.format(date).substring(0, 10)+" 00:00:00";
+
+		Date dat = null;
+		try {
+			dat = sdf.parse(sdat);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} 
+		
+		VisitExample example=new VisitExample();
+		example.createCriteria().andVisitTimeBetween(dat, date).andAddressEqualTo(ip);
+		
+		List<Visit> visitList=visitMapper.selectByExample(example);
+		if(visitList.isEmpty()) {
+			
+			Visit record=new Visit();
+			record.setVisitTime(date);
+			record.setAddress(ip);
+			visitMapper.insertSelective(record);
+		}
+		List<Object> visitCountList =new ArrayList<Object>() ;
+		example.createCriteria().andIdIsNotNull();
+	    Integer total=visitMapper.selectByExample(example).size();
+	    visitCountList.add(total);
+	    
+	     
+		example.createCriteria().andVisitTimeBetween(dat, date);
+		Integer day=visitMapper.selectByExample(example).size();
+		visitCountList.add(day);
+		
+		return visitCountList;
+	}
+	
+	/**
+	 * 获取所有访问记录
+	 * @return
+	 */
+	public long getVisitCount() {
+		
+		return visitMapper.countByExample(null);
 	}
 }

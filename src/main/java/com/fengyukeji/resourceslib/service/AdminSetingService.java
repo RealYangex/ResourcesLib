@@ -61,7 +61,7 @@ public class AdminSetingService {
 	 * @return
 	 */
 	public Integer getMsgSeting() {
-		
+		 
 		return adminSetMapper.selectByExample(null).get(0).getMessageRange();
 	}
 	

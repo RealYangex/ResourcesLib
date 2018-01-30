@@ -75,8 +75,8 @@ $(document).on('click','#top-login',function(){
 
 //body滚动条控制B
 $(document).on("mouseover",".right-content",function(){
-	 var h = $(document).height()-$(window).height();
-	   $(document).scrollTop(h/2);
+	 //var h = $(document).height()-$(window).height();
+	  // $(document).scrollTop(h/2);
 	$("body").css("overflow-y","hidden");
 })
 $(document).on("mouseout",".right-content",function(){

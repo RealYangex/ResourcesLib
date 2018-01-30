@@ -37,9 +37,9 @@
 		    <div class="dropdown fr"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
                <img src="${APP_PATH}/static/images/user.png" class="nav-avatar" style="width:40px; border-radius:50%">
                 <b class="caret"></b></a>
-                <ul class="dropdown-menu dropdown-menu-right " style="padding:0px;border-top-left-radius:0px;border-top-right-radius:0px;font-family: 'Microsoft YaHei';">
-	                <li ><a href="#" class='person' style="line-height:30px;">个人中心</a></li>
-	                <li><a href='${APP_PATH}/AdmLogin/exit' class='logout' style="line-height:30px;">退 出</a></li>
+                <ul class="dropdown-menu dropdown-menu-right " style="padding:0px;border-top-left-radius:0px;border-top-right-radius:0px;font-family: 'Microsoft YaHei';width:30px;">
+	                <!--  <li ><a href="#" class='person' style="line-height:30px;">个人中心</a></li> -->
+	                <li ><a href='${APP_PATH}/AdmLogin/exit' class='logout' style="line-height:30px;">退 出</a></li>
                 </ul>
            </div>
 		</div>

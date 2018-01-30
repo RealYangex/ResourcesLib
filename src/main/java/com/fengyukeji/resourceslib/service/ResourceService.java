@@ -1,14 +1,22 @@
 package com.fengyukeji.resourceslib.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fengyukeji.resourceslib.bean.CountByDate;
 import com.fengyukeji.resourceslib.bean.Resources;
 import com.fengyukeji.resourceslib.bean.ResourcesExample;
 import com.fengyukeji.resourceslib.dao.ResourcesMapper;
+import com.fengyukeji.resourceslib.dao.VisitMapper;
 import com.fengyukeji.resourceslib.utils.FileUtil;
 import com.fengyukeji.resourceslib.utils.Msg;
 
@@ -23,6 +31,10 @@ public class ResourceService {
 	
 	@Autowired
 	ResourcesMapper resourcesMapper;
+	
+	@Autowired
+	VisitMapper visitMapper;
+	
 	/**
 	 * 上传文件
 	 * @param resourceList
@@ -302,6 +314,37 @@ public class ResourceService {
 			return resourcesMapper.countByExample(example);
 		}
 		
+	}
+	public List<CountByDate> getSubVisitCountByDay(int days) {
+		SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd");  
+		Date date = new Date();  
+		Calendar c = Calendar.getInstance();  
+		c.setTime(date);  
+		c.add(Calendar.DATE, -days);  
+															//获取指定多少天前 格式"2017-12-21"
+		String dateBeforeStr = format.format(c.getTime()); 
+		List<CountByDate> countByDates =visitMapper .selectByDate(dateBeforeStr);
+		c.setTime(date); 
+		Map<String,Integer> countMap = new TreeMap<String, Integer>();
+		for(int i = 0;i<days;i++){
+			c.add(Calendar.DATE, -1);
+			String t1 = format.format(c.getTime());
+			countMap.put(t1, 0);
+		}
+		List<CountByDate> counts = new ArrayList<CountByDate>();			//用于返回所有值的list
+		for(CountByDate countByDate:countByDates){
+			String key = countByDate.getDate();
+			if(countMap.get(key)!=null){
+				countMap.put(key, countByDate.getNum());
+			}
+			
+		}
+		Set<String> mapKeys = countMap.keySet();
+		for(String key:mapKeys){
+			counts.add(new CountByDate(key,countMap.get(key)));
+		}
+			
+		return counts;
 	}
 	
 	

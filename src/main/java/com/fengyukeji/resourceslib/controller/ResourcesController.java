@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fengyukeji.resourceslib.bean.CountByDate;
 import com.fengyukeji.resourceslib.bean.Resources;
 import com.fengyukeji.resourceslib.service.AdminSetingService;
 import com.fengyukeji.resourceslib.service.CustomerService;
@@ -394,14 +395,27 @@ public class ResourcesController {
 		
 		int imagePercent = (int)(((float)imageFileCount/allFileCount)*100);
 		
+		long allVisitCount = customerService.getVisitCount();
 		
 		long end = System.currentTimeMillis();
+		
+		List<CountByDate> count = resourceService.getSubVisitCountByDay(12);
 		
 		System.out.println("消耗时间"+(end-start)+":ms");
 		return Msg.success().add("allFileCount", allFileCount).add("audioPercent",audioPercent)
 				.add("vedioPercent", vedioPercent).add("docPercent", docPercent).add("imagePercent", imagePercent)
-				.add("allCusotmerCount", allCusotmerCount);
+				.add("allCusotmerCount", allCusotmerCount).add("allVisitCount",allVisitCount).add("count", count);
 	}
 	
+	/**
+	 * 获取一段时间的访问记录
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/getSubVisitCount")
+	public Msg getSubVisitCount(){
+		List<CountByDate> count = resourceService.getSubVisitCountByDay(12);
+		return Msg.success().add("count", count);
+	}
 	
 }

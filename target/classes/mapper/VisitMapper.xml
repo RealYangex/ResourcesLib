@@ -6,6 +6,10 @@
     <result column="visit_time" jdbcType="TIMESTAMP" property="visitTime" />
     <result column="address" jdbcType="VARCHAR" property="address" />
   </resultMap>
+  <resultMap id="BaseResultByDateMap" type="com.fengyukeji.resourceslib.bean.CountByDate">
+    <result column="date" jdbcType="VARCHAR" property="date" />
+    <result column="num" jdbcType="TIMESTAMP" property="num" />
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -87,6 +91,11 @@
     from res_visit
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <!-- 自定义方法获取大于指定时间的访问统计 -->
+  <select id="selectByDate" parameterType="java.lang.String" resultMap="BaseResultByDateMap">
+    SELECT LEFT(visit_time,10)AS DATE,COUNT(*)num FROM res_visit WHERE visit_time > #{id,jdbcType=INTEGER} GROUP BY LEFT(visit_time,10)
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from res_visit
     where id = #{id,jdbcType=INTEGER}

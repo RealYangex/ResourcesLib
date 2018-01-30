@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import com.fengyukeji.resourceslib.bean.ExamSchedule;
 import com.fengyukeji.resourceslib.bean.ExamWithCustomerBean;
+import com.fengyukeji.resourceslib.bean.ExamresExam;
+import com.fengyukeji.resourceslib.bean.Subject;
 import com.fengyukeji.resourceslib.bean.SubjectAnwserBean;
 import com.fengyukeji.resourceslib.service.ExamScheduleService;
 import com.fengyukeji.resourceslib.service.ExamService;
@@ -202,12 +204,12 @@ public class ExamController {
        
 		String[] subIds = subId.split(",#,");
 	   
-	    List<Integer[]> list=new ArrayList<Integer[]>();
+	    List<String[]> list=new ArrayList<String[]>();
 		for(int i=0;i<subIds.length;i++) {
 			String[] subIdContent =subIds[i].substring(0,subIds[i].length()).split(",");
-			 Integer[] cntInts=new Integer[3];
+			String[] cntInts=new String[4];
 			for(int j=0;j<subIdContent.length;j++) {
-				cntInts[j]=Integer.parseInt(subIdContent[j]);
+				cntInts[j]=subIdContent[j];
 			}
 			list.add(cntInts);
 		}
@@ -215,7 +217,7 @@ public class ExamController {
 	Float totalScore=examService.disposeExamResult(examId,list,subTotalScore,exasubId);
 		
 		return Msg.success().add("totalScore", totalScore);
-	}
+	}	
 	
 	/**
 	 * 获取携带考试者信息的考试记录
@@ -251,7 +253,6 @@ public class ExamController {
 		return Msg.success().add("examList", examWithAnwserList).add("examCount",examCount).add("showNum",examService.EAXM_SHOW_NUM);
 	}
 	
-	
 	/**
 	 * 通过id删除考试记录
 	 * @param request
@@ -284,6 +285,19 @@ public class ExamController {
 		return Msg.success();
 	}
 	
+	/**
+	 * 获取考试详情
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/getExamDetail")
+	public Msg getExamDetail(HttpServletRequest request){
+	  Integer id=Integer.parseInt(request.getParameter("id"));
+	  List<ExamresExam> detailList=examService.getExamAnswer(id);//获取用户选的答案
+	  List<Subject> subjectList=examService.getExamSubject(id); //获取用户考试的题目
+		return Msg.success().add("detailList", detailList).add("subjectList", subjectList);
+	}
 }
 
 

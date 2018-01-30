@@ -96,7 +96,7 @@
 						<div class="showIconDiv" >
 							<center>
 								<span class=" fa fa-eye" style="font-size:52px;"></span>
-								<label style="color:#333333" id="visitCount">800</label><br>
+								<label style="color:#333333" id="visitCount"></label><br>
 								<span style="color:#333333" class="title">总浏览量</span>
 							</center>
 						</div>
@@ -157,7 +157,12 @@
 	
 	$(function(){
 		
-		getResourceInfo()
+		getResourceInfo();
+		
+		var ct=[];
+		var ld=[];
+		var dn="";
+		var cd=[];
 		
 		/**
 		 *	获取资源信息
@@ -170,6 +175,7 @@
 				success:function(data){
 					setTimeout(function(){layer.close(load)}, 500);
 					if(data.code==200){
+						//console.log(data);
 						var datas = data.extend;
 						var allFileCount = datas.allFileCount;
 						var audioPercent = datas.audioPercent;
@@ -177,12 +183,15 @@
 						var docPercent = datas.docPercent;
 						var imagePercent = datas.imagePercent;
 						var allCusotmerCount = datas.allCusotmerCount;
+						var allVisitCount = datas.allVisitCount;
 						var systemMessage = datas.systemMessage;
 						var examMessage = datas.examMessage;
+						var counts = datas.count;
 						
 						//设置这些值
 						$("#fileCount").text(allFileCount);
 						$("#customerCount").text(allCusotmerCount);
+						$("#visitCount").text(allVisitCount);
 						$("#videoPercent").text(vedioPercent+"%");
 						$("#videoPercentLine").css("width",vedioPercent+"%");
 						$("#imagePercent").text(imagePercent+"%");
@@ -191,6 +200,19 @@
 						$("#docPercentLine").css("width",docPercent+"%");
 						$("#audioPercent").text(audioPercent+"%");
 						$("#audioPercentLine").css("width",audioPercent+"%");
+						
+						
+						if(counts.length==0)return;
+						$.each(counts,function(index,item){
+							
+							ct.push(item.date);
+							cd.push(item.num);
+						})
+						dn = ct[0]+"~"+ct[ct.length-1]+" 访问量";
+						if(dn!=""){
+							ld.push(dn);
+						}
+						chart();
 						
 						/*
 						//如果新消息为零则去掉badge
@@ -215,10 +237,6 @@
 		
 		
 		
-		var ct=[];
-		var ld=[];
-		var dn="";
-		var cd=[];
 		function chart(){
 			
 			var chartDataTime = ct.length==0?["2017-12-21", "2017-12-22", "2017-12-23", "2017-12-24", "2017-12-25", "2017-12-26", "2017-12-27", "2017-12-28", "2017-12-29", "2017-12-30", "2017-12-31", "2018-01-01"]:ct;
@@ -227,7 +245,7 @@
 			}else{
 				var dataName = dn;
 			}
-			console.log(chartDataTime)
+			//console.log(chartDataTime)
 			ld.push(dataName)
 			var legendData = ld;
 			var charData = cd.length==0?[3, 5, 11, 18, 48, 69, 261, 46, 55, 18, 10, 0]:cd;
@@ -291,7 +309,7 @@
 			var myChart = echarts.init(document.getElementById('chart'));
 			myChart.setOption(option);														
 		}
-		chart();
+		
 	})
 </script>
 </body>

@@ -28,7 +28,7 @@ import com.fengyukeji.resourceslib.utils.SimpleExcelWrite;
  */
 @Controller
 @RequestMapping("/View")
-public class ViewController {
+public class ViewController { 
 	
 	@Autowired 
 	ExamService examService;

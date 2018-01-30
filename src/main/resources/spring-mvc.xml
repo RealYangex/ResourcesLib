@@ -52,6 +52,7 @@
 			<mvc:exclude-mapping path="/Customer/cannotVisit*"/>
 			<mvc:exclude-mapping path="/Customer/checkLogin*"/>
 			<mvc:exclude-mapping path="/Customer/visit*"/>
+			<mvc:exclude-mapping path="/Customer/visitCount*"/>
 			<mvc:exclude-mapping path="/**loginCustomer*"/>
 			<mvc:exclude-mapping path="/View/examination*"/>
 			<mvc:exclude-mapping path="/Exam/getExamSchOnline*"/>

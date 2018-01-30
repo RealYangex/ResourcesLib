@@ -5,22 +5,24 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.fengyukeji.resourceslib.bean.Anwser;
+import com.fengyukeji.resourceslib.bean.AnwserExample;
 import com.fengyukeji.resourceslib.bean.Exam;
 import com.fengyukeji.resourceslib.bean.ExamExample;
 import com.fengyukeji.resourceslib.bean.ExamSchedule;
 import com.fengyukeji.resourceslib.bean.ExamWithCustomerBean;
 import com.fengyukeji.resourceslib.bean.ExamresExam;
 import com.fengyukeji.resourceslib.bean.ExamresExamExample;
-import com.fengyukeji.resourceslib.bean.Anwser;
+import com.fengyukeji.resourceslib.bean.Message;
 import com.fengyukeji.resourceslib.bean.Subject;
 import com.fengyukeji.resourceslib.bean.SubjectAnwserBean;
 import com.fengyukeji.resourceslib.bean.SubjectWithAnwserBean;
 import com.fengyukeji.resourceslib.dao.AnwserMapper;
+import com.fengyukeji.resourceslib.dao.CustomerMapper;
 import com.fengyukeji.resourceslib.dao.ExamMapper;
 import com.fengyukeji.resourceslib.dao.ExamScheduleMapper;
 import com.fengyukeji.resourceslib.dao.ExamresExamMapper;
+import com.fengyukeji.resourceslib.dao.MessageMapper;
 import com.fengyukeji.resourceslib.dao.SubjectMapper;
 
 /**
@@ -50,6 +52,11 @@ public class ExamService {
 	@Autowired
 	ExamresExamMapper examresExamMapper; 
 	
+	@Autowired
+	MessageMapper messageMapper;
+	
+	@Autowired
+	CustomerMapper customerMapper;
 	/**
 	 * 获取答案和
 	 * @return
@@ -218,21 +225,31 @@ public class ExamService {
 	 * @return 
 	 * @return
 	 */
-	public Float disposeExamResult(Integer examId, List<Integer[]> list,Float subTotalScore,Integer exasubId) {
+	public Float disposeExamResult(Integer examId, List<String[]> list,Float subTotalScore,Integer exasubId) {
 	    Float totalScore=0f;//记录总分
 	    int trueNum=0;      //记录做对几题
-	    
+	   
+	   Integer resExamId= examresExamMapper.selectByPrimaryKey(exasubId).getExamId();
 	    for(int i=0;i<list.size();i++) {
-	    	Integer T[]=list.get(i);
-	    	Subject subject=subjectMapper.selectByPrimaryKey(T[0]);
-	    	if((T[1]==1)&&(T[2]==1)) {
+	    	String T[]=list.get(i);
+	    	ExamresExamExample example=new  ExamresExamExample();
+	    	example.createCriteria().andExamIdEqualTo(resExamId).andSubjectIdEqualTo(Integer.parseInt(T[0]));
+	    	 
+	    	ExamresExam examresExam=new ExamresExam();
+	    	examresExam.setUserAnwser(T[3]);
+			examresExamMapper.updateByExampleSelective(examresExam, example);
+	    	
+	    	
+	    	
+	    	Subject subject=subjectMapper.selectByPrimaryKey(Integer.parseInt(T[0]));
+	    	if((T[1].equals("1"))&&(T[2].equals("1"))) {
 	    		trueNum++;
-	    		 subject.setId(T[0]);
+	    		 subject.setId(Integer.parseInt(T[0]));
 	    		 subject.setSubjectDoes(subject.getSubjectDoes()+1);	
 	    		 subject.setSubjectSuccesses(subject.getSubjectSuccesses()+1);
 	    	} 
-	    	if((T[1]==1)&&(T[2]==0)) {
-	    		 subject.setId(T[0]);
+	    	if((T[1].equals("1"))&&(T[2].equals("0"))) {
+	    		 subject.setId(Integer.parseInt(T[0]));
 	    		 subject.setSubjectDoes(subject.getSubjectDoes()+1);
 	    		 subject.setSubjectError(subject.getSubjectError()+1);
 	    	}
@@ -250,6 +267,16 @@ public class ExamService {
 		exam.setEndTime(date);
 	    
 	   examMapper.updateByPrimaryKeySelective(exam);
+	   Integer  customerId=examMapper.selectByPrimaryKey(examId).getCustomerId();
+	   String username=customerMapper.selectByPrimaryKey(customerId).getUsername();
+	   
+	   Message msg=new Message();
+	   msg.setCustomerId(customerId);
+	   msg.setTime(date);
+	   msg.setContent("用户"+username+"：完成了考试！");
+	   msg.setType(3);
+	   msg.setIsReaded(0);
+	   messageMapper.insertSelective(msg);
 	   return  totalScore;
 	}
 	
@@ -299,5 +326,46 @@ public class ExamService {
 		}else{
 			return examMapper.selectEaxmWithCustomerSortByScoreDown(pageIndex*EAXM_SHOW_NUM, EAXM_SHOW_NUM);
 		}
+	}
+	
+	/**
+	 * 获取考试选的答案
+	 * @param request
+	 * @return
+	 */
+	public List<ExamresExam> getExamAnswer( Integer id) {
+		Integer examSubjectId=examMapper.selectByPrimaryKey(id).getExamSubjectId();
+		Integer examId=examresExamMapper.selectByPrimaryKey(examSubjectId).getExamId();
+		ExamresExamExample example=new ExamresExamExample();
+		example.createCriteria().andExamIdEqualTo(examId);
+		List<ExamresExam> examresExam=examresExamMapper.selectByExample(example);
+		
+		return examresExam;
+	}
+	
+	/**
+	 * 获取用户考试的题目
+	 * @param request
+	 * @return
+	 */
+	public List<Subject> getExamSubject(Integer id) {
+		Integer examSubjectId=examMapper.selectByPrimaryKey(id).getExamSubjectId();
+		Integer examId=examresExamMapper.selectByPrimaryKey(examSubjectId).getExamId();
+		ExamresExamExample example=new ExamresExamExample();
+		example.createCriteria().andExamIdEqualTo(examId);
+		List<ExamresExam> examresExam=examresExamMapper.selectByExample(example);
+		List<Subject> subjectList=new ArrayList<Subject>();
+		for(int i=0;i<examresExam.size();i++) {
+			Integer subId=examresExam.get(i).getSubjectId();
+			Subject subject=subjectMapper.selectByPrimaryKey(subId);
+			
+			AnwserExample Aexample=new AnwserExample();
+			Aexample.createCriteria().andSubjectIdEqualTo(subId);
+			List<Anwser> anwserList= anwserMapper.selectByExample(Aexample);
+			subject.setAnwserList(anwserList);
+			subjectList.add(subject);
+		}
+		
+		return subjectList;
 	}
 }

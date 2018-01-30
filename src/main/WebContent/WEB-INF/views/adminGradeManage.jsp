@@ -8,6 +8,7 @@
   <title>成绩管理-资源建设平台</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link rel="stylesheet" type="text/css" href="${APP_PATH}/static/css/common.css">
+    <link rel="stylesheet" type="text/css" href="${APP_PATH}/static/css/layui.css">
   <link rel="stylesheet" type="text/css" href="${APP_PATH}/static/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="${APP_PATH}/static/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="${APP_PATH}/static/css/adminIndex.css">
@@ -350,8 +351,61 @@
 		
 		//详情按钮点击事件
 		$(document).on("click",".detailBtn",function(){
-			var id = $(this).parents("tr").attr('id');
-			alert(id)
+			layer.open({
+				  type: 1 
+				  ,area: ['1000px', '543px']
+		          ,title:'考试详情'
+				  ,shade: 0.2
+				  ,anim: 5 
+				  ,content:'<div style="height:450px;overflow:auto">'+
+					       '<table id="examDetailTable" class="layui-table table" lay-skin="line">'+
+					          '<thead>'+
+	                             '<tr>'+
+	                                '<th width="50px">序号</th>'+
+	                                '<th width="550px">考试题目</th>'+
+	                                '<th width="250px">题目选项</th>'+
+	                                '<th width="150px">用户答案</th>'+              
+	                             '</tr>'+
+	                          '</thead>'+
+		                      '<tbody>'+
+		                      '</tbody>'+
+		                   '</table>'+
+		                   '</div>'+               
+		                   '<button class="layui-btn layui-btn-normal layui-layer-close" style="margin-right:50px;position: relative;float: right;">关闭</button>'
+				});
+		    var  id=$(this).parents("td").parents("tr").attr("id");
+		    var load = layer.msg("正在加载数据,请稍后!",{icon:16,shade:0.05,time:38*1000});
+		    $.ajax({
+				url:'${APP_PATH}/Exam/getExamDetail',
+				type:"post",
+				data:"id="+id,
+				success:function(data){
+					layer.close(load);
+					$("#examDetailTable tbody").empty();
+					 var detailList = data.extend.detailList;console.log(detailList);
+					 var subjectList = data.extend.subjectList;console.log(subjectList);
+	                 var k=0;
+					 for(var i=0;i<detailList.length;i++){
+						   var tr = $("<tr></tr>");
+						    tr.append($("<td></td>").append(++k));
+							tr.append($("<td></td>").append(subjectList[i].subjectContent));
+							var td=$("<td></td>");
+							var L=1;
+							for(var j=0;j<subjectList[i].anwserList.length;j++){
+								if(subjectList[i].anwserList[j].isTrue==true)
+								    td.append('<p style="margin:0;color:#FF9933">'+L+". "+subjectList[i].anwserList[j].anwserContent+'(正确答案)</p>');
+								else
+									td.append('<p style="margin:0">'+L+". "+subjectList[i].anwserList[j].anwserContent+'</p>');
+							     L++;
+							}
+							tr.append(td);
+							tr.append($("<td></td>").append(detailList[i].userAnwser));
+							tr.appendTo($("#examDetailTable tbody"))
+					 }
+				},error:function(){
+					
+				}
+			});
 		})
 		
 		//全选框选中事件
