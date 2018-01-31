@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.ibatis.javassist.expr.NewArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +29,7 @@ import com.fengyukeji.resourceslib.dao.VisitMapper;
 public class CustomerService {
 	@Autowired
 	CustomerMapper customerMapper; 
+	
 	@Autowired
 	VisitMapper visitMapper;
 	/**
@@ -159,6 +159,15 @@ public class CustomerService {
 	}
 	
 	/**
+	 * 获取所有的用户数量
+	 * @return
+	 */
+	public long getAllCustomerCount() {
+		
+		return customerMapper.countByExample(null);
+	}
+	
+	/**
 	 * 获取访问人次
 	 * @return
 	 * @throws ParseException 
@@ -178,23 +187,45 @@ public class CustomerService {
 		example.createCriteria().andVisitTimeBetween(dat, date).andAddressEqualTo(ip);
 		
 		List<Visit> visitList=visitMapper.selectByExample(example);
-		if(visitList.isEmpty()) {
-			
+		
+		if(visitList.size()==0) {
 			Visit record=new Visit();
 			record.setVisitTime(date);
 			record.setAddress(ip);
 			visitMapper.insertSelective(record);
 		}
 		List<Object> visitCountList =new ArrayList<Object>() ;
-		example.createCriteria().andIdIsNotNull();
-	    Integer total=visitMapper.selectByExample(example).size();
+	    Integer total=visitMapper.selectByExample(null).size();
 	    visitCountList.add(total);
 	    
-	     
-		example.createCriteria().andVisitTimeBetween(dat, date);
-		Integer day=visitMapper.selectByExample(example).size();
+	    VisitExample examplee=new VisitExample();
+		examplee.createCriteria().andVisitTimeBetween(dat, date);
+		Integer day=visitMapper.selectByExample(examplee).size();
+		
 		visitCountList.add(day);
 		
 		return visitCountList;
+	}
+	
+	/**
+	 * 获取所有访问记录
+	 * @return
+	 */
+	public long getVisitCount() {
+		
+		return visitMapper.countByExample(null);
+	}
+	/**
+	 * 校验用户名
+	 * @return
+	 */
+	public boolean checkCustomer(String userName) {
+		CustomerExample example=new CustomerExample();
+		example.createCriteria().andUsernameEqualTo(userName);
+	int isExist=customerMapper.selectByExample(example).size();
+	if(isExist==0)
+		return false;
+	else
+		return true;
 	}
 }

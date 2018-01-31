@@ -3,10 +3,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.ibatis.javassist.expr.NewArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.fengyukeji.resourceslib.bean.Anwser;
 import com.fengyukeji.resourceslib.bean.AnwserExample;
 import com.fengyukeji.resourceslib.bean.Exam;
@@ -16,7 +14,6 @@ import com.fengyukeji.resourceslib.bean.ExamWithCustomerBean;
 import com.fengyukeji.resourceslib.bean.ExamresExam;
 import com.fengyukeji.resourceslib.bean.ExamresExamExample;
 import com.fengyukeji.resourceslib.bean.Message;
-import com.fengyukeji.resourceslib.bean.Anwser;
 import com.fengyukeji.resourceslib.bean.Subject;
 import com.fengyukeji.resourceslib.bean.SubjectAnwserBean;
 import com.fengyukeji.resourceslib.bean.SubjectWithAnwserBean;
@@ -330,7 +327,7 @@ public class ExamService {
 			return examMapper.selectEaxmWithCustomerSortByScoreDown(pageIndex*EAXM_SHOW_NUM, EAXM_SHOW_NUM);
 		}
 	}
-
+	
 	/**
 	 * 获取考试选的答案
 	 * @param request
@@ -345,7 +342,7 @@ public class ExamService {
 		
 		return examresExam;
 	}
-
+	
 	/**
 	 * 获取用户考试的题目
 	 * @param request

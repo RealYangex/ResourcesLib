@@ -157,7 +157,7 @@
             <div class="bottom-bot-left">
                 <ul>
                    <li>地址：贵州民族大学</li>
-                   <li>邮编：553000</li>
+                   <li>邮编：550025</li>
                 </ul>
             </div> 
             <div class="bottom-bot-right">
@@ -220,7 +220,7 @@ $(document).on('click','.top-Answer-que',function(){
 			url:'${APP_PATH}/Exam/getExamSchOnline',       //传到控制器controller
 			type:'post',
 			success:function(data){
-				layer.close(load);
+				setTimeout(function(){layer.close(load)}, 500);
 				var schId=data.extend.schId;
 			
 				if(schId=="0"){			
@@ -260,7 +260,7 @@ $(document).on('click','.top-Answer-que',function(){
 			data:{"userName":$("#inputAccount").val(),"userPassword":$("#inputPassword").val()},
 			type:'post',
 			success:function(data){
-				layer.close(load);
+				setTimeout(function(){layer.close(load)}, 500);
 				if(data.code==200){			
 					if(data.extend.userType==1){
 					   $('#loginModal').modal('hide');
@@ -360,7 +360,7 @@ $(document).on('click','.top-regist',function(){
 			  data:"parentId="+id,
 			  type:'post',
 			  success:function(data){
-				  layer.close(load);
+				  setTimeout(function(){layer.close(load)}, 500);
 				  if(data.code==200){
 					  var resources = data.extend.resources;
 					  
@@ -396,6 +396,13 @@ $(document).on('click','.top-regist',function(){
 					  filePathLifo.pop();
 					  fileLifo.pop();
 					  createFilePath();
+				  }else if(data.code==400){
+					  layer.alert("当前系统设置仅管理员可以访问，请联管理员");
+					  
+					  //访问被拒绝 重新生成导航
+					  filePathLifo.pop();
+					  fileLifo.pop();
+					  createFilePath();
 				  }
 			  },
 			  error:function(data){
@@ -419,31 +426,39 @@ $(document).on('click','.top-regist',function(){
 	 //下载按钮点击事件
 	 $(document).on("click",".download",function(){
 		 
-		//判断是否登录
-		if(!isLogin()){
+		//判断允许访问情况
+		if(isLogin()==100){
 			 $("#top-login").trigger("click");
 			 return;
+		}else if(isLogin()==400){
+			layer.alert("当前系统设置仅管理员可以访问，请联管理员");
+			return;
 		}
 	 	var id =$(this).parents("tr").attr("fileid");
 	 	var form = $("<form action='${APP_PATH}/Resources/download' method='post' style='display:none'></from>");
 		   $("<input name='id' value='"+id+"'>").appendTo(form);
 		   $(document.body).append(form);
+		 	
+		   //设置下载记录
+		   visit(2,id);
+		   
 		   form.submit();
 		   
-	 	   //设置下载记录
-		   if(type!=0){
-		 	 visit(2,id);
-		   }
+	 	   
 	 })
 	 
 	 //文件点击事件
 	 $(document).on("click",".open",function(){
 		 
-		 //判断是否登录
-		 if(!isLogin()){
+		//判断允许访问情况
+		var isVisit = isLogin();
+		if(isVisit==100){
 			 $("#top-login").trigger("click");
 			 return;
-		 }
+		}else if(isVisit==400){
+			layer.alert("当前系统设置仅管理员可以访问，请联管理员");
+			return;
+		}
 	 	var id = $(this).parents("tr").attr("fileid");
 	 	var type = $(this).parents("tr").attr("filetype");
 	 	var localtion = $(this).parents("tr").attr("localtion");
@@ -560,6 +575,7 @@ $(document).on('click','.top-regist',function(){
 	 			})
 	 		}else{
 	 			
+	 			window.open("${APP_PATH}/"+localtion);
 	 		}
 	 		
 	 	}else if(type==3){								//文档
@@ -644,7 +660,7 @@ $(document).on('click','.top-regist',function(){
 			  data:{"searchContent":searchContent},
 			  type:'post',
 			  success:function(data){
-				  layer.close(load);
+				  setTimeout(function(){layer.close(load)}, 500);
 				  if(data.code==200){
 					  $("#searchIpt").val("");
 					  var resources = data.extend.resources;
@@ -705,7 +721,7 @@ $(document).on('click','.top-regist',function(){
 			  data:"type="+type,
 			  type:'post',
 			  success:function(data){
-				  layer.close(load);
+				  setTimeout(function(){layer.close(load)}, 500);
 				  if(data.code==200){
 					  var resources = data.extend.resources;
 					  
@@ -773,15 +789,13 @@ $(document).on('click','.top-regist',function(){
 	  *	判断是否是已经登录
 	  */
 	  function isLogin(){
-		 var isLogin = false;
+		 var isLogin = 100;
 		 $.ajax({
 			 url:'${APP_PATH}/Customer/checkLogin',
 			 type:'post',
 			 async:false, 
 			 success:function(data){
-				 if(data.code==200){
-					 isLogin = true;
-				 }
+				isLogin = data.code;
 			 }
 		 });
 		 return isLogin;

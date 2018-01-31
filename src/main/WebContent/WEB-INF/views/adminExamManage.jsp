@@ -202,7 +202,7 @@ $(function(){
 			type:'post',
 			data:'page='+pageIndex,
 			success:function(data){
-				layer.close(load);
+				setTimeout(function(){layer.close(load)}, 500);
 				if(data.code==200){
 					var subjectAnwser = data.extend.subjectAnwsers;
 					var subjectCount = data.extend.subjectCount;
@@ -304,7 +304,7 @@ $(function(){
 			url:'${APP_PATH}/Exam/getExamSchedule',
 			type:"get",
 			success:function(data){
-				layer.close(load);
+				setTimeout(function(){layer.close(load)}, 500);
 				
 				$("#examScheduleTable tbody").empty();
 				var i=0;
@@ -397,7 +397,7 @@ $(function(){
 					type:"post",
 					data:"id="+id,
 					success:function(data){
-						layer.close(load);
+						setTimeout(function(){layer.close(load)}, 500);
 						layer.confirm('删除成功！', {
 							  btn: ['确定'] 					  
 							}, function(index, layero){
@@ -455,7 +455,7 @@ $(function(){
 				data:'id='+id,
 				type:'post',
 				success:function(data){
-					layer.close(load);
+					setTimeout(function(){layer.close(load)}, 500);
 					if(data.code==200){
 						getSubject(current_page);
 					}
@@ -553,7 +553,7 @@ $(function(){
 				data:'title='+title+"&item1="+item1+"&item2="+item2+"&item3="+item3+"&item4="+item4+"&trueAnwser="+trueAnwser,
 				type:'post',
 				success:function(data){
-					layer.close(load);
+					setTimeout(function(){layer.close(load)}, 500);
 					if(data.code==200){
 						layer.alert("添加完成,您可以在最后一页进行查看");
 						layer.close(addOpen);
@@ -621,7 +621,7 @@ $(document).on('click',".btnSubmit",function(){
             processData:false,//必须有 
 			type:'post',
 			success:function(data){
-				layer.close(load);
+				setTimeout(function(){layer.close(load)}, 500);
 				if(data.code==200){
 					layer.alert("添加完成,您可以在最后一页进行查看");
 					current_page = maxPage;
@@ -651,7 +651,7 @@ $(document).on("click","#subjectSearch",function(){
 			data:'insearchKey='+insearchKey,
 			success:function(data){
 				
-				layer.close(load);
+				setTimeout(function(){layer.close(load)}, 500);
 				if(data.code==200){
 					//清空原有数据
 					$("#eaxmTable tbody").empty();
@@ -751,7 +751,7 @@ $(document).on("click","#addExamSave",function(){
 		data:{"startTime":startTime,"endTime":endTime,"examTotalTime":examTotalTime,"topicType":topicType,"topicNum":topicNum,"topicScore":topicScore},
 		type:'post',
 		success:function(data){
-			layer.close(load);
+			setTimeout(function(){layer.close(load)}, 500);
 			if(data.code==200){
 				layer.confirm('保存成功！', {
 					  btn: ['确定'] 					  
@@ -801,7 +801,7 @@ $(document).on("click","#addExamSave",function(){
 					type:"post",
 					data:{"id":id,"state":state},
 					success:function(data){
-						layer.close(load);
+						setTimeout(function(){layer.close(load)}, 500);
 						layer.confirm('设置成功！', {
 							  btn: ['确定'] 					  
 							}, function(index, layero){
@@ -853,8 +853,6 @@ $(document).on("click","#addExamSave",function(){
 	                              '<select id="topicType" name="topicType" lay-ignore style="width: 100%;height:100%; border:none;color: #757575;">'+
 	                                '<option value="">请选择题目类型</option>'+
 	                                '<option value="0">单选</option>'+
-	                                '<option value="1">多选</option>'+
-	                                '<option value="2">判断</option>'+
 	                              '</select>'+ 
 	                          '</div>'+
 	                     '</div>'+

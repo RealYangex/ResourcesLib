@@ -46,7 +46,7 @@ public class ExamScheduleService {
 		examSchedule.setExamType(topicType);
 		examSchedule.setExamSubjectNum(topicNum);
 		examSchedule.setExamAllScore(topicScore);
-		examSchedule.setIsUse(0);
+		examSchedule.setIsUse(1);
 		
 		examScheduleMapper.insertSelective(examSchedule);
 	}

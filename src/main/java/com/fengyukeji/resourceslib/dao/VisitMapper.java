@@ -1,8 +1,11 @@
 package com.fengyukeji.resourceslib.dao;
 
+import com.fengyukeji.resourceslib.bean.CountByDate;
 import com.fengyukeji.resourceslib.bean.Visit;
 import com.fengyukeji.resourceslib.bean.VisitExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface VisitMapper {
@@ -17,7 +20,10 @@ public interface VisitMapper {
     int insertSelective(Visit record);
 
     List<Visit> selectByExample(VisitExample example);
-
+    
+    //自定义方法 获取大于指定时间的访问记录
+    List<CountByDate> selectByDate(String date);
+    
     Visit selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") Visit record, @Param("example") VisitExample example);

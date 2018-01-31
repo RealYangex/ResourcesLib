@@ -217,7 +217,7 @@ public class ExamController {
 	Float totalScore=examService.disposeExamResult(examId,list,subTotalScore,exasubId);
 		
 		return Msg.success().add("totalScore", totalScore);
-	}
+	}	
 	
 	/**
 	 * 获取携带考试者信息的考试记录
@@ -252,7 +252,6 @@ public class ExamController {
 		long examCount = examService.getExamCount();
 		return Msg.success().add("examList", examWithAnwserList).add("examCount",examCount).add("showNum",examService.EAXM_SHOW_NUM);
 	}
-	
 	
 	/**
 	 * 通过id删除考试记录

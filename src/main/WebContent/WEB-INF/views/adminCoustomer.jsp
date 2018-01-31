@@ -129,7 +129,7 @@
 				type:"get",
 				data:'pn='+pn,
 				success:function(data){
-					layer.close(load);
+					setTimeout(function(){layer.close(load)}, 500);
 					var customer = data.extend.cusList.list;
 					var currentPage=parseInt(data.extend.cusList.pageNum);//当前页
 					var pageSize=parseInt(data.extend.cusList.pageSize);  //每页数量				
@@ -183,7 +183,7 @@
 				type:"get",
 				data:'pn='+pn,
 				success:function(data){
-					layer.close(load);
+					setTimeout(function(){layer.close(load)}, 500);
 					var customer = data.extend.cusList.list;
 					var currentPage=parseInt(data.extend.cusList.pageNum);//当前页
 					var pageSize=parseInt(data.extend.cusList.pageSize);  //每页数量				
@@ -234,7 +234,7 @@
 			$("#queryPage").empty();
 			currentPage=data.extend.cusList.pageNum;
 			 lastPages=data.extend.cusList.pages;
-			var pageInfoAndNav = $("<span></span>").append(" 共"+data.extend.cusList.total+"条数据  当前第<span>"+data.extend.cusList.pageNum+"/"+data.extend.cusList.pages+"</span>页  跳转到：<input type='number' id='navInput' style='width:52px;'><button id='navButton' class='btn btn-info btn-sm jump'><span class='fa fa-send-o'></span></button> ")
+			var pageInfoAndNav = $("<span style='margin-left:20px;'></span>").append(" 共"+data.extend.cusList.total+"条数据  当前第<span>"+data.extend.cusList.pageNum+"/"+data.extend.cusList.pages+"</span>页  跳转到：<input type='number' id='navInput' style='width:52px;'><button id='navButton' class='btn btn-info btn-sm jump'><span class='fa fa-send-o'></span></button> ")
 			                                       .append("<div class='fr'><button class='btn btn-info btn-sm prev'><span class='fa  fa-chevron-left'></span> </button><button class='btn btn-info btn-sm next'><span class='fa  fa-chevron-right'></span> </button></div>");
 			 pageInfoAndNav.appendTo("#queryPage");
 			 
@@ -272,7 +272,7 @@
 				data:'searchName='+searchName,
 				type:'post',
 				success:function(data){
-					layer.close(load);
+					setTimeout(function(){layer.close(load)}, 500);
 					if(data.code==200){
 						var placePage=data.extend.placePage;
 						layer.confirm('已搜索到！', {
@@ -318,7 +318,7 @@
 					type:'post',
 					success:function(data){
 						if(data.code==200){
-							layer.close(load);
+							setTimeout(function(){layer.close(load)}, 500);
 							if(data.extend.type==0){
 								$(btn).text("");
 							    $(btn).html("<span class='fa fa-minus-circle'></span>&nbsp;授权登录");
@@ -353,7 +353,7 @@
 						type:'post',
 						success:function(data){
 							if(data.code==200){
-								layer.close(load);
+								setTimeout(function(){layer.close(load)}, 500);
 								$(thisTr).remove();
 								layer.confirm('删除成功！', {
 									  btn: ['确定'] 					  
@@ -463,7 +463,7 @@
 			data:{"userName":name,"userRealName":realName,"userEmail":email,"userPassword":password},
 			type:'post',
 			success:function(data){
-				layer.close(load);
+				setTimeout(function(){layer.close(load)}, 500);
 				if(data.code==200){
 					   $('#add_modal .Name').val("");
 					   $('#add_modal .realName').val("");
@@ -595,7 +595,7 @@
 			data:{"id":id,"name":name,"realName":realName,"email":email,"password":password},
 			type:'post',
 			success:function(data){
-				layer.close(load);
+				setTimeout(function(){layer.close(load)}, 500);
 				if(data.code==200){
 					layer.confirm('保存成功！', {
 						  btn: ['确定'] 					  

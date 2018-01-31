@@ -25,12 +25,11 @@ public class AdminSetingService {
 	 * @throws
 	 */
 	public void msgSeting(Integer value) {
-		AdminSetExample example=new AdminSetExample();
+		AdminSetExample example = new AdminSetExample();
 		example.createCriteria().andIdEqualTo(1);
-		AdminSet record=new AdminSet();
-		record.setId(1);
-		record.setMessageRange(value);
-		adminSetMapper.updateByExampleSelective(record, example);
+		AdminSet adminSet=  new AdminSet();
+		adminSet.setMessageRange(value);
+		adminSetMapper.updateByExampleSelective(adminSet, example);
 		
 	}
 
@@ -40,12 +39,11 @@ public class AdminSetingService {
 	 * @throws
 	 */
 	public void vistSeting(Integer value) {
-		AdminSetExample example=new AdminSetExample();
+		AdminSetExample example = new AdminSetExample();
 		example.createCriteria().andIdEqualTo(1);
-		AdminSet record=new AdminSet();
-		record.setId(1);
-		record.setVisitAuthority(value);
-		adminSetMapper.updateByExampleSelective(record, example);
+		AdminSet adminSet=  new AdminSet();
+		adminSet.setVisitAuthority(value);
+		adminSetMapper.updateByExampleSelective(adminSet, example);
 		
 	}
 
@@ -59,11 +57,11 @@ public class AdminSetingService {
 	}
 	
 	/**
-	 * 获取消息设置
+	 * 获取消息范围
 	 * @return
-	 * @throws
 	 */
 	public Integer getMsgSeting() {
+		 
 		return adminSetMapper.selectByExample(null).get(0).getMessageRange();
 	}
 	

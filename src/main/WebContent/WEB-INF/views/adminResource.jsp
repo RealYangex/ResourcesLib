@@ -173,7 +173,7 @@
 			  type:'post',
 			  success:function(data){
 				  console.log(data);
-				  layer.close(load);
+				  setTimeout(function(){layer.close(load)}, 500);
 				  if(data.code==200){
 					  var resources = data.extend.resources;
 					  
@@ -642,7 +642,7 @@
 			  data:{"searchContent":searchContent},
 			  type:'post',
 			  success:function(data){
-				  layer.close(load);
+				  setTimeout(function(){layer.close(load)}, 500)
 				  if(data.code==200){
 					  $("#searchIpt").val("");
 					  var resources = data.extend.resources;
@@ -704,7 +704,7 @@
 			  data:"type="+type,
 			  type:'post',
 			  success:function(data){
-				  layer.close(load);
+				  setTimeout(function(){layer.close(load)}, 500);
 				  if(data.code==200){
 					  var resources = data.extend.resources;
 					  
@@ -727,7 +727,7 @@
 						  	case 4: showType='图片文件';icon+="file-photo-o"; break;
 						  	case 5: showType='其他文件';icon+="file-zip-o"; break;
 						  }
-						  tr.append('<td><a class="open"><i class="'+icon+'"></i>'+item.name+'</a><i2 style="display:inline-block;width:16px;height:16px;"><i3 style="display:none;color:#1E9FFF;" class="fa fa-download download"></i3></i2></td>');
+						  tr.append('<td><a class="openFile"><i class="'+icon+'"></i>'+item.name+'</a><i2 style="display:inline-block;width:16px;height:16px;"><i3 style="display:none;color:#1E9FFF;" class="fa fa-download download"></i3></i2></td>');
 						  tr.append('<td>'+showType+'</td>');
 						  tr.append('<td>'+showDate+'</td>');
 						  tr.append('<td><button class="btn btn-xs btn-info rename" style="display:none;"><span class="fa fa-edit"></span> 重命名</button>&nbsp;&nbsp;<button class="btn btn-xs btn-danger delete"><span class="fa fa-trash"></span> 删 除</button></td>');
