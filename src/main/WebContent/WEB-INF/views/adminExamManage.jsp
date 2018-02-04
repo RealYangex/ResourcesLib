@@ -34,7 +34,7 @@
   		width:200px;height:100px;
   		background-color: #FFFFFF;
   		border-radius:3px;
-  		
+  		cursor:pointer;
   	}
   	.margin-right20{
   		margin-right:23px;
@@ -114,13 +114,13 @@
 			<!-- 右侧内容展示 样式自定义 不用之前的样式 -->
 			<div class="spanr fr" id="span2" style="padding-left:30px;height:800px;width:900px;">
 				<div style="width:100%;height:100%;">
-					<div  class="examRange fr ">
+					<div  class="examRange fr " id="subjectAnlyize">
 						<center>
 							<span class="fa fa-pie-chart"></span><br>
 							<i>试题分析</i>
 						</center>
 					</div>
-					<div  class="examRange fr margin-right20">
+					<div  class="examRange fr margin-right20" id="examStatu">
 						<center>
 							<span class="fa fa-play-circle"></span><br>
 							<i>考试状态</i>
@@ -886,6 +886,16 @@ $(document).on("click","#addExamSave",function(){
 			});	 
 	});
 	/*添加考试安排E*/
+	
+	//试题分析 方块点击事件
+	$("#subjectAnlyize").click(function(){
+		layer.alert("暂时没有可分析的试题");
+	})
+	
+	//考试状态 方块点击事件
+	$("#examStatu").click(function(){
+		layer.alert("请在考试安排中查看");
+	})
 	
 })
 // function end	

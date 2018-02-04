@@ -23,8 +23,8 @@
 </style>
 </head>
 <body>
-	<div class="head">
-		<div class="real-head">
+	<div class="head" ondragstart='return false;'>
+		<div class="real-head" style="-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;user-select: none;cursor:default">
 			<span class='admin fl'>Admin</span>
 			<img  src="${APP_PATH}/static/images/resouces.png" class="fl">
 			<span class='name fl'>资源库建设平台</span>

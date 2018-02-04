@@ -22,7 +22,7 @@
 </style>
 </head>
 <body>
-	<div class="footer">
+	<div class="footer" style="-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;user-select: none;cursor:default">
 		<div class="real-footer">
 			<span>© 2018 admin - EGrappler.com All rights reserved.</span>
 			

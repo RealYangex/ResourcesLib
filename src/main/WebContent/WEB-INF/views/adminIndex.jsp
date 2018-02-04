@@ -10,11 +10,11 @@
   <link rel="stylesheet" type="text/css" href="${APP_PATH}/static/css/common.css">
   <link rel="stylesheet" type="text/css" href="${APP_PATH}/static/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="${APP_PATH}/static/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="${APP_PATH}/static/css/adminIndex.css">
   <script type="text/javascript" src="${APP_PATH}/static/js/jquery.min.js"></script>
   <script type="text/javascript" src="${APP_PATH}/static/js/echarts.common.min.js"></script>
   <script type="text/javascript" src="${APP_PATH}/static/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="${APP_PATH}/static/js/layer.js"></script>
+  <link rel="stylesheet" type="text/css" href="${APP_PATH}/static/css/adminIndex.css">
 </head>
 <body>
 	<!-- 头部Begin -->
@@ -46,44 +46,44 @@
 							<center>
 								<span class=" fa fa-user" style="font-size:52px;"></span></br>
 								<label style="color:#333333" id="customerCount"></label><br>
-								<span style="color:#333333" class="title">用户数量</span>
+								<span style="color:#333333" class="title">会员数量</span>
 							</center>
 						</div>
 					</div>
-					<div class="showSpan">
+					<div class="showSpan"  id="systemMessage">
 						<center>
 							<span class="fa fa-envelope-o"  ></span><br>
-							<span style="color:#333333" class="title1">消息</span>
+							<span style="color:#333333;cursor:pointer" class="title1">系统消息</span>
 						</center>
 					</div>
-					<div class="showSpan">
+					<div class="showSpan" id="allCustomer">
 						<center>
 							<span class="fa fa-users"  ></span><br>
-							<span style="color:#333333" class="title1">用户管理</span>
+							<span style="color:#333333" class="title1">所有会员</span>
 						</center>
 					</div>
-					<div class="showSpan">
+					<div class="showSpan" id="messageSet">
 						<center>
 							<span class="fa fa-bullhorn"  ></span><br>
-							<span style="color:#333333" class="title1">注册消息</span>
+							<span style="color:#333333" class="title1">消息设置</span>
 						</center>
 					</div>
-					<div class="showSpan" >
+					<div class="showSpan" id="file">
 						<center>
 							<span class="fa fa-save"  ></span><br>
 							<span style="color:#333333" class="title1">文件</span>
 						</center>
 					</div>
-					<div class="showSpan">
+					<div class="showSpan" id="visitSet">
 						<center>
 							<span class="fa fa-cogs"  ></span><br>
-							<span style="color:#333333" class="title1">设置</span>
+							<span style="color:#333333" class="title1">访问设置</span>
 						</center>
 					</div>
-					<div class="showSpan">
+					<div class="showSpan" id="examMessage">
 						<center>
 							<span class="fa fa-envelope-o"  ></span><br>
-							<span style="color:#333333" class="title1">消息</span>
+							<span style="color:#333333" class="title1">考试消息</span>
 						</center>
 					</div>
 				</div>
@@ -142,8 +142,9 @@
 				<!-- 最右侧END -->
 			
 				<!-- 可视化 Begin -->
-				<div id="chart"></div>
+				<div id="chart" class="fl"></div>
 			</div>
+			
 			<!-- 右侧内容End -->
 		</div>
 	</div>
@@ -266,7 +267,7 @@
 			    	
 			    	left:29,
 			    	right:28,
-			        top: 32,
+			        top: 52,
 			        bottom: 28
 			    },
 			    xAxis: [
@@ -310,6 +311,33 @@
 			myChart.setOption(option);														
 		}
 		
+		//showSpan 方块的显示
+		$(".showSpan").mouseover(function(){
+	  		$(this).css("border","1px solid #40CFE5");
+	  	});
+		$(".showSpan").mouseout(function(){
+	  		$(this).css("border","none");
+	  	});
+		
+		//系统消息  方块点击事件
+		$("#systemMessage").click(function(){
+			window.location.href="${APP_PATH}/View/adminSystemMessge";
+		})
+		
+		//所有会员  方块点击事件
+		$("#allCustomer").click(function(){
+			window.location.href="${APP_PATH}/View/adminCoustomer";
+		})
+		
+		//文件  方块点击事件
+		$("#file").click(function(){
+			window.location.href="${APP_PATH}/View/adminResource";
+		})
+		
+		//考试事件  方块点击事件
+		$("#examMessage").click(function(){
+			window.location.href="${APP_PATH}/View/adminExamMessage";
+		})
 	})
 </script>
 </body>

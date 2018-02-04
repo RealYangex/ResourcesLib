@@ -73,7 +73,7 @@
 				  ,area: ['480px', '285px']
     	          ,title:'账户修改'
 				  ,shade: 0.2
-				  ,anim: 5 
+				  ,anim: 1 
 				  ,content:'<div id="mod_modal" class="modal-content" style="border-radius: 0px; width: 480px;background-color:#F8F8F8;border-color:#F8F8F8">'+				  
 			      '<div class="modal-body">'+
 			        	'<form class="form-horizontal" id="form_add_confirm">'+	        	    
@@ -168,7 +168,7 @@
 				  ,area: ['380px', '243px']
  	          ,title:'消息设置'
 				  ,shade: 0.2
-				  ,anim: 5 
+				  ,anim: 1 
 				  ,content:'<div id="msgSeting_modal" class="modal-content" style="border-radius: 0px; width: 380px;background-color:#F8F8F8;border-color:#F8F8F8">'+				  
 			      '<div class="modal-body">'+
 			           '<form id="formMsg">'+
@@ -251,7 +251,7 @@
 				  ,area: ['380px', '217px']
 	          ,title:'访问设置'
 				  ,shade: 0.2
-				  ,anim: 5 
+				  ,anim: 1 
 				  ,content:'<div id="vistSeting_modal" class="modal-content" style="border-radius: 0px; width: 380px;background-color:#F8F8F8;border-color:#F8F8F8">'+				  
 			      '<div class="modal-body">'+
 			           '<form id="formViste">'+

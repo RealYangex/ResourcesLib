@@ -150,16 +150,18 @@
 		background-color: #fff;
 		float:left;
 		padding:30px auto;
+		
 	}
 	.showSpan .fa{
 		font-size:28px;
 		color:#40CFE5;
 		margin:26px 0 0 0;
+		cursor:pointer;
 	}
 	.showSpan label{
 		font-family:'Microsoft YaHei';
 	}
-	.showSpan:hover{
+	.showSpan{
 		cursor:pointer;
 	}
 	.fileTypeFrist{
@@ -194,5 +196,5 @@
 	}
 	#chart{
 		width:900px;
-		height:390px;
+		height:380px;
 	}
