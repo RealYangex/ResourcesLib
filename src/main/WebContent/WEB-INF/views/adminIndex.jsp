@@ -333,7 +333,7 @@
 		$("#file").click(function(){
 			window.location.href="${APP_PATH}/View/adminResource";
 		})
-		
+		 
 		//考试事件  方块点击事件
 		$("#examMessage").click(function(){
 			window.location.href="${APP_PATH}/View/adminExamMessage";

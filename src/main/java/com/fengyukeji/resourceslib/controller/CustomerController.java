@@ -60,12 +60,21 @@ public class CustomerController {
 		String userPassword=request.getParameter("userPassword");
 		String userRealName=request.getParameter("userRealName");
 		String userEmail=request.getParameter("userEmail");
-		Integer userId = customerService.saveCustomerInfo(userName, userRealName,userEmail,userPassword);
+	    boolean bool=	customerService.checkCustomer(userName);
+		if(bool==false) {
+			Integer userId = customerService.saveCustomerInfo(userName, userRealName,userEmail,userPassword);
+			
+			//记录请求授权信息
+			Message message = new Message(null,userId,DateUtil.getNowSqlDate(),"用户："+userName+";真实姓名："+userRealName+";邮箱:"+userEmail+" 完成注册，请求授权",2,null);
+			systemMessageService.insertMessage(message);
+			return Msg.success();
+		}else {
+			Msg msg = new Msg();
+			msg.setCode(300);
+			msg.setMessage("用户名已存在！");
+			return msg;
+		}
 		
-		//记录请求授权信息
-		Message message = new Message(null,userId,DateUtil.getNowSqlDate(),"用户："+userName+";真实姓名："+userRealName+";邮箱:"+userEmail+" 完成注册，请求授权",2,null);
-		systemMessageService.insertMessage(message);
-		return Msg.success();
 	}
    //deleteOneCustomer
 	/**

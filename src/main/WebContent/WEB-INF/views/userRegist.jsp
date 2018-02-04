@@ -188,8 +188,11 @@ $("#formLogin").validate({
 								 window.open("${APP_PATH}/View/index","_self");
 							});	
 					}
+					else if(data.code==300){
+						layer.alert("用户名已存在！");
+					}
 					else{
-						layer.alert("提交失败！");
+						layer.alert("遇到错误！");
 					}
 				}
 			});

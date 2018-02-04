@@ -187,21 +187,21 @@ public class CustomerService {
 		example.createCriteria().andVisitTimeBetween(dat, date).andAddressEqualTo(ip);
 		
 		List<Visit> visitList=visitMapper.selectByExample(example);
-		if(visitList.isEmpty()) {
-			
+		
+		if(visitList.size()==0) {
 			Visit record=new Visit();
 			record.setVisitTime(date);
 			record.setAddress(ip);
 			visitMapper.insertSelective(record);
 		}
 		List<Object> visitCountList =new ArrayList<Object>() ;
-		example.createCriteria().andIdIsNotNull();
-	    Integer total=visitMapper.selectByExample(example).size();
+	    Integer total=visitMapper.selectByExample(null).size();
 	    visitCountList.add(total);
 	    
-	     
-		example.createCriteria().andVisitTimeBetween(dat, date);
-		Integer day=visitMapper.selectByExample(example).size();
+	    VisitExample examplee=new VisitExample();
+		examplee.createCriteria().andVisitTimeBetween(dat, date);
+		Integer day=visitMapper.selectByExample(examplee).size();
+		
 		visitCountList.add(day);
 		
 		return visitCountList;
@@ -214,5 +214,19 @@ public class CustomerService {
 	public long getVisitCount() {
 		
 		return visitMapper.countByExample(null);
+	}
+	
+	/**
+	 * 校验用户名
+	 * @return
+	 */
+	public boolean checkCustomer(String userName) {
+		CustomerExample example=new CustomerExample();
+		example.createCriteria().andUsernameEqualTo(userName);
+	int isExist=customerMapper.selectByExample(example).size();
+	if(isExist==0)
+		return false;
+	else
+		return true;
 	}
 }

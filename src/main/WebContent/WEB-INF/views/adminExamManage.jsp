@@ -853,8 +853,6 @@ $(document).on("click","#addExamSave",function(){
 	                              '<select id="topicType" name="topicType" lay-ignore style="width: 100%;height:100%; border:none;color: #757575;">'+
 	                                '<option value="">请选择题目类型</option>'+
 	                                '<option value="0">单选</option>'+
-	                                '<option value="1">多选</option>'+
-	                                '<option value="2">判断</option>'+
 	                              '</select>'+ 
 	                          '</div>'+
 	                     '</div>'+
